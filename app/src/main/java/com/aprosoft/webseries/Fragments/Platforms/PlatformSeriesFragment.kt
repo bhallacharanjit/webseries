@@ -11,7 +11,7 @@ import com.aprosoft.webseries.R
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
+lateinit var v:View
 /**
  * A simple [Fragment] subclass.
  * Use the [PlatformSeriesFragment.newInstance] factory method to
@@ -35,7 +35,7 @@ class PlatformSeriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val v =inflater.inflate(R.layout.fragment_platform_series, container, false)
+         v=inflater.inflate(R.layout.fragment_platform_series, container, false)
 
 
         return v
