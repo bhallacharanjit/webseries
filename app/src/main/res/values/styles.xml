@@ -1,0 +1,32 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <style name="Theme.AppCompat.Light.Custom">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="colorPrimaryDark">#151C25</item>
+    </style>
+
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/duskYellow</item>
+        <item name="colorControlActivated">@color/duskYellow</item>
+    </style>
+
+    <style name="Widget.AppTheme.TextInputEditText.Dense"
+        parent="Widget.MaterialComponents.TextInputEditText.FilledBox.Dense">
+        <item name="colorPrimary">@color/duskYellow</item>
+    </style>
+
+    <style name="MyEditTextTheme">
+        <item name="colorControlNormal">@color/textColor_grey</item>
+        <item name="colorControlActivated">@color/textColor_grey</item>
+        <item name="colorControlHighlight">@color/textColor_grey</item>
+    </style>
+</resources>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/ll_popular_Webseries">
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="225dp"
+        android:id="@+id/iv_seriesPoster"
+        android:src="@drawable/poster_of_mirzapur"
+        android:layout_margin="5dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_seriesName"
+        android:text="Mirzapur"
+        android:layout_marginStart="5dp"
+        android:fontFamily="@font/montserrat_medium"
+        android:textSize="13sp"
+        android:textColor="@color/textColor_grey"
+        />
+    <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="0.5"
+        style="@style/Widget.AppCompat.RatingBar.Small"
+        android:theme="@style/RatingBar"
+        android:layout_marginStart="5dp"
+        />
+
+
+
+
+</LinearLayout>

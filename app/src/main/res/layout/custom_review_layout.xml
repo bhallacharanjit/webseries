@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/circularbordersolid"
+        android:padding="10dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_user"
+            android:id="@+id/iv_reviewer_photo"
+            android:padding="6dp"
+            android:background="@drawable/background_circle"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hardeep singh"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/tv_reviewerName"
+            android:textSize="10sp"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_medium"
+            android:padding="6dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="06/11/2020"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="4dp"
+            android:textSize="10sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:padding="6dp"
+            android:id="@+id/tv_reviewDate"
+            android:textColor="@color/lightGrey"
+            />
+
+
+        <RatingBar
+            android:id="@+id/ratingReviewBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="0.5"
+            android:layout_below="@id/tv_reviewDate"
+            android:theme="@style/RatingBar"
+            style="?android:attr/ratingBarStyleSmall"
+            android:numStars="5"
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ratingReviewBar"
+            android:layout_margin="10dp"
+            android:text=""
+            android:textSize="12sp"
+            android:fontFamily="@font/montserrat_medium"
+            android:padding="5dp"
+            android:id="@+id/tv_reviewDesc"
+            android:textColor="@color/lightGrey"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

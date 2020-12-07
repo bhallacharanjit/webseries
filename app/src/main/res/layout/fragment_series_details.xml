@@ -1,0 +1,531 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Fragments.SeriesDetailsFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="255dp"
+                android:src="@drawable/mirzapur_poster_fullsize"
+                android:alpha="0.8"
+                android:id="@+id/iv_webseriesPoster"
+                />
+
+            <LinearLayout
+                android:id="@+id/topbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:gravity="center_vertical"
+                android:padding="16dp"
+                android:layout_marginTop="5dp">
+
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:id="@+id/iv_backArrow_seriesDetails"
+                    android:background="@drawable/background_circle"
+                    android:src="@drawable/ic_back_arrow"
+                    />
+            </LinearLayout>
+
+            <Button
+                android:layout_width="70dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="180dp"
+                android:layout_marginStart="10dp"
+                android:text="2016"
+                android:fontFamily="@font/montserrat_extra_bold"
+                android:textColor="@color/white"
+                android:background="@drawable/button_background"
+                android:id="@+id/btn_releasedYear"
+                />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_webseriesPoster"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <androidx.appcompat.widget.AppCompatRatingBar
+                        android:id="@+id/rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:numStars="5"
+                        android:stepSize="0.5"
+                        style="@style/Widget.AppCompat.RatingBar.Small"
+                        android:theme="@style/RatingBar"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="5dp"
+                        />
+                    <TextView
+                        android:layout_width="300dp"
+                        android:layout_height="wrap_content"
+                        android:text="Mirzapur "
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:lines="2"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="5dp"
+                        android:id="@+id/tv_title"
+                        android:layout_below="@id/rating"
+                        />
+                    <ImageView
+                        android:id="@+id/iv_whiteHeart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:src="@drawable/ic_heart"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toEndOf="@id/tv_title"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        />
+                    <ImageView
+                        android:id="@+id/iv_redHeart"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="end|center_vertical"
+                        android:src="@drawable/ic_heart_red"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_toEndOf="@id/tv_title"
+                        android:layout_marginTop="5dp"
+                        android:padding="8dp"
+                        android:visibility="gone"
+                        />
+<!--                    <TextView-->
+<!--                        android:layout_width="wrap_content"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Favourites"-->
+<!--                        android:layout_toEndOf="@id/tv_title"-->
+<!--                        android:layout_below="@id/iv_whiteHeart"-->
+<!--                        android:textColor="@color/lightGrey"-->
+<!--                        android:fontFamily="@font/montserrat_regular"-->
+<!--                        android:textSize="8sp"-->
+<!--                        android:layout_marginEnd="5dp"-->
+<!--                        />-->
+
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginStart="25dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2h 31min "
+                        android:fontFamily="@font/montserrat_bold"
+                        android:textColor="@color/white"
+                        android:textSize="13sp"
+                        android:lines="2"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="10dp"
+                        app:drawableStartCompat="@drawable/ic_schedule_white_18dp"
+                        android:gravity="center_vertical"
+                        android:drawablePadding="10dp"
+                        />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Family"
+                        android:textColor="@color/white"
+                        android:background="@drawable/genre_background"
+                        android:padding="10dp"
+                        android:layout_marginEnd="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Fantasy"
+                        android:textColor="@color/white"
+                        android:background="@drawable/genre_background"
+                        android:padding="10dp"
+                        android:layout_marginEnd="5dp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Adventure"
+                        android:textColor="@color/white"
+                        android:background="@drawable/genre_background"
+                        android:padding="10dp"
+                        />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="STORYLINE"
+                        android:textColor="@color/textColor_grey"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="25dp"
+                        android:textSize="15sp"
+                        />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/description"
+                        android:textColor="@color/lightGrey"
+                        android:fontFamily="@font/montserrat_regular"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginEnd="20dp"
+                        android:textSize="12sp"
+                        android:id="@+id/tv_storyLine"
+                        />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="25dp">
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/button_background"
+                        android:text="PLAY TRAILER"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:layout_marginEnd="20dp"
+                        android:drawableStart="@drawable/ic_play_arrow_white_18dp"
+                        android:id="@+id/btn_play_trailer"
+                        />
+
+                    <Button
+                        android:layout_width="150dp"
+                        android:layout_height="40dp"
+                        android:id="@+id/btn_rateMovie"
+                        android:background="@drawable/rating_button_background"
+                        android:text="RATE MOVIE"
+                        android:padding="10dp"
+                        android:textColor="@color/white"
+                        android:fontFamily="@font/montserrat_bold"
+                        android:ems="8"
+                        android:drawableStart="@drawable/ic_star_rate_yellow_18dp"
+                        />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="5dp"
+                    android:background="#1D2532">
+
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="3dp"
+                        android:id="@+id/horizontalScrollView_Actors"
+                        android:scrollbars="none"
+                        android:layout_marginStart="25dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:id="@+id/ll_actorPhotosLayout">
+
+                        </LinearLayout>
+
+                    </HorizontalScrollView>
+
+
+
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ABOUT FILM"
+                            android:textColor="@color/textColor_grey"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="25dp"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
+                            />
+
+<!--                        <ImageView-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:id="@+id/iv_Review_for_admin"-->
+<!--                            android:src="@drawable/avd_plus_to_tick"-->
+<!--                            android:layout_alignParentEnd="true"-->
+<!--                            android:layout_marginEnd="20dp"-->
+<!--                            android:padding="5sp"-->
+<!--                            android:background="?android:attr/selectableItemBackground"-->
+<!--                            android:clickable="true"-->
+<!--                            android:focusable="true"-->
+<!--                            />-->
+
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="5dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Original Title:"
+                            android:textColor="@color/textColor_grey"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:id="@+id/tv_OriginalTitle"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Mirzapur"
+                            android:textColor="@color/lightGrey"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_marginStart="10dp"
+                            android:id="@+id/tv_showTitle"
+                            android:layout_toEndOf="@id/tv_OriginalTitle"
+                            />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Type:"
+                            android:textColor="@color/textColor_grey"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_below="@id/tv_OriginalTitle"
+                            android:id="@+id/tv_Type"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="Family, Fantasy, Adventure "
+                            android:textColor="@color/lightGrey"
+                            android:textSize="12sp"
+                            android:id="@+id/tv_showType"
+                            android:layout_alignStart="@id/tv_showTitle"
+                            android:layout_below="@id/tv_OriginalTitle"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Production:"
+                            android:textColor="@color/textColor_grey"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_below="@id/tv_Type"
+                            android:id="@+id/tv_Production"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="Mumbai, India"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="12sp"
+                            android:id="@+id/tv_showProduction"
+                            android:layout_alignTop="@id/tv_Production"
+                            android:layout_alignStart="@id/tv_showTitle"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Premiere:"
+                            android:textColor="@color/textColor_grey"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_below="@id/tv_Production"
+                            android:id="@+id/tv_Premiere"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="8 November 2020"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="12sp"
+                            android:id="@+id/tv_showPremiereDate"
+                            android:layout_alignStart="@id/tv_showTitle"
+                            android:layout_alignTop="@id/tv_Premiere"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Description:"
+                            android:textColor="@color/textColor_grey"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:layout_marginTop="5dp"
+                            android:textSize="12sp"
+                            android:layout_below="@id/tv_Premiere"
+                            android:id="@+id/tv_Description"
+                            />
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/montserrat_medium"
+                            android:text="@string/description"
+                            android:textColor="@color/lightGrey"
+                            android:textSize="12sp"
+                            android:id="@+id/tv_showDescription"
+                            android:layout_alignStart="@id/tv_showTitle"
+                            android:layout_alignTop="@id/tv_Description"
+                            />
+
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="25dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Reviews"
+                            android:textColor="@color/textColor_grey"
+                            android:fontFamily="@font/montserrat_bold"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="25dp"
+                            android:textSize="15sp"
+                            android:gravity="center_vertical"
+                            android:id="@+id/tv_reviewsTitle"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="5dp"
+                            android:background="@drawable/button_background"
+                            >
+                            <com.jaredrummler.materialspinner.MaterialSpinner
+                                android:id="@+id/spinner"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+
+
+
+
+<!--                        <com.jaredrummler.materialspinner.MaterialSpinner-->
+<!--                            android:id="@+id/spinner"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"/>-->
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@id/tv_reviewsTitle"
+                            android:layout_marginTop="15dp">
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/rv_reviews" />
+
+
+                        </RelativeLayout>
+
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/iv_Review_for_admin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:srcCompat="@drawable/ic_plus_24"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="15dp"
+                android:backgroundTint="@color/duskYellow"/>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+
+
+
+
+
+
+</FrameLayout>

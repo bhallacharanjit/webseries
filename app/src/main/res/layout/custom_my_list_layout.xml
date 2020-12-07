@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:id="@+id/iv_myList_Photo"
+            android:src="@drawable/lucy_poster"
+            android:layout_margin="5dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:foreground="?android:attr/selectableItemBackground"
+            />
+
+        <TextView
+            android:id="@+id/tv_myList_Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_myList_Photo"
+            android:layout_marginStart="5dp"
+            android:fontFamily="@font/montserrat_medium"
+            android:text="Lucy"
+            android:textColor="@color/textColor_grey"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>
