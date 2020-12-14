@@ -1,17 +1,45 @@
 package com.aprosoft.webseries.Fragments.Platforms
 
+import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.aprosoft.webseries.Adapters.MyListAdapter
+import com.aprosoft.webseries.Adapters.PlatformsSeriesAdapter
+import com.aprosoft.webseries.Fragments.SeriesDetailsFragment
+import com.aprosoft.webseries.Fragments.jsonArray
+
+import com.aprosoft.webseries.Fragments.uid
 import com.aprosoft.webseries.R
+import com.aprosoft.webseries.Retrofit.ApiClient
+import com.aprosoft.webseries.Shared.Singleton
+import kotlinx.android.synthetic.main.fragment_platform_series.view.*
+import okhttp3.ResponseBody
+import org.json.JSONArray
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-lateinit var v:View
+lateinit var seriesView:View
+var platformId:String?= null
+lateinit var rv_PlatformSeries: RecyclerView
+var myListArray= JSONArray()
+var platformName:String?= null
 /**
  * A simple [Fragment] subclass.
  * Use the [PlatformSeriesFragment.newInstance] factory method to
@@ -33,13 +61,69 @@ class PlatformSeriesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
-         v=inflater.inflate(R.layout.fragment_platform_series, container, false)
+        platformId = arguments?.getString("platformId")
+        platformName = arguments?.getString("platformName")
+         seriesView=inflater.inflate(R.layout.fragment_platform_series, container, false)
+        seriesView.tv_platformTitle.text = platformName
+
+        seriesView.iv_notificationIcon.setOnClickListener {
 
 
-        return v
+        }
+        rv_PlatformSeries = seriesView.findViewById(R.id.rv_PlatformSeries)
+        rv_PlatformSeries.setHasFixedSize(true)
+
+        val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,2)
+        rv_PlatformSeries.layoutManager = mLayoutManager
+        rv_PlatformSeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
+        rv_PlatformSeries.itemAnimator = DefaultItemAnimator()
+        myList()
+
+        platformSeries()
+
+        return seriesView
     }
+
+    private fun platformSeries(){
+        val kProgressHUD = Singleton().createLoading(context,"","")
+        val seriesParams = HashMap<String,String>()
+        seriesParams["platformId"] = platformId.toString()
+
+        val call:Call<ResponseBody> = ApiClient.getClient.platformSeries(seriesParams)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                kProgressHUD?.dismiss()
+                val res = response.body()?.string()
+                val jsonArray = JSONArray(res)
+                val jsonObject = jsonArray.getJSONObject(0)
+                val success = jsonObject.getBoolean("success")
+                var msg: String? = null
+                if (success) {
+                    msg = jsonObject.getString("msg")
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    val platformsSeriesAdapter = PlatformsSeriesAdapter(context!!, jsonArray,this@PlatformSeriesFragment)
+                    rv_PlatformSeries.adapter = platformsSeriesAdapter
+                } else {
+                    msg = jsonObject.getString("msg")
+                    seriesView.tv_nothingToShow.visibility = View.VISIBLE
+//                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    
+//                    Handler().postDelayed({
+//                        activity?.onBackPressed()
+//                    },3000)
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                kProgressHUD?.dismiss()
+                Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
+                Log.d("error", "$t")
+            }
+        })
+    }
+
+
 
     companion object {
         /**
@@ -60,4 +144,53 @@ class PlatformSeriesFragment : Fragment() {
                 }
             }
     }
+    private fun myList(){
+        val userObject = Singleton().getUserFromSharedPrefrence(context!!)
+        uid = userObject?.getString("token")
+
+        val listParmas = HashMap<String,String>()
+        listParmas["uid"] = uid.toString()
+        val call: Call<ResponseBody> = ApiClient.getClient.myShowsList(listParmas)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val res = response.body()?.string()
+                myListArray= JSONArray(res)
+                Log.d("mylist","$myListArray")
+                val msg: String
+                if (myListArray.length() > 0) {
+
+                    val jsonObject = myListArray.getJSONObject(0)
+                    if (jsonObject.getBoolean("success")) {
+//                        val myListAdapter = MyListAdapter(context!!, jsonArray,this@MyListFragment)
+//                        recyclerView.adapter = myListAdapter
+//                        msg = jsonObject.getString("msg")
+//                        Toast.makeText(context, "$msg my list", Toast.LENGTH_SHORT).show()
+                    } else {
+                        msg = jsonObject.getString("msg")
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun moveToNextFragment(listObject: JSONObject) {
+        val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("seriesObject", "$listObject")
+        bundle.putString("myList", "$myListArray")
+        val seriesDetailsFragment = SeriesDetailsFragment()
+        fragmentTransaction!!.replace(R.id.frame_main,seriesDetailsFragment)
+        fragmentTransaction.addToBackStack("Fragments")
+        fragmentTransaction.commit()
+        seriesDetailsFragment.arguments= bundle
+
+
+    }
+
 }

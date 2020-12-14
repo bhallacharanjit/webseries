@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.aprosoft.webseries.Fragments.Platforms.AllPlatformsFragment
 import com.aprosoft.webseries.Fragments.Platforms.PlatformSeriesFragment
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
@@ -251,10 +252,10 @@ class HomeFragment : Fragment() {
 
         platformImageSlider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
-                Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
                 val fragmentTransaction: FragmentTransaction = fragmentManager?.beginTransaction()!!
-                val platformSeriesFragment = PlatformSeriesFragment()
-                fragmentTransaction.replace(R.id.frame_main, platformSeriesFragment)
+                val allPlatformsFragment = AllPlatformsFragment()
+                fragmentTransaction.replace(R.id.frame_main, allPlatformsFragment)
                 fragmentTransaction.addToBackStack("Fragments")
                 fragmentTransaction.commit()
             }

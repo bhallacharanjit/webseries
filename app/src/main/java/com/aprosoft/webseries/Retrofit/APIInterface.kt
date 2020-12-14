@@ -57,6 +57,17 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("showmylist")
     fun myShowsList(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
-    
+
+    @GET("viewPlatform")
+    fun allPlatforms():Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("platformSeries")
+    fun platformSeries(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("notificationOnOff")
+    fun notification(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
+
 
 }

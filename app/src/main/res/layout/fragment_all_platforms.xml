@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.Platforms.PlatformSeriesFragment">
+    tools:context=".Fragments.Platforms.AllPlatformsFragment">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -24,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_platformTitle"
-                android:text=""
+                android:text="All Platforms"
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -35,22 +36,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/iv_notificationIcon"
-                android:src="@drawable/ic_notifications_active_white_24dp"
-                android:layout_margin="10dp"
-                />
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/iv_notificationOnIcon"
-                android:src="@drawable/ic_notifications_active_red_24dp"
-                android:layout_margin="10dp"
-                android:visibility="gone"
-                />
-
         </LinearLayout>
 
         <RelativeLayout
@@ -58,24 +43,13 @@
             android:layout_height="match_parent"
             android:layout_marginTop="10dp">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_nothingToShow"
-                android:layout_centerInParent="true"
-                android:text="Nothing to show"
-                android:textSize="30sp"
-                android:textColor="@color/lightGrey"
-                android:fontFamily="@font/montserrat_extra_bold"
-                android:visibility="gone"
-                />
-
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:id="@+id/rv_PlatformSeries"/>
+                android:id="@+id/rv_PlatformList"/>
 
         </RelativeLayout>
 
     </LinearLayout>
+
 </FrameLayout>
