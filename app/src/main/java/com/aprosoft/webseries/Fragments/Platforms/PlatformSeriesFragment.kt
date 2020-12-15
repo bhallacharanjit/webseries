@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -40,6 +41,10 @@ var platformId:String?= null
 lateinit var rv_PlatformSeries: RecyclerView
 var myListArray= JSONArray()
 var platformName:String?= null
+//lateinit var notificationOn:ImageView
+//lateinit var notificationOff:ImageView
+var userObject= JSONObject()
+var isActive: Boolean?=null
 /**
  * A simple [Fragment] subclass.
  * Use the [PlatformSeriesFragment.newInstance] factory method to
@@ -67,23 +72,31 @@ class PlatformSeriesFragment : Fragment() {
         platformName = arguments?.getString("platformName")
          seriesView=inflater.inflate(R.layout.fragment_platform_series, container, false)
         seriesView.tv_platformTitle.text = platformName
+//        notificationOn = seriesView.findViewById(R.id.iv_notificationIcon)
+//        notificationOff = seriesView.findViewById(R.id.iv_notificationOnIcon)
+
+        notificationOnOff()
 
         seriesView.iv_notificationIcon.setOnClickListener {
-
-
+            notificationOnOff()
         }
+        seriesView.iv_notificationOnIcon.setOnClickListener {
+            notificationOnOff()
+        }
+
+
         rv_PlatformSeries = seriesView.findViewById(R.id.rv_PlatformSeries)
         rv_PlatformSeries.setHasFixedSize(true)
-
         val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,2)
         rv_PlatformSeries.layoutManager = mLayoutManager
         rv_PlatformSeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
         rv_PlatformSeries.itemAnimator = DefaultItemAnimator()
-        myList()
 
+        myList()
         platformSeries()
 
         return seriesView
+
     }
 
     private fun platformSeries(){
@@ -102,8 +115,10 @@ class PlatformSeriesFragment : Fragment() {
                 var msg: String? = null
                 if (success) {
                     msg = jsonObject.getString("msg")
-                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    val platformsSeriesAdapter = PlatformsSeriesAdapter(context!!, jsonArray,this@PlatformSeriesFragment)
+                    //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    val platformsSeriesAdapter = PlatformsSeriesAdapter(context!!,
+                        jsonArray,
+                        this@PlatformSeriesFragment)
                     rv_PlatformSeries.adapter = platformsSeriesAdapter
                 } else {
                     msg = jsonObject.getString("msg")
@@ -123,6 +138,38 @@ class PlatformSeriesFragment : Fragment() {
         })
     }
 
+    private fun notificationOnOff() {
+        userObject = Singleton().getUserFromSharedPrefrence(context!!)!!
+        val notificationParams = HashMap<String,String>()
+        notificationParams["platformId"] = platformId.toString()
+        notificationParams["userId"]= userObject.getString("token")
+
+        val call: Call<ResponseBody> = ApiClient.getClient.notification(notificationParams)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val res = response.body()?.string()
+                val jsonArray = JSONArray(res)
+                val jsonObject = jsonArray.getJSONObject(0)
+                val success = jsonObject.getBoolean("success")
+                var msg: String? = null
+                if (success) {
+                    msg = jsonObject.getString("msg")
+                    isActive = jsonObject.getBoolean("isActive")
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                    checkNotification()
+                }else{
+                    msg = jsonObject.getString("msg")
+                    isActive = jsonObject.getBoolean("isActive")
+                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+//                Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
+                Log.d("error","$t")
+            }
+        })
+    }
 
 
     companion object {
@@ -193,4 +240,16 @@ class PlatformSeriesFragment : Fragment() {
 
     }
 
+    private fun checkNotification(){
+
+        if (isActive == true){
+//            Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
+            seriesView.iv_notificationIcon.visibility = View.GONE
+            seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
+        }else{
+//            Toast.makeText(context, "0", Toast.LENGTH_SHORT).show()
+            seriesView.iv_notificationIcon.visibility = View.VISIBLE
+            seriesView.iv_notificationOnIcon.visibility = View.GONE
+        }
+    }
 }
