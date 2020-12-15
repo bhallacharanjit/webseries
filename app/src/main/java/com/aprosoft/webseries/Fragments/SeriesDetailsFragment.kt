@@ -103,9 +103,15 @@ class   SeriesDetailsFragment : Fragment() {
         val tv_showDescription:TextView = v.findViewById(R.id.tv_showDescription)
 
         v.iv_whiteHeart.setOnClickListener {
-            v.iv_whiteHeart.visibility = View.GONE
-            v.iv_redHeart.visibility = View.VISIBLE
-            addTomyList()
+            if (Singleton().getUserFromSharedPrefrence(context!!)!=null){
+                v.iv_whiteHeart.visibility = View.GONE
+                v.iv_redHeart.visibility = View.VISIBLE
+                addTomyList()
+            }else{
+                val intent = Intent(context,LoginActivity::class.java)
+                startActivity(intent)
+            }
+
         }
         v.iv_redHeart.setOnClickListener {
             v.iv_redHeart.visibility = View.GONE

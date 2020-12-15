@@ -59,7 +59,7 @@ class AllPlatformsFragment : Fragment() {
 
         val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,3)
         rvPlatform.layoutManager = mLayoutManager
-        rvPlatform.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
+       // rvPlatform.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
         rvPlatform.itemAnimator = DefaultItemAnimator()
 
         allPlatforms()

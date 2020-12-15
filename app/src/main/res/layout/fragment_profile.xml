@@ -47,26 +47,26 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
-            <RelativeLayout
-                android:layout_width="50dp"
-                android:layout_height="50dp">
-
-                <ImageView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:padding="6dp"
-                    android:src="@drawable/ic_notifications_active_white_24dp" />
+<!--            <RelativeLayout-->
+<!--                android:layout_width="50dp"-->
+<!--                android:layout_height="50dp">-->
 
 <!--                <ImageView-->
-<!--                    android:layout_width="20dp"-->
-<!--                    android:layout_height="20dp"-->
-<!--                    android:layout_alignParentTop="true"-->
-<!--                    android:layout_alignParentEnd="true"-->
-<!--                    android:layout_margin="8dp"-->
-<!--                    android:padding="4dp"-->
-<!--                    android:src="@drawable/circleyellowfil" />-->
-            </RelativeLayout>
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="40dp"-->
+<!--                    android:layout_centerInParent="true"-->
+<!--                    android:padding="6dp"-->
+<!--                    android:src="@drawable/ic_notifications_active_white_24dp" />-->
+
+<!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_width="20dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_height="20dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_alignParentTop="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_alignParentEnd="true"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:layout_margin="8dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:padding="4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                    android:src="@drawable/circleyellowfil" />&ndash;&gt;-->
+<!--            </RelativeLayout>-->
 
         </LinearLayout>
 
@@ -132,7 +132,7 @@
                             android:layout_marginTop="10dp"
                             android:fontFamily="@font/proximanovaregular"
                             android:text=""
-                            android:textColor="@color/textColor_grey"
+                            android:textColor="@color/lightGrey"
                             android:textSize="21sp"
                             android:textStyle="bold" />
 
@@ -221,11 +221,11 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
+                                    android:layout_marginStart="20dp"
                                     android:id="@+id/tv_userPhone"
-                                    android:text=""
+                                    android:text="1234657890"
                                     android:textSize="15sp"
-                                    android:textColor="@color/textColor_grey"
+                                    android:textColor="@color/lightGrey"
                                     android:fontFamily="@font/proximanovaregular" />
                             </LinearLayout>
 
@@ -234,7 +234,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="10dp"
                                 android:gravity="center_vertical"
-                                android:paddingRight="8dp">
+                                android:paddingEnd="8dp">
 
                                 <ImageView
                                     android:layout_width="40dp"
@@ -246,8 +246,8 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginLeft="20dp"
-                                    android:textColor="@color/textColor_grey"
+                                    android:layout_marginStart="20dp"
+                                    android:textColor="@color/lightGrey"
                                     android:text=""
                                     android:id="@+id/tv_userEmail"
                                     android:textSize="15sp"

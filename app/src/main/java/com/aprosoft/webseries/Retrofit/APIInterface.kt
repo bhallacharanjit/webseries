@@ -15,8 +15,9 @@ interface APIInterface {
     @GET("viewCategory")
     fun viewCategory():Call<ResponseBody>
 
-    @GET("viewAllSeries")
-    fun viewAllsWebseries():Call<ResponseBody>
+    @FormUrlEncoded
+    @POST("viewAllSeries")
+    fun viewAllsWebseries(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
     @FormUrlEncoded
     @POST("viewCast")
@@ -69,5 +70,8 @@ interface APIInterface {
     @POST("notificationOnOff")
     fun notification(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("checkNotification")
+    fun checkNotification(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
 }

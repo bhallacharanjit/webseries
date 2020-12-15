@@ -2,7 +2,11 @@ package com.aprosoft.webseries.Fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,13 +19,17 @@ import android.widget.Toast
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
+import com.bumptech.glide.Glide
 import com.github.dhaval2404.imagepicker.ImagePicker
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
@@ -59,19 +67,38 @@ class ProfileFragment : Fragment() {
 
         v.cv_profileImage.setOnClickListener {
 
-            com.github.dhaval2404.imagepicker.ImagePicker.with(this)
-                .crop()
-                .compress(1024)
-                .maxResultSize(512,512)
-                .start()
+            val permissionListener:PermissionListener = object:PermissionListener{
+                override fun onPermissionGranted() {
+                    ImagePicker.with(this@ProfileFragment)
+                        .compress(1024)			//Final image size will be less than 1 MB(Optional)
+                        .maxResultSize(1080, 1080)	//Final image resolution will be less than 1080 x 1080(Optional)
+                        .start()
+                }
+
+                override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
+                    Toast.makeText(
+                        context,
+                        "Permission Denied${deniedPermissions.toString()}".trimIndent(),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            TedPermission.with(context)
+                .setPermissionListener(permissionListener)
+                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setPermissions(
+                    android.Manifest.permission.CAMERA,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ).check()
+
         }
         v.iv_backArrow.setOnClickListener {
             val animation: Animation = AnimationUtils.loadAnimation(context?.applicationContext,R.anim.alpha)
             v.iv_backArrow.startAnimation(animation)
             activity?.supportFragmentManager?.popBackStack()
         }
-
-
         profile(userName,phone,email)
         // Inflate the layout for this fragment
         return v
@@ -102,14 +129,28 @@ class ProfileFragment : Fragment() {
         if (resultCode == Activity.RESULT_OK) {
             //Image Uri will not be null for RESULT_OK
             val fileUri = data?.data
-            iv_profileImage?.setImageURI(fileUri)
+            Glide.with(this)
+                .load(fileUri)
+                .into(iv_profileImage!!)
 
+//            val bitmap = BitmapFactory.decodeFile(fileUri?.encodedPath)
+//            val nh = (bitmap.height * (1024.0 / bitmap.width)).toInt()
+//            val scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true)
+//            val baos = ByteArrayOutputStream()
+//            scaled.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+//            val images = baos.toByteArray()
+//
+//            val base64QImage = Base64.encodeToString(images, Base64.DEFAULT)
+//            Log.d("base64", base64QImage)
 
+//            iv_profileImage?.setImageURI(fileUri)
+//
             //You can get File object from intent
             val file: File = ImagePicker.getFile(data)!!
 
             //You can also get File Path from intent
             val filePath:String = ImagePicker.getFilePath(data)!!
+
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {

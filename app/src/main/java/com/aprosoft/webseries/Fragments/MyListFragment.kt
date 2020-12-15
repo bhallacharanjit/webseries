@@ -14,6 +14,7 @@ import com.aprosoft.webseries.Adapters.MyListAdapter
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
+import kotlinx.android.synthetic.main.fragment_my_list.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -26,6 +27,7 @@ import retrofit2.Response
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 private lateinit var recyclerView: RecyclerView
+lateinit var MyListView:View
 var jsonArray = JSONArray()
 /**
  * A simple [Fragment] subclass.
@@ -50,9 +52,9 @@ class MyListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        val v =inflater.inflate(R.layout.fragment_my_list, container, false)
+        MyListView =inflater.inflate(R.layout.fragment_my_list, container, false)
 
-        recyclerView = v.findViewById(R.id.rv_myShowList)
+        recyclerView = MyListView.findViewById(R.id.rv_myShowList)
         recyclerView.setHasFixedSize(true)
 
         val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,2)
@@ -62,7 +64,7 @@ class MyListFragment : Fragment() {
 
         myList()
 
-        return v
+        return MyListView
     }
 
     companion object {
@@ -112,7 +114,9 @@ class MyListFragment : Fragment() {
                         Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                    MyListView.tv_nothingToShow.visibility = View.VISIBLE
+
+//                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
                 }
             }
 

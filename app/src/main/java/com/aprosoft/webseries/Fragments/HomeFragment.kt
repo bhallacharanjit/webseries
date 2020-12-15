@@ -172,13 +172,18 @@ class HomeFragment : Fragment() {
             }
     }
 
-
     private fun seriesPoster(ll_posterLayout: LinearLayout) {
 //        aviLoader?.visibility = View.VISIBLE
         val inflater =context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-
-        val call:Call<ResponseBody> = ApiClient.getClient.viewAllsWebseries()
+        val seriesParams= HashMap<String,String>()
+        if(Singleton().getUserFromSharedPrefrence(context!!)!=null){
+            val userObject = Singleton().getUserFromSharedPrefrence(context!!)
+            seriesParams["userId"]=userObject?.getString("token").toString()
+        }else{
+            Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
+            seriesParams["userId"]=""
+        }
+       val call:Call<ResponseBody> = ApiClient.getClient.viewAllsWebseries(seriesParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 //                aviLoader?.visibility = View.GONE
@@ -187,7 +192,6 @@ class HomeFragment : Fragment() {
                 val jsonObject = jsonArray.getJSONObject(0)
                 val success = jsonObject.getBoolean("success")
                 if (success) {
-
                     for (i in 0 until jsonArray.length()) {
                         val seriesObject = jsonArray.getJSONObject(i)
                         val v: View = inflater.inflate(R.layout.custom_series_photos_layout, null)
@@ -411,6 +415,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
 
 

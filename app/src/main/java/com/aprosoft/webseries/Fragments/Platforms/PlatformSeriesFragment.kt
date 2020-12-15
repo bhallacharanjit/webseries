@@ -1,5 +1,6 @@
 package com.aprosoft.webseries.Fragments.Platforms
 
+import android.content.Intent
 import android.opengl.Visibility
 import android.os.Bundle
 import android.os.Handler
@@ -24,6 +25,7 @@ import com.aprosoft.webseries.Fragments.uid
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
+import com.aprosoft.webseries.User.LoginActivity
 import kotlinx.android.synthetic.main.fragment_platform_series.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -75,13 +77,37 @@ class PlatformSeriesFragment : Fragment() {
 //        notificationOn = seriesView.findViewById(R.id.iv_notificationIcon)
 //        notificationOff = seriesView.findViewById(R.id.iv_notificationOnIcon)
 
-        notificationOnOff()
+        if (Singleton().getUserFromSharedPrefrence(context!!)!=null){
+            checkNotification()
+        }else{
+
+        }
+
 
         seriesView.iv_notificationIcon.setOnClickListener {
-            notificationOnOff()
+
+            if (Singleton().getUserFromSharedPrefrence(context!!)!= null){
+                notificationOnOff()
+//            checkNotification()
+                seriesView.iv_notificationIcon.visibility = View.GONE
+                seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
+                seriesView.tv_notificationText.text = "Turn off notifications"
+            }else{
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
         seriesView.iv_notificationOnIcon.setOnClickListener {
-            notificationOnOff()
+            if (Singleton().getUserFromSharedPrefrence(context!!)!= null){
+                notificationOnOff()
+//            checkNotification()
+                seriesView.iv_notificationIcon.visibility = View.VISIBLE
+                seriesView.iv_notificationOnIcon.visibility = View.GONE
+                seriesView.tv_notificationText.text = "Turn on notifications"
+            }else{
+                val intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
 
 
@@ -154,12 +180,9 @@ class PlatformSeriesFragment : Fragment() {
                 var msg: String? = null
                 if (success) {
                     msg = jsonObject.getString("msg")
-                    isActive = jsonObject.getBoolean("isActive")
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    checkNotification()
                 }else{
                     msg = jsonObject.getString("msg")
-                    isActive = jsonObject.getBoolean("isActive")
                     Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                 }
             }
@@ -171,6 +194,53 @@ class PlatformSeriesFragment : Fragment() {
         })
     }
 
+    private fun checkNotification(){
+        userObject = Singleton().getUserFromSharedPrefrence(context!!)!!
+        val notificationParams = HashMap<String, String>()
+        notificationParams["uid"] = userObject.getString("token").toString()
+
+        val call:Call<ResponseBody> = ApiClient.getClient.checkNotification(notificationParams)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val res = response.body()?.string()
+                val jsonArray = JSONArray(res)
+                Log.d("jsonArray", "$jsonArray")
+                if (jsonArray.length()>0){
+                    val jsonObject = jsonArray.getJSONObject(0)
+                    val success = jsonObject.getBoolean("success")
+                    var msg: String? = null
+                    if (success) {
+                        msg = jsonObject.getString("msg")
+                        isActive = jsonObject.getBoolean("isActive")
+                        //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        if (isActive == true) {
+                            //Toast.makeText(context, "$isActive", Toast.LENGTH_SHORT).show()
+                            seriesView.iv_notificationIcon.visibility = View.GONE
+                            seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
+                            seriesView.tv_notificationText.text = "Turn off notifications"
+                        }
+                        else{
+                            //Toast.makeText(context, "$isActive", Toast.LENGTH_SHORT).show()
+                            seriesView.iv_notificationIcon.visibility = View.VISIBLE
+                            seriesView.iv_notificationOnIcon.visibility = View.GONE
+                            seriesView.tv_notificationText.text = "Turn on notifications"
+                        }
+                    } else {
+                        msg = jsonObject.getString("msg")
+                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        //isActive = jsonObject.getBoolean("isActive")
+                    }
+                }
+                else{
+                    Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("error", "$t")
+                Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
 
     companion object {
         /**
@@ -191,6 +261,9 @@ class PlatformSeriesFragment : Fragment() {
                 }
             }
     }
+
+
+
     private fun myList(){
         val userObject = Singleton().getUserFromSharedPrefrence(context!!)
         uid = userObject?.getString("token")
@@ -240,16 +313,16 @@ class PlatformSeriesFragment : Fragment() {
 
     }
 
-    private fun checkNotification(){
-
-        if (isActive == true){
-//            Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
-            seriesView.iv_notificationIcon.visibility = View.GONE
-            seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
-        }else{
-//            Toast.makeText(context, "0", Toast.LENGTH_SHORT).show()
-            seriesView.iv_notificationIcon.visibility = View.VISIBLE
-            seriesView.iv_notificationOnIcon.visibility = View.GONE
-        }
-    }
+//    private fun checkNotification(){
+//
+//        if (isActive == true){
+////            Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
+//            seriesView.iv_notificationIcon.visibility = View.GONE
+//            seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
+//        }else{
+////            Toast.makeText(context, "0", Toast.LENGTH_SHORT).show()
+//            seriesView.iv_notificationIcon.visibility = View.VISIBLE
+//            seriesView.iv_notificationOnIcon.visibility = View.GONE
+//        }
+//    }
 }

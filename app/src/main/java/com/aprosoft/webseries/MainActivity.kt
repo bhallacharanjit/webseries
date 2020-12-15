@@ -65,11 +65,16 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.myList->{
 
-                    val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()
-                    val myListFragment = MyListFragment()
-                    fragmentTransaction.replace(R.id.frame_main,myListFragment)
-                    fragmentTransaction.addToBackStack("Fragments")
-                    fragmentTransaction.commit()
+                    if (Singleton().getUserFromSharedPrefrence(this)!=null){
+                        val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()
+                        val myListFragment = MyListFragment()
+                        fragmentTransaction.replace(R.id.frame_main,myListFragment)
+                        fragmentTransaction.addToBackStack("Fragments")
+                        fragmentTransaction.commit()
+                    }else{
+                        val intent = Intent(this,LoginActivity::class.java)
+                        startActivity(intent)
+                    }
                     true
                 }
 //                R.id.menu_notification ->{
