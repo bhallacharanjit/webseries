@@ -152,7 +152,6 @@ class PlatformSeriesFragment : Fragment() {
                     msg = jsonObject.getString("msg")
                     seriesView.tv_nothingToShow.visibility = View.VISIBLE
 //                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    
 //                    Handler().postDelayed({
 //                        activity?.onBackPressed()
 //                    },3000)

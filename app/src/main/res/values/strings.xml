@@ -12,6 +12,7 @@
     <string name="don_t_have_account_register_now">Don\'t have an account? Register now</string>
     <string name="write_your_review">Write your review</string>
     <string name="review">Review</string>
+    <string name="submit">Submit</string>
 
     <string-array name="Reviews">
         <item>App review</item>

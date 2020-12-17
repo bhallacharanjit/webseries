@@ -114,31 +114,26 @@ class   SeriesDetailsFragment : Fragment() {
                 val intent = Intent(context,LoginActivity::class.java)
                 startActivity(intent)
             }
-
         }
         v.iv_redHeart.setOnClickListener {
             v.iv_redHeart.visibility = View.GONE
             v.iv_whiteHeart.visibility = View.VISIBLE
             removeFromList()
         }
-        for (i in 0 until listArray.length()){
-            val jsonObject = listArray.getJSONObject(i)
-            val id = jsonObject.getString("token")
-            if (id == showId){
-                v.iv_whiteHeart.visibility = View.GONE
-                v.iv_redHeart.visibility = View.VISIBLE
-//                Toast.makeText(context, "match found", Toast.LENGTH_SHORT).show()
-            }else{
-//                v.iv_whiteHeart.visibility = View.VISIBLE
-//                v.iv_redHeart.visibility = View.GONE
-//                Toast.makeText(context, "match not found", Toast.LENGTH_SHORT).show()
-            }
+        if (jsonObject.has("fav")){
+                if (jsonObject.getString("fav")=="null"){
+                }else{
+                    v.iv_whiteHeart.visibility = View.GONE
+                    v.iv_redHeart.visibility = View.VISIBLE
+                }
+        }else{
+//            Toast.makeText(context, "not fav", Toast.LENGTH_SHORT).show()
         }
         recyclerView = v.findViewById(R.id.rv_reviews)
         recyclerView.setHasFixedSize(true)
         val mLayoutManager: RecyclerView.LayoutManager = LinearLayoutManager(context)
         recyclerView.layoutManager = mLayoutManager
-        recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+//        recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         recyclerView.itemAnimator = DefaultItemAnimator()
 
         v.tv_type1.text =  jsonObject.getString("category").substringBefore(",")

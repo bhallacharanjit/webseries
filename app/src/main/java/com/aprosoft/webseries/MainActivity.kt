@@ -1,5 +1,6 @@
 package com.aprosoft.webseries
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -57,8 +58,14 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.menu_home ->{
 
-                    intent = Intent(this,MainActivity::class.java)
-                    startActivity(intent)
+                    val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()
+                    val homeFragment = HomeFragment()
+                    fragmentTransaction.replace(R.id.frame_main,homeFragment)
+                    fragmentTransaction.addToBackStack("Fragments")
+                    fragmentTransaction.commit()
+
+//                    intent = Intent(this,MainActivity::class.java)
+//                    startActivity(intent)
 
                     true
                 }
@@ -87,9 +94,6 @@ class MainActivity : AppCompatActivity() {
                     fragmentTransaction.replace(R.id.frame_main,profileFragment)
                     fragmentTransaction.addToBackStack("Fragments")
                     fragmentTransaction.commit()
-
-
-
                     true
                 }
                 R.id.menu_profile_login->{

@@ -180,7 +180,7 @@ class HomeFragment : Fragment() {
             val userObject = Singleton().getUserFromSharedPrefrence(context!!)
             seriesParams["userId"]=userObject?.getString("token").toString()
         }else{
-            Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
             seriesParams["userId"]=""
         }
        val call:Call<ResponseBody> = ApiClient.getClient.viewAllsWebseries(seriesParams)
@@ -398,7 +398,6 @@ class HomeFragment : Fragment() {
                 Log.d("mylist","$MyShowListArray")
                 val msg: String
                 if (MyShowListArray.length() > 0) {
-
                     val jsonObject = MyShowListArray.getJSONObject(0)
                     if (jsonObject.getBoolean("success")) {
                         msg = jsonObject.getString("msg")
@@ -408,7 +407,7 @@ class HomeFragment : Fragment() {
                         Toast.makeText(context, "$msg", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

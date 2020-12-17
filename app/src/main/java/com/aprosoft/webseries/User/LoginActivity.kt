@@ -41,6 +41,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        tv_forgotPassword.setOnClickListener {
+            intent = Intent(this,ForgotPasswordActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
