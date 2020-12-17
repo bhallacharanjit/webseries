@@ -72,6 +72,8 @@ class PlatformSeriesFragment : Fragment() {
         // Inflate the layout for this fragment
         platformId = arguments?.getString("platformId")
         platformName = arguments?.getString("platformName")
+
+
          seriesView=inflater.inflate(R.layout.fragment_platform_series, container, false)
         seriesView.tv_platformTitle.text = platformName
 //        notificationOn = seriesView.findViewById(R.id.iv_notificationIcon)

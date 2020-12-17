@@ -1,36 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
+    android:orientation="vertical">
 
     <ImageView
         android:layout_width="150dp"
         android:layout_height="225dp"
-        android:id="@+id/iv_PlatformSeriesImage"
-
+        android:id="@+id/iv_CategorySeriesImage"
         android:layout_margin="5dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_PlatformSeriesName"
+        android:id="@+id/tv_CategorySeriesName"
         android:text=""
         android:layout_marginStart="5dp"
         android:fontFamily="@font/montserrat_medium"
         android:textSize="13sp"
         android:textColor="@color/lightGrey"
         />
-<!--    <androidx.appcompat.widget.AppCompatRatingBar-->
-<!--        android:id="@+id/PlatformSeriesrating"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:numStars="5"-->
-<!--        android:stepSize="0.5"-->
-<!--        style="@style/Widget.AppCompat.RatingBar.Small"-->
-<!--        android:theme="@style/RatingBar"-->
-<!--        android:layout_marginStart="5dp"-->
-<!--        />-->
-
 </LinearLayout>

@@ -156,7 +156,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Family"
+                        android:id="@+id/tv_type1"
+                        android:text=""
                         android:textColor="@color/white"
                         android:background="@drawable/genre_background"
                         android:padding="10dp"
@@ -165,7 +166,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Fantasy"
+                        android:id="@+id/tv_type2"
+                        android:text=""
                         android:textColor="@color/white"
                         android:background="@drawable/genre_background"
                         android:padding="10dp"
@@ -174,7 +176,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Adventure"
+                        android:id="@+id/tv_type3"
+                        android:text=""
                         android:textColor="@color/white"
                         android:background="@drawable/genre_background"
                         android:padding="10dp"

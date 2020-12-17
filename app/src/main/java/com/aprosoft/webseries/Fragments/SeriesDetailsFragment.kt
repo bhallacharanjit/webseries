@@ -55,6 +55,7 @@ var spinnerItemPostion:Int? =0
 var AdminReviewArray= JSONArray()
 var userReviewArray= JSONArray()
 var imdbReviewArray= JSONArray()
+lateinit var v:View
 /**
  * A simple [Fragment] subclass.
  * Use the [SeriesDetailsFragment.newInstance] factory method to
@@ -91,7 +92,7 @@ class   SeriesDetailsFragment : Fragment() {
 
         //Log.d("listarray","$listArray")
         //Toast.makeText(context, "$listArray", Toast.LENGTH_SHORT).show()
-        val v:View =  inflater.inflate(R.layout.fragment_series_details, container, false)
+        v =  inflater.inflate(R.layout.fragment_series_details, container, false)
         val webseriesPoster:ImageView = v.findViewById(R.id.iv_webseriesPoster)
         val btn_releaseYear: Button = v.findViewById(R.id.btn_releasedYear)
         val tv_title:TextView = v.findViewById(R.id.tv_title)
@@ -138,6 +139,44 @@ class   SeriesDetailsFragment : Fragment() {
         recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         recyclerView.itemAnimator = DefaultItemAnimator()
 
+        v.tv_type1.text =  jsonObject.getString("category").substringBefore(",")
+        v.tv_type3.text = jsonObject.getString("category").substringAfterLast(",")
+        val category1 = jsonObject.getString("category").substringAfter(",")
+        val type2 = category1.substringBefore(",")
+        v.tv_type2.text =type2
+
+        v.tv_type1.setOnClickListener {
+            val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
+            val bundle = Bundle()
+            bundle.putString("categoryName",tv_type1.text.toString())
+            val seriesByCategoryFragment = SeriesByCategoryFragment()
+            fragmentTransaction.replace(R.id.frame_main,seriesByCategoryFragment)
+            fragmentTransaction.addToBackStack("Fragments")
+            fragmentTransaction.commit()
+            seriesByCategoryFragment.arguments = bundle
+        }
+        v.tv_type2.setOnClickListener {
+            val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
+            val bundle = Bundle()
+            bundle.putString("categoryName",tv_type2.text.toString())
+            val seriesByCategoryFragment = SeriesByCategoryFragment()
+            fragmentTransaction.replace(R.id.frame_main,seriesByCategoryFragment)
+            fragmentTransaction.addToBackStack("Fragments")
+            fragmentTransaction.commit()
+            seriesByCategoryFragment.arguments = bundle
+        }
+        v.tv_type3.setOnClickListener {
+            val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
+            val bundle = Bundle()
+            bundle.putString("categoryName",tv_type3.text.toString())
+            val seriesByCategoryFragment = SeriesByCategoryFragment()
+            fragmentTransaction.replace(R.id.frame_main,seriesByCategoryFragment)
+            fragmentTransaction.addToBackStack("Fragments")
+            fragmentTransaction.commit()
+            seriesByCategoryFragment.arguments = bundle
+        }
+
+
 
         val userObject = Singleton().getUserFromSharedPrefrence(context!!)
         val role = userObject?.getString("role")
@@ -152,7 +191,6 @@ class   SeriesDetailsFragment : Fragment() {
                 fragmentTransaction.addToBackStack("Fragments")
                 fragmentTransaction.commit()
                 addReviewFragment.arguments = bundle
-
 //                Toast.makeText(context, "working", Toast.LENGTH_SHORT).show()
             }
         }else{
@@ -190,7 +228,7 @@ class   SeriesDetailsFragment : Fragment() {
         tv_title.text = jsonObject.getString("showname")
         tv_storyLine.text = jsonObject.getString("storyline")
         tv_showTitle.text = jsonObject.getString("showname")
-        tv_showType.text =" "
+        tv_showType.text =jsonObject.getString("category")
         tv_showProduction.text = ""
         tv_showPremiereDate.text = jsonObject.getString("releasingdate")
         tv_showDescription.text = jsonObject.getString("showdesc")

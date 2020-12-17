@@ -74,4 +74,8 @@ interface APIInterface {
     @POST("checkNotification")
     fun checkNotification(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("updateProfilePhoto")
+    fun updateProfilePhoto(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
+
 }

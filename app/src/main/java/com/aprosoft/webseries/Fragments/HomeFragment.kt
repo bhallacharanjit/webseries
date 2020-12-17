@@ -146,7 +146,7 @@ class HomeFragment : Fragment() {
         platformImageSlider(platformImageSlider)
         showCategory(ll_categoryLayout, ll_categoryPhotosLayout)
         myList()
-        categoryPhotos(ll_categoryPhotosLayout,"b90bfd9d-b694-4f2e-90a6-216840ab1877")
+        categoryPhotos(ll_categoryPhotosLayout,"Action")
 //        trailers(ll_videoLayout)
 
         return view
@@ -290,8 +290,9 @@ class HomeFragment : Fragment() {
                         tv_category.setOnClickListener {
 //                            tv_category.setBackgroundResource(R.drawable.button_background)
                             val token = categoryObject.getString("token")
+                            val categoryName = categoryObject.getString("CategoryName")
 //                            Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
-                            categoryPhotos(ll_categoryPhotosLayout,token)
+                            categoryPhotos(ll_categoryPhotosLayout,categoryName)
                         }
 //                    Toast.makeText(context, "category", Toast.LENGTH_SHORT).show()
                         ll_categoryLayout.addView(v)
@@ -310,10 +311,10 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun categoryPhotos(ll_categoryPhotosLayout: LinearLayout, token: String) {
+    private fun categoryPhotos(ll_categoryPhotosLayout: LinearLayout, categoryType: String) {
 //        aviLoader?.visibility = View.VISIBLE
         val categoryParams = HashMap<String,String>()
-        categoryParams["categoryId"] = token
+        categoryParams["categoryId"] = categoryType
         val call:Call<ResponseBody> = ApiClient.getClient.seriesByCategory(categoryParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

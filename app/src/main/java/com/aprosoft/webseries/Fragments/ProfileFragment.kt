@@ -26,6 +26,7 @@ import com.gun0912.tedpermission.TedPermission
 import kotlinx.android.synthetic.main.fragment_profile.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,6 +38,9 @@ import java.io.File
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 var iv_profileImage:ImageView? = null
+var userObject= JSONObject()
+var token:String?= null
+var base64QImage:String?=null
 /**
  * A simple [Fragment] subclass.
  * Use the [ProfileFragment.newInstance] factory method to
@@ -131,26 +135,23 @@ class ProfileFragment : Fragment() {
             val fileUri = data?.data
             Glide.with(this)
                 .load(fileUri)
+                .circleCrop()
                 .into(iv_profileImage!!)
 
-//            val bitmap = BitmapFactory.decodeFile(fileUri?.encodedPath)
-//            val nh = (bitmap.height * (1024.0 / bitmap.width)).toInt()
-//            val scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true)
-//            val baos = ByteArrayOutputStream()
-//            scaled.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-//            val images = baos.toByteArray()
-//
-//            val base64QImage = Base64.encodeToString(images, Base64.DEFAULT)
-//            Log.d("base64", base64QImage)
+            val bitmap = BitmapFactory.decodeFile(fileUri?.encodedPath)
+            val nh = (bitmap.height * (1024.0 / bitmap.width)).toInt()
+            val scaled = Bitmap.createScaledBitmap(bitmap, 1024, nh, true)
+            val baos = ByteArrayOutputStream()
+            scaled.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+            val images = baos.toByteArray()
+            base64QImage = Base64.encodeToString(images, Base64.DEFAULT)
+            Log.d("base64", base64QImage)
+            updateProfilePic()
 
-//            iv_profileImage?.setImageURI(fileUri)
-//
             //You can get File object from intent
             val file: File = ImagePicker.getFile(data)!!
-
             //You can also get File Path from intent
             val filePath:String = ImagePicker.getFilePath(data)!!
-
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
@@ -159,8 +160,8 @@ class ProfileFragment : Fragment() {
     }
 
     private fun profile(userName: TextView, phone: TextView, email: TextView) {
-        val userObject = Singleton().getUserFromSharedPrefrence(requireContext())
-        val token  = userObject?.getString("token")
+        userObject = Singleton().getUserFromSharedPrefrence(requireContext())!!
+        token  = userObject.getString("token")
 
         val profileParams = HashMap<String,String>()
         profileParams["token"] = token.toString()
@@ -176,6 +177,10 @@ class ProfileFragment : Fragment() {
                         userName.text = jsonObject.getString("name")
 //                        phone.text = jsonObject.getString("")
                         email.text = jsonObject.getString("email")
+                        Glide.with(context!!)
+                            .load(Singleton().imageUrl+jsonObject.getString("photo"))
+                            .circleCrop()
+                            .into(iv_profileImage!!)
 //                        Toast.makeText(context, "Profile", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "No Profile", Toast.LENGTH_SHORT).show()
@@ -184,11 +189,40 @@ class ProfileFragment : Fragment() {
                     Toast.makeText(context, "Array is null", Toast.LENGTH_SHORT).show()
                 }
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
             }
+        })
+    }
 
+    private fun updateProfilePic(){
+        val kProgressHUD = Singleton().createLoading(context,"","")
+
+        val photoParams =HashMap<String,String>()
+        photoParams["token"] = token.toString()
+        photoParams["photo"] = base64QImage.toString()
+        val call:Call<ResponseBody> = ApiClient.getClient.updateProfilePhoto(photoParams)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                kProgressHUD?.dismiss()
+                val res = response.body()?.string()
+                val jsonArray = JSONArray(res)
+                if (jsonArray.length() > 0) {
+                    val jsonObject = jsonArray.getJSONObject(0)
+                    val success = jsonObject.getBoolean("success")
+                    if (success) {
+                        Toast.makeText(context, "$success", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "$success", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(context, "empty array", Toast.LENGTH_SHORT).show()
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
+                kProgressHUD?.dismiss()
+            }
         })
     }
 }
