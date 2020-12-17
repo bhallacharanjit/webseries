@@ -23,7 +23,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tv_platformTitle"
+                android:id="@+id/tv_CategoryTitle"
                 android:text=""
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/white"

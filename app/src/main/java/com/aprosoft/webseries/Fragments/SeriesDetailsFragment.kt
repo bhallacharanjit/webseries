@@ -87,6 +87,8 @@ class   SeriesDetailsFragment : Fragment() {
         showId = jsonObject.getString("token")
         trailerKey = jsonObject.getString("trailer")
         Log.d("seriesObject", "$jsonObject")
+
+
         myListString= arguments?.getString("myList")
         listArray = JSONArray(myListString)
 

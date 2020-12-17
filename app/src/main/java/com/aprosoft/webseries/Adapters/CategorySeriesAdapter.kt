@@ -7,12 +7,13 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.aprosoft.webseries.Fragments.SeriesByCategoryFragment
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Shared.Singleton
 import com.bumptech.glide.Glide
 import org.json.JSONArray
 
-class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray)
+class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray, var seriesByCategoryFragment: SeriesByCategoryFragment)
     :RecyclerView.Adapter<CategorySeriesAdapter.MyViewHolder>(){
 
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
@@ -32,7 +33,11 @@ class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray)
             .load(Singleton().imageUrl+jsonObject.getString("webseriesposter"))
             .into(holder.iv_categorySeriesImage)
         holder.tv_categorySeriesName.text = jsonObject.getString("showname")
-        
+        holder.itemView.setOnClickListener {
+            val listObject = jsonArray.getJSONObject(position)
+            seriesByCategoryFragment.moveToNextFragment(listObject)
+
+        }
 
     }
 

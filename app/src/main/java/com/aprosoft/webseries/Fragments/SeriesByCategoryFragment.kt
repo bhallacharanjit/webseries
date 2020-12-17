@@ -8,17 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.GridLayout
 import android.widget.Toast
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aprosoft.webseries.Adapters.CategorySeriesAdapter
+import com.aprosoft.webseries.Fragments.Platforms.myListArray
 import com.aprosoft.webseries.Fragments.Platforms.rv_PlatformSeries
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import kotlinx.android.synthetic.main.fragment_series_by_category.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
+import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -57,13 +60,12 @@ class SeriesByCategoryFragment : Fragment() {
         categoryName= arguments?.getString("categoryName")
         CategorySeriesView =inflater.inflate(R.layout.fragment_series_by_category, container, false)
 
+        CategorySeriesView.tv_CategoryTitle.text= categoryName.toString()
         CategorySeriesView.rv_CategorySeries.setHasFixedSize(true)
         val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,2)
         CategorySeriesView.rv_CategorySeries.layoutManager = mLayoutManager
 //        v.rv_CategorySeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
         CategorySeriesView.rv_CategorySeries.itemAnimator = DefaultItemAnimator()
-
-
 
         seriesByCategory()
 
@@ -85,7 +87,7 @@ class SeriesByCategoryFragment : Fragment() {
                     val success = jsonObject.getBoolean("success")
                     if (success) {
                         val msg = jsonObject.getString("msg")
-                        val categorySeriesAdapter = CategorySeriesAdapter(context!!,jsonArray)
+                        val categorySeriesAdapter = CategorySeriesAdapter(context!!,jsonArray,this@SeriesByCategoryFragment)
                         CategorySeriesView.rv_CategorySeries.adapter = categorySeriesAdapter
 //                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     } else {
@@ -103,6 +105,16 @@ class SeriesByCategoryFragment : Fragment() {
         })
     }
 
+    fun moveToNextFragment(listObject: JSONObject){
+        val fragmentTransaction:FragmentTransaction?= fragmentManager?.beginTransaction()
+        val seriesDetailsFragment = SeriesDetailsFragment()
+        val bundle = Bundle()
+        bundle.putString("seriesObject", "$listObject")
+        fragmentTransaction!!.replace(R.id.frame_main,seriesDetailsFragment)
+        fragmentTransaction.addToBackStack("Fragments")
+        fragmentTransaction.commit()
+        seriesDetailsFragment.arguments = bundle
+    }
 
 
     companion object {

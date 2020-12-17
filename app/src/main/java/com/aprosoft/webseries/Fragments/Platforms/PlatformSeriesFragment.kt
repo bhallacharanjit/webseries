@@ -311,8 +311,6 @@ class PlatformSeriesFragment : Fragment() {
         fragmentTransaction.addToBackStack("Fragments")
         fragmentTransaction.commit()
         seriesDetailsFragment.arguments= bundle
-
-
     }
 
 //    private fun checkNotification(){
