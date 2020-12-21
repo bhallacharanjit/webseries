@@ -379,23 +379,23 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Production:"
+                            android:text="Language:"
                             android:textColor="@color/textColor_grey"
                             android:fontFamily="@font/montserrat_medium"
                             android:layout_marginTop="5dp"
                             android:textSize="12sp"
                             android:layout_below="@id/tv_Type"
-                            android:id="@+id/tv_Production"
-                            android:visibility="gone"/>
+                            android:id="@+id/tv_Language"
+                            android:visibility="visible"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:fontFamily="@font/montserrat_medium"
-                            android:text="Mumbai, India"
+                            android:text=""
                             android:textColor="@color/lightGrey"
                             android:textSize="12sp"
-                            android:id="@+id/tv_showProduction"
-                            android:layout_alignTop="@id/tv_Production"
+                            android:id="@+id/tv_showLanguage"
+                            android:layout_alignTop="@id/tv_Language"
                             android:layout_alignStart="@id/tv_showTitle"
                             />
                         <TextView
@@ -406,7 +406,7 @@
                             android:fontFamily="@font/montserrat_medium"
                             android:layout_marginTop="5dp"
                             android:textSize="12sp"
-                            android:layout_below="@id/tv_Production"
+                            android:layout_below="@id/tv_Language"
                             android:id="@+id/tv_Premiere"
                             />
                         <TextView

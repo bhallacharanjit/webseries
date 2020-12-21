@@ -100,7 +100,6 @@ class   SeriesDetailsFragment : Fragment() {
         val tv_storyLine:TextView = v.findViewById(R.id.tv_storyLine)
         val tv_showTitle:TextView = v.findViewById(R.id.tv_showTitle)
         val tv_showType:TextView = v.findViewById(R.id.tv_showType)
-        val tv_showProduction:TextView = v.findViewById(R.id.tv_showProduction)
         val tv_showPremiereDate:TextView = v.findViewById(R.id.tv_showPremiereDate)
         val tv_showDescription:TextView = v.findViewById(R.id.tv_showDescription)
 
@@ -234,9 +233,9 @@ class   SeriesDetailsFragment : Fragment() {
         tv_storyLine.text = jsonObject.getString("storyline")
         tv_showTitle.text = jsonObject.getString("showname")
         tv_showType.text =jsonObject.getString("category")
-        tv_showProduction.text = ""
         tv_showPremiereDate.text = jsonObject.getString("releasingdate")
         tv_showDescription.text = jsonObject.getString("showdesc")
+        v.tv_showLanguage.text= jsonObject.getString("language")
 
 
         Glide.with(context!!)

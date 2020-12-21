@@ -27,6 +27,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiControlle
 import com.wang.avi.AVLoadingIndicatorView
 import kotlinx.android.synthetic.main.custom_category_webseries.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_series_details.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -43,6 +44,7 @@ var categoryArray = JSONArray()
 var uid:String?= null
 //var aviLoader:AVLoadingIndicatorView?= null
 var categoryViewArrayList:ArrayList<View>? = null
+var seriesArray = JSONArray()
 /**
  * A simple [Fragment] subclass.
  * Use the [HomeFragment.newInstance] factory method to
@@ -77,6 +79,18 @@ class HomeFragment : Fragment() {
         val ll_categoryPhotosLayout = view.findViewById<LinearLayout>(R.id.ll_categoryPhotosLayout)
 //        aviLoader = view.findViewById(R.id.avi_homefrag)
 
+        view.tv_moreSeries.setOnClickListener {
+
+
+            val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
+            val bundle = Bundle()
+            bundle.putString("seriesArray","$seriesArray")
+            val moreSeriesFragment = MoreSeriesFragment()
+            fragmentTransaction.replace(R.id.frame_main,moreSeriesFragment)
+            fragmentTransaction.addToBackStack("Fragments")
+            fragmentTransaction.commit()
+            moreSeriesFragment.arguments= bundle
+        }
         val platformImageSlider:ImageSlider = view.findViewById(R.id.image_slider)
 
         horizontalScrollView = view.findViewById(R.id.horizontalScrollView)
@@ -188,12 +202,12 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 //                aviLoader?.visibility = View.GONE
                 val res = response.body()?.string()
-                val jsonArray = JSONArray(res)
-                val jsonObject = jsonArray.getJSONObject(0)
+                seriesArray = JSONArray(res)
+                val jsonObject = seriesArray.getJSONObject(0)
                 val success = jsonObject.getBoolean("success")
                 if (success) {
-                    for (i in 0 until jsonArray.length()) {
-                        val seriesObject = jsonArray.getJSONObject(i)
+                    for (i in 0 until seriesArray.length()) {
+                        val seriesObject = seriesArray.getJSONObject(i)
                         val v: View = inflater.inflate(R.layout.custom_series_photos_layout, null)
                         val popular_webSeries_layout: LinearLayout =
                             v.findViewById(R.id.ll_popular_Webseries)

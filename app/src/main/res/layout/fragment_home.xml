@@ -87,7 +87,7 @@
 
             </LinearLayout>
 
-            <LinearLayout
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
@@ -100,9 +100,22 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="25dp"
                     android:textSize="15sp"
+                    android:layout_centerVertical="true"
                     />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tv_moreSeries"
+                    android:text="More>>"
+                    android:textColor="@color/lightGrey"
+                    android:fontFamily="@font/montserrat_bold"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="13dp"
+                    android:layout_centerVertical="true"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
