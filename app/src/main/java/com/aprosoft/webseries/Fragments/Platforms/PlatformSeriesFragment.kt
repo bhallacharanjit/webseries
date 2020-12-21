@@ -117,7 +117,7 @@ class PlatformSeriesFragment : Fragment() {
         rv_PlatformSeries.setHasFixedSize(true)
         val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,2)
         rv_PlatformSeries.layoutManager = mLayoutManager
-        rv_PlatformSeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
+       // rv_PlatformSeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
         rv_PlatformSeries.itemAnimator = DefaultItemAnimator()
 
         myList()
@@ -131,6 +131,14 @@ class PlatformSeriesFragment : Fragment() {
         val kProgressHUD = Singleton().createLoading(context,"","")
         val seriesParams = HashMap<String,String>()
         seriesParams["platformId"] = platformId.toString()
+        if(Singleton().getUserFromSharedPrefrence(context!!)!=null){
+            val userObject = Singleton().getUserFromSharedPrefrence(context!!)
+            seriesParams["userId"]=userObject?.getString("token").toString()
+        }else{
+            //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
+            seriesParams["userId"]=""
+        }
+
 
         val call:Call<ResponseBody> = ApiClient.getClient.platformSeries(seriesParams)
         call.enqueue(object : Callback<ResponseBody> {

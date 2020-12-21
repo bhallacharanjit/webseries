@@ -1,9 +1,9 @@
 package com.aprosoft.webseries.Fragments
 
 import android.annotation.SuppressLint
+import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -16,7 +16,6 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aprosoft.webseries.Adapters.ReviewsAdapter
@@ -25,7 +24,6 @@ import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
 import com.aprosoft.webseries.User.LoginActivity
 import com.bumptech.glide.Glide
-import com.google.android.material.snackbar.Snackbar
 import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.custom_actor_photos_layout.view.*
 import kotlinx.android.synthetic.main.fragment_series_details.*
@@ -87,10 +85,11 @@ class   SeriesDetailsFragment : Fragment() {
         showId = jsonObject.getString("token")
         trailerKey = jsonObject.getString("trailer")
         Log.d("seriesObject", "$jsonObject")
+        Log.d("key", trailerKey)
 
 
-        myListString= arguments?.getString("myList")
-        listArray = JSONArray(myListString)
+  //      myListString= arguments?.getString("myList")
+//        listArray = JSONArray(myListString)
 
         //Log.d("listarray","$listArray")
         //Toast.makeText(context, "$listArray", Toast.LENGTH_SHORT).show()
@@ -105,13 +104,14 @@ class   SeriesDetailsFragment : Fragment() {
         val tv_showPremiereDate:TextView = v.findViewById(R.id.tv_showPremiereDate)
         val tv_showDescription:TextView = v.findViewById(R.id.tv_showDescription)
 
+        v.tv_watchTime.text = jsonObject.getString("watchtime")
         v.iv_whiteHeart.setOnClickListener {
             if (Singleton().getUserFromSharedPrefrence(context!!)!=null){
                 v.iv_whiteHeart.visibility = View.GONE
                 v.iv_redHeart.visibility = View.VISIBLE
                 addTomyList()
             }else{
-                val intent = Intent(context,LoginActivity::class.java)
+                val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -136,18 +136,26 @@ class   SeriesDetailsFragment : Fragment() {
 //        recyclerView.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         recyclerView.itemAnimator = DefaultItemAnimator()
 
-        v.tv_type1.text =  jsonObject.getString("category").substringBefore(",")
-        v.tv_type3.text = jsonObject.getString("category").substringAfterLast(",")
-        val category1 = jsonObject.getString("category").substringAfter(",")
-        val type2 = category1.substringBefore(",")
-        v.tv_type2.text =type2
+        if (jsonObject.getString("category")=="null"){
+            v.tv_type1.visibility = View.GONE
+            v.tv_type2.visibility = View.GONE
+            v.tv_type3.visibility = View.GONE
+        }else{
+            v.tv_type1.text =  jsonObject.getString("category").substringBefore(",")
+            v.tv_type3.text = jsonObject.getString("category").substringAfterLast(",")
+            val category1 = jsonObject.getString("category").substringAfter(",")
+            val type2 = category1.substringBefore(",")
+            v.tv_type2.text =type2
+        }
+
+
 
         v.tv_type1.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
             val bundle = Bundle()
-            bundle.putString("categoryName",tv_type1.text.toString())
+            bundle.putString("categoryName", tv_type1.text.toString())
             val seriesByCategoryFragment = SeriesByCategoryFragment()
-            fragmentTransaction.replace(R.id.frame_main,seriesByCategoryFragment)
+            fragmentTransaction.replace(R.id.frame_main, seriesByCategoryFragment)
             fragmentTransaction.addToBackStack("Fragments")
             fragmentTransaction.commit()
             seriesByCategoryFragment.arguments = bundle
@@ -155,9 +163,9 @@ class   SeriesDetailsFragment : Fragment() {
         v.tv_type2.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
             val bundle = Bundle()
-            bundle.putString("categoryName",tv_type2.text.toString())
+            bundle.putString("categoryName", tv_type2.text.toString())
             val seriesByCategoryFragment = SeriesByCategoryFragment()
-            fragmentTransaction.replace(R.id.frame_main,seriesByCategoryFragment)
+            fragmentTransaction.replace(R.id.frame_main, seriesByCategoryFragment)
             fragmentTransaction.addToBackStack("Fragments")
             fragmentTransaction.commit()
             seriesByCategoryFragment.arguments = bundle
@@ -165,9 +173,9 @@ class   SeriesDetailsFragment : Fragment() {
         v.tv_type3.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
             val bundle = Bundle()
-            bundle.putString("categoryName",tv_type3.text.toString())
+            bundle.putString("categoryName", tv_type3.text.toString())
             val seriesByCategoryFragment = SeriesByCategoryFragment()
-            fragmentTransaction.replace(R.id.frame_main,seriesByCategoryFragment)
+            fragmentTransaction.replace(R.id.frame_main, seriesByCategoryFragment)
             fragmentTransaction.addToBackStack("Fragments")
             fragmentTransaction.commit()
             seriesByCategoryFragment.arguments = bundle
@@ -207,7 +215,7 @@ class   SeriesDetailsFragment : Fragment() {
                 addReviewFragment.arguments = bundle
             }
             else{
-                val intent = Intent(context,LoginActivity::class.java)
+                val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
             }
 
@@ -237,15 +245,14 @@ class   SeriesDetailsFragment : Fragment() {
             .into(webseriesPoster)
 
 
-
-
-
         iv_backArrow.setOnClickListener {
 
-            val animation: Animation = AnimationUtils.loadAnimation(context?.applicationContext,R.anim.alpha)
+            val animation: Animation = AnimationUtils.loadAnimation(
+                context?.applicationContext,
+                R.anim.alpha
+            )
             iv_backArrow.startAnimation(animation)
             activity?.supportFragmentManager?.popBackStack()
-
         }
 
 
@@ -260,23 +267,21 @@ class   SeriesDetailsFragment : Fragment() {
         review()
 
         v.btn_play_trailer.setOnClickListener {
-            var intent = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:$trailerKey"))
-            // Check if the youtube app exists on the device
-            if (intent.resolveActivity(this.context!!.packageManager) == null) {
-                // If the youtube app doesn't exist, then use the browser
-                intent = Intent(Intent.ACTION_VIEW,Uri.parse("http://www.youtube.com/watch?v=$trailerKey"))
-            }
-            startActivity(intent)
+            openYoutubeLink("$trailerKey")
+            Log.d("youtubelink",""+Uri.parse("https://www.youtube.com/watch?v=$trailerKey"))
         }
-
         actorPhotos(ll_actorPhotos)
-
-
-
-
         return v
     }
-
+    private fun openYoutubeLink(youtubeID: String) {
+        val intentApp = Intent(Intent.ACTION_VIEW, Uri.parse("vnd.youtube:" + youtubeID))
+        val intentBrowser = Intent(Intent.ACTION_VIEW, Uri.parse("http://www.youtube.com/watch?v=" + youtubeID))
+        try {
+            this.startActivity(intentApp)
+        } catch (ex: ActivityNotFoundException) {
+            this.startActivity(intentBrowser)
+        }
+    }
 
 
     companion object {
@@ -363,32 +368,32 @@ class   SeriesDetailsFragment : Fragment() {
 
 
                 if (jsonArray.length() > 0) {
-                    for (i in 0 until jsonArray.length()){
+                    for (i in 0 until jsonArray.length()) {
 
                         val role = jsonArray.getJSONObject(i).getString("role")
-                        if (spinnerItemPostion==0 && role=="admin"){
+                        if (spinnerItemPostion == 0 && role == "admin") {
                             AdminReviewArray = JSONArray()
                             val reviewObject = jsonArray.getJSONObject(i)
                             AdminReviewArray.put(reviewObject)
-                            Log.d("reviewObject" ,"$AdminReviewArray")
+                            Log.d("reviewObject", "$AdminReviewArray")
                             val reviewsAdapter = ReviewsAdapter(context!!, AdminReviewArray)
                             reviewsAdapter.notifyDataSetChanged()
                             recyclerView.adapter = reviewsAdapter
                         }
-                        if (spinnerItemPostion==1 && role=="user"){
+                        if (spinnerItemPostion == 1 && role == "user") {
                             userReviewArray = JSONArray()
                             val reviewObject = jsonArray.getJSONObject(i)
                             userReviewArray.put(reviewObject)
-                            Log.d("reviewObject" ,"$userReviewArray")
+                            Log.d("reviewObject", "$userReviewArray")
                             val reviewsAdapter = ReviewsAdapter(context!!, userReviewArray)
                             reviewsAdapter.notifyDataSetChanged()
                             recyclerView.adapter = reviewsAdapter
                         }
-                        if (spinnerItemPostion==2 && role=="imdb"){
+                        if (spinnerItemPostion == 2 && role == "imdb") {
                             imdbReviewArray = JSONArray()
                             val reviewObject = jsonArray.getJSONObject(i)
                             imdbReviewArray.put(reviewObject)
-                            Log.d("reviewObject" ,"$imdbReviewArray")
+                            Log.d("reviewObject", "$imdbReviewArray")
                             val reviewsAdapter = ReviewsAdapter(context!!, imdbReviewArray)
                             reviewsAdapter.notifyDataSetChanged()
                             recyclerView.adapter = reviewsAdapter

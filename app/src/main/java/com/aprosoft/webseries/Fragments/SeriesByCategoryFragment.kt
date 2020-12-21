@@ -18,6 +18,7 @@ import com.aprosoft.webseries.Fragments.Platforms.myListArray
 import com.aprosoft.webseries.Fragments.Platforms.rv_PlatformSeries
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
+import com.aprosoft.webseries.Shared.Singleton
 import kotlinx.android.synthetic.main.fragment_series_by_category.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -76,6 +77,13 @@ class SeriesByCategoryFragment : Fragment() {
     private fun seriesByCategory(){
         val categoryParams = HashMap<String,String>()
         categoryParams["categoryId"] = categoryName.toString()
+        if(Singleton().getUserFromSharedPrefrence(context!!)!=null){
+            val userObject = Singleton().getUserFromSharedPrefrence(context!!)
+            categoryParams["userId"]=userObject?.getString("token").toString()
+        }else{
+            //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
+            categoryParams["userId"]=""
+        }
         val call:Call<ResponseBody> = ApiClient.getClient.seriesByCategory(categoryParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

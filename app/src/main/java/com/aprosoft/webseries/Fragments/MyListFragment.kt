@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.GridView
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
@@ -15,6 +17,8 @@ import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
 import kotlinx.android.synthetic.main.fragment_my_list.view.*
+import kotlinx.android.synthetic.main.fragment_my_list.view.iv_backArrow
+import kotlinx.android.synthetic.main.fragment_profile.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -53,6 +57,12 @@ class MyListFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         MyListView =inflater.inflate(R.layout.fragment_my_list, container, false)
+
+        MyListView.iv_backArrow.setOnClickListener {
+            val animation: Animation = AnimationUtils.loadAnimation(context?.applicationContext,R.anim.alpha)
+            MyListView.iv_backArrow.startAnimation(animation)
+            activity?.supportFragmentManager?.popBackStack()
+        }
 
         recyclerView = MyListView.findViewById(R.id.rv_myShowList)
         recyclerView.setHasFixedSize(true)

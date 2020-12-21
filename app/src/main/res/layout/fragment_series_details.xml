@@ -141,7 +141,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="2h 31min "
+                        android:id="@+id/tv_watchTime"
+                        android:text=""
                         android:fontFamily="@font/montserrat_bold"
                         android:textColor="@color/white"
                         android:textSize="13sp"
@@ -385,7 +386,7 @@
                             android:textSize="12sp"
                             android:layout_below="@id/tv_Type"
                             android:id="@+id/tv_Production"
-                            />
+                            android:visibility="gone"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
