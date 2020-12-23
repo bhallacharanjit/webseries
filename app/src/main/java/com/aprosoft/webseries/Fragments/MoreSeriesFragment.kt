@@ -1,11 +1,24 @@
 package com.aprosoft.webseries.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
+import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.aprosoft.webseries.Adapters.MoreSeriesAdapter
+import com.aprosoft.webseries.Adapters.PlatformsSeriesAdapter
+import com.aprosoft.webseries.Fragments.Platforms.PlatformSeriesFragment
+import com.aprosoft.webseries.Fragments.Platforms.myListArray
+import com.aprosoft.webseries.Fragments.Platforms.rv_PlatformSeries
 import com.aprosoft.webseries.R
+import kotlinx.android.synthetic.main.fragment_more_series.view.*
+import org.json.JSONArray
+import org.json.JSONObject
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +48,31 @@ class MoreSeriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_more_series, container, false)
+        val seriesString = arguments?.getString("seriesArray")
+        val seriesArray = JSONArray(seriesString)
+        Log.d("seriesArray","$seriesArray")
+        val view=inflater.inflate(R.layout.fragment_more_series, container, false)
+
+        view.rv_MoreSeries.setHasFixedSize(true)
+        val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,2)
+        view.rv_MoreSeries.layoutManager = mLayoutManager
+        // rv_PlatformSeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
+        view.rv_MoreSeries.itemAnimator = DefaultItemAnimator()
+
+        val moreSeriesAdapter = MoreSeriesAdapter(context!!,seriesArray,this@MoreSeriesFragment)
+        view.rv_MoreSeries.adapter = moreSeriesAdapter
+        return view
+    }
+
+    fun moveToNextFragment(listObject: JSONObject) {
+        val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+        val bundle = Bundle()
+        bundle.putString("seriesObject", "$listObject")
+        val seriesDetailsFragment = SeriesDetailsFragment()
+        fragmentTransaction!!.replace(R.id.frame_main,seriesDetailsFragment)
+        fragmentTransaction.addToBackStack("Fragments")
+        fragmentTransaction.commit()
+        seriesDetailsFragment.arguments= bundle
     }
 
     companion object {

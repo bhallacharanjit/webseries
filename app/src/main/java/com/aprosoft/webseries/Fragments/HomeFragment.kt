@@ -206,7 +206,7 @@ class HomeFragment : Fragment() {
                 val jsonObject = seriesArray.getJSONObject(0)
                 val success = jsonObject.getBoolean("success")
                 if (success) {
-                    for (i in 0 until seriesArray.length()) {
+                    for (i in 0 until 5) {
                         val seriesObject = seriesArray.getJSONObject(i)
                         val v: View = inflater.inflate(R.layout.custom_series_photos_layout, null)
                         val popular_webSeries_layout: LinearLayout =
@@ -258,16 +258,12 @@ class HomeFragment : Fragment() {
             }
         })
     }
-
     private fun platformImageSlider(platformImageSlider: ImageSlider) {
-
         val imageList = ArrayList<SlideModel>()
-
         imageList.add(SlideModel(R.drawable.netflix_poster, "Netflix"))
         imageList.add(SlideModel(R.drawable.amazon_prime_poster, "Amazon Prime"))
         imageList.add(SlideModel(R.drawable.mx_player_poster, "MX player original"))
         platformImageSlider.setImageList(imageList)
-
         platformImageSlider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
                 //Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
@@ -296,19 +292,13 @@ class HomeFragment : Fragment() {
                         val categoryObject = jsonArray.getJSONObject(i)
                         val v: View = inflater.inflate(R.layout.custom_series_category_layout, null)
                         val tv_category = v.findViewById<TextView>(R.id.tv_seriesCategory)
-
                         tv_category.text = categoryObject.getString("CategoryName")
-
                         tv_category.tag = i
-
                         tv_category.setOnClickListener {
-//                            tv_category.setBackgroundResource(R.drawable.button_background)
                             val token = categoryObject.getString("token")
                             val categoryName = categoryObject.getString("CategoryName")
-//                            Toast.makeText(context, token, Toast.LENGTH_SHORT).show()
                             categoryPhotos(ll_categoryPhotosLayout,categoryName)
                         }
-//                    Toast.makeText(context, "category", Toast.LENGTH_SHORT).show()
                         ll_categoryLayout.addView(v)
                     }
                 } else {
@@ -319,20 +309,16 @@ class HomeFragment : Fragment() {
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
 //                aviLoader?.visibility = View.GONE
-
             }
-
         })
     }
 
     private fun categoryPhotos(ll_categoryPhotosLayout: LinearLayout, categoryType: String) {
-//        aviLoader?.visibility = View.VISIBLE
         val categoryParams = HashMap<String,String>()
         categoryParams["categoryId"] = categoryType
         val call:Call<ResponseBody> = ApiClient.getClient.seriesByCategory(categoryParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                aviLoader?.visibility = View.GONE
                 val res = response.body()?.string()
                 categoryArray = JSONArray(res)
                 val arryOfString = ArrayList<String>()
@@ -361,7 +347,6 @@ class HomeFragment : Fragment() {
                             ll_categoryPhotosLayout.addView(v)
                             v.iv_categorySeriesPoster.tag = i
                             v.iv_categorySeriesPoster.setOnClickListener {
-
                                 val fragmentTransaction: FragmentTransaction =
                                     fragmentManager?.beginTransaction()!!
                                 val bundle = Bundle()
@@ -386,7 +371,6 @@ class HomeFragment : Fragment() {
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
-//                aviLoader?.visibility = View.GONE
             }
         })
     }

@@ -140,7 +140,7 @@ class MyListFragment : Fragment() {
         val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
         val bundle = Bundle()
         bundle.putString("seriesObject", "$listObject")
-        bundle.putString("myList", "$jsonArray")
+//        bundle.putString("myList", "$jsonArray")
         val seriesDetailsFragment = SeriesDetailsFragment()
         fragmentTransaction!!.replace(R.id.frame_main,seriesDetailsFragment)
         fragmentTransaction.addToBackStack("Fragments")

@@ -11,7 +11,7 @@ class VideoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setFormat(PixelFormat.TRANSLUCENT);
+        window.setFormat(PixelFormat.TRANSLUCENT)
         setContentView(R.layout.activity_video)
 
 

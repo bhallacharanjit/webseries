@@ -14,14 +14,19 @@ import com.aprosoft.webseries.Fragments.MyListFragment
 import com.aprosoft.webseries.Fragments.ProfileFragment
 import com.aprosoft.webseries.Shared.Singleton
 import com.aprosoft.webseries.User.LoginActivity
+import com.chartboost.sdk.CBLocation
+import com.chartboost.sdk.Chartboost
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
     private val fragmentManager:FragmentManager= supportFragmentManager
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
 
         if (Singleton().getUserFromSharedPrefrence(this)!=null){
             BottomNavClick(bottomNav)
@@ -43,7 +48,7 @@ class MainActivity : AppCompatActivity() {
 //        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
 
-
+        Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT)
 
 
 //        bottomNav.menu.removeItem(R.id.menu_logout)
@@ -71,6 +76,10 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.myList->{
+
+                    if (Chartboost.hasInterstitial(CBLocation.LOCATION_DEFAULT)) {
+                        Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT)
+                    }
 
                     if (Singleton().getUserFromSharedPrefrence(this)!=null){
                         val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()

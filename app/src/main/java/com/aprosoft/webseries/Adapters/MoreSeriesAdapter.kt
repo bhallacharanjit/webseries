@@ -8,19 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.aprosoft.webseries.Fragments.MoreSeriesFragment
-import com.aprosoft.webseries.Fragments.Platforms.PlatformSeriesFragment
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Shared.Singleton
 import com.bumptech.glide.Glide
 import org.json.JSONArray
 
-class PlatformsSeriesAdapter(var context: Context,
-                             var jsonArray: JSONArray,
-                             var platformSeriesFragment: PlatformSeriesFragment)
-    :RecyclerView.Adapter<PlatformsSeriesAdapter.MyViewHolder>(){
-
-    var platformId:String?= null
-
+class MoreSeriesAdapter(var context: Context,var jsonArray: JSONArray,
+                        var moreSeriesFragment: MoreSeriesFragment):RecyclerView.Adapter<MoreSeriesAdapter.MyViewHolder>() {
 
 
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
@@ -30,23 +24,25 @@ class PlatformsSeriesAdapter(var context: Context,
 
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlatformsSeriesAdapter.MyViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int
+    ): MoreSeriesAdapter.MyViewHolder {
         val v:View = LayoutInflater.from(parent.context).inflate(R.layout.custom_platformseries_layout,parent,false)
         return MyViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: PlatformsSeriesAdapter.MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MoreSeriesAdapter.MyViewHolder, position: Int) {
         val jsonObject = jsonArray.getJSONObject(position)
+        var token:String?= null
         Glide.with(context)
             .load(Singleton().imageUrl+jsonObject.getString("webseriesposter"))
             .into(holder.platformSeriesImage)
         holder.platformSeriesName.text = jsonObject.getString("showname")
-        platformId = jsonObject.getString("platformId")
-        var token:String?= null
         holder.itemView.setOnClickListener {
             token = jsonObject.getString("token")
             val listObject = jsonArray.getJSONObject(position)
-            platformSeriesFragment.moveToNextFragment(listObject)
+            moreSeriesFragment.moveToNextFragment(listObject)
         }
     }
 

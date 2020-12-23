@@ -29,7 +29,7 @@ class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray, var 
 
     override fun onBindViewHolder(holder: CategorySeriesAdapter.MyViewHolder, position: Int) {
         val jsonObject = jsonArray.getJSONObject(position)
-        Glide.with(context!!)
+        Glide.with(context)
             .load(Singleton().imageUrl+jsonObject.getString("webseriesposter"))
             .into(holder.iv_categorySeriesImage)
         holder.tv_categorySeriesName.text = jsonObject.getString("showname")

@@ -30,6 +30,9 @@ android {
     buildFeatures {
         dataBinding true
     }
+    repositories {
+        maven { url "https://chartboostmobile.bintray.com/Chartboost" }
+    }
 }
 
 dependencies {
@@ -73,6 +76,10 @@ dependencies {
     //firebase
     implementation platform('com.google.firebase:firebase-bom:26.1.1')
     implementation 'com.google.firebase:firebase-analytics-ktx'
+    //chartboost
+    implementation 'com.chartboost:chartboost-sdk:8.2.0'
+    implementation "com.google.android.gms:play-services-base:17.5.0"
+    //implementation "com.google.android.gms:play-services-ads-identifier:17.5.0"
 
 
 

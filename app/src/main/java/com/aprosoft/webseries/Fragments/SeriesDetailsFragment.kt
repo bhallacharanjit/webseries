@@ -410,28 +410,18 @@ class   SeriesDetailsFragment : Fragment() {
 //                        Toast.makeText(context, "review not working", Toast.LENGTH_SHORT).show()
 //                    }
                 } else {
-                    Toast.makeText(context, "Array is null", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "Array is null", Toast.LENGTH_SHORT).show()
                 }
-
-
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
-
             }
-
         })
     }
-
-
-
     private fun addTomyList(){
         val showid = jsonObject.getString("token")
         val userObject = Singleton().getUserFromSharedPrefrence(context!!)
         val uid = userObject?.getString("token")
-
-
         val myListParam = HashMap<String, String>()
         myListParam["uid"] =uid.toString()
         myListParam["showid"] = showid
@@ -451,17 +441,12 @@ class   SeriesDetailsFragment : Fragment() {
                 } else {
                     Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                 }
-
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("error", "$t")
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
             }
-
         })
-
-
     }
 
     private fun removeFromList() {
