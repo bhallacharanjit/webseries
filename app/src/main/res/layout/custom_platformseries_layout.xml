@@ -5,23 +5,35 @@
     android:layout_height="wrap_content"
     >
 
-    <ImageView
-        android:layout_width="150dp"
-        android:layout_height="225dp"
-        android:id="@+id/iv_PlatformSeriesImage"
-
-        android:layout_margin="5dp"/>
-
-    <TextView
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/tv_PlatformSeriesName"
-        android:text=""
-        android:layout_marginStart="5dp"
-        android:fontFamily="@font/montserrat_medium"
-        android:textSize="13sp"
-        android:textColor="@color/lightGrey"
-        />
+        android:layout_margin="5dp"
+        android:padding="5dp">
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="225dp"
+            android:id="@+id/iv_PlatformSeriesImage"
+            android:layout_margin="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_PlatformSeriesName"
+            android:text="Mirzapur"
+            android:fontFamily="@font/montserrat_medium"
+            android:textSize="13sp"
+            android:textColor="@color/lightGrey"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/iv_PlatformSeriesImage"
+            />
+
+
+    </RelativeLayout>
+
+
+
 <!--    <androidx.appcompat.widget.AppCompatRatingBar-->
 <!--        android:id="@+id/PlatformSeriesrating"-->
 <!--        android:layout_width="wrap_content"-->

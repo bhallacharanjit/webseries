@@ -11,7 +11,6 @@ import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.aprosoft.webseries.Fragments.Platforms.AllPlatformsFragment
-import com.aprosoft.webseries.Fragments.Platforms.PlatformSeriesFragment
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
@@ -21,10 +20,7 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.YouTubePlayerFullScreenListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.PlayerUiController
-import com.wang.avi.AVLoadingIndicatorView
 import kotlinx.android.synthetic.main.custom_category_webseries.view.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -80,8 +76,6 @@ class HomeFragment : Fragment() {
 //        aviLoader = view.findViewById(R.id.avi_homefrag)
 
         view.tv_moreSeries.setOnClickListener {
-
-
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
             val bundle = Bundle()
             bundle.putString("seriesArray","$seriesArray")
@@ -267,6 +261,10 @@ class HomeFragment : Fragment() {
         platformImageSlider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
                 //Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
+                if (position ==0){
+
+                }
+
                 val fragmentTransaction: FragmentTransaction = fragmentManager?.beginTransaction()!!
                 val allPlatformsFragment = AllPlatformsFragment()
                 fragmentTransaction.replace(R.id.frame_main, allPlatformsFragment)

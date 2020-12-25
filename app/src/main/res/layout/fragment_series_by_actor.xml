@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.MyListFragment">
+    tools:context=".Fragments.SeriesByActorFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,14 +16,6 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:padding="10dp"
-                android:id="@+id/iv_backArrow"
-                android:src="@drawable/ic_back_arrow"
-                android:background="@drawable/background_circle"
-                android:layout_margin="10dp"/>
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -32,7 +24,8 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="My List"
+                android:id="@+id/tv_actorName"
+                android:text=""
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -44,33 +37,29 @@
                 android:layout_weight="1" />
 
         </LinearLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_nothingToShow"
-                android:text="Empty list"
-                android:textSize="30sp"
                 android:layout_centerInParent="true"
+                android:text="Nothing to show"
+                android:textSize="30sp"
                 android:textColor="@color/lightGrey"
                 android:fontFamily="@font/montserrat_extra_bold"
                 android:visibility="gone"
                 />
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/rv_myShowList"/>
+                android:layout_height="match_parent"
+                android:id="@+id/rv_ActorSeries"/>
 
         </RelativeLayout>
 
     </LinearLayout>
-
-
 
 </FrameLayout>

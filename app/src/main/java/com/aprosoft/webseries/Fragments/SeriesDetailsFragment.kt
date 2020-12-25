@@ -332,8 +332,17 @@ class   SeriesDetailsFragment : Fragment() {
                                 .into(v.iv_actorPhoto)
 
                             v.tv_actorName.text = photosObject.getString("actorname")
-
-
+                            v.iv_actorPhoto.setOnClickListener {
+                                val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
+                                val bundle = Bundle()
+                                bundle.putString("actorid","${jsonArray.getJSONObject(i).getString("token")}")
+                                bundle.putString("actorname","${jsonArray.getJSONObject(i).getString("actorname")}")
+                                val seriesByActorFragment = SeriesByActorFragment()
+                                fragmentTransaction.replace(R.id.frame_main, seriesByActorFragment)
+                                fragmentTransaction.addToBackStack("Fragments")
+                                fragmentTransaction.commit()
+                                seriesByActorFragment.arguments = bundle
+                            }
                             ll_actorPhotos.addView(v)
                         }
 

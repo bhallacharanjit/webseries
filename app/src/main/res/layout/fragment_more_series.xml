@@ -23,7 +23,7 @@
                 android:id="@+id/iv_backArrow_seriesDetails"
                 android:background="@drawable/background_circle"
                 android:src="@drawable/ic_back_arrow"
-                />
+                android:layout_margin="5dp"/>
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

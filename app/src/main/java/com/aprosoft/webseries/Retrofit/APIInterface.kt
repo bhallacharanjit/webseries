@@ -20,7 +20,7 @@ interface APIInterface {
     fun viewAllsWebseries(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
     @FormUrlEncoded
-    @POST("viewCast")
+    @POST("seriesCast")
     fun viewCast(@FieldMap params:HashMap<String, String>):Call<ResponseBody>
 
     @FormUrlEncoded
@@ -77,5 +77,9 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("updateProfilePhoto")
     fun updateProfilePhoto(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("seriesByActor")
+    fun seriesByActor(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
 }
