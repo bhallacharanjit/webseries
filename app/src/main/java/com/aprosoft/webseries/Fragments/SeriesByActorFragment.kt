@@ -83,7 +83,7 @@ class SeriesByActorFragment : Fragment() {
                             ActorSeriesAdapter(context!!, jsonArray, this@SeriesByActorFragment)
                         ActorView.rv_ActorSeries.adapter = actorSeriesAdapter
                     } else {
-                        Toast.makeText(context, "Nothig to show", Toast.LENGTH_SHORT).show()
+                      //  Toast.makeText(context, "Nothig to show", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Log.d("Array", "Array is null")

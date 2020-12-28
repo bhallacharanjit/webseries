@@ -241,7 +241,7 @@ class PlatformSeriesFragment : Fragment() {
                     }
                 }
                 else{
-                    Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

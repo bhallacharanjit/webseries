@@ -183,10 +183,10 @@ class ProfileFragment : Fragment() {
                             .into(iv_profileImage!!)
 //                        Toast.makeText(context, "Profile", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(context, "No Profile", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "No Profile", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "Array is null", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Array is null", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -216,7 +216,7 @@ class ProfileFragment : Fragment() {
                         Toast.makeText(context, "$success", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "empty array", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "empty array", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

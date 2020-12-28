@@ -136,11 +136,11 @@ class HomeFragment : Fragment() {
                             ll_videoLayout.addView(v)
                         }
                     }else{
-                        Toast.makeText(context, " not Working", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, " not Working", Toast.LENGTH_SHORT).show()
                     }
                 }
                 else{
-                    Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -242,7 +242,7 @@ class HomeFragment : Fragment() {
                     }
 //                    Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "Not done", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "Not done", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -359,11 +359,11 @@ class HomeFragment : Fragment() {
                         }
 //                        Toast.makeText(context, "success", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(context, "false", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "false", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     clearCategoryView()
-                    Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                 }
             }
 

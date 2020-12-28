@@ -88,12 +88,12 @@ class SignupActivity : AppCompatActivity() {
                 val jsonObject = jsonArray.getJSONObject(0)
                 val success = jsonObject.getBoolean("success")
                 if (success) {
-                    Toast.makeText(applicationContext, "success", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, "success", Toast.LENGTH_SHORT).show()
                     intent = Intent(this@SignupActivity, LoginActivity::class.java)
                     startActivity(intent)
                     this@SignupActivity.finish()
                 } else {
-                    Toast.makeText(applicationContext, " not success", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(applicationContext, " not success", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {

@@ -345,20 +345,16 @@ class   SeriesDetailsFragment : Fragment() {
                             }
                             ll_actorPhotos.addView(v)
                         }
-
                     } else {
-                        Toast.makeText(context, "not working", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(context, "not working", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     //Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                 }
-
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Log.d("error", "$t")
             }
-
         })
     }
 
@@ -443,12 +439,12 @@ class   SeriesDetailsFragment : Fragment() {
                 if (jsonArray.length() > 0) {
                     val jsonObject = jsonArray.getJSONObject(0)
                     if (jsonObject.getBoolean("success")) {
-                        Toast.makeText(context, "added", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "added to favourites", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(context, "something went wrong", Toast.LENGTH_SHORT).show()
+//                        Toast.makeText(context, "something went wrong", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -482,7 +478,7 @@ class   SeriesDetailsFragment : Fragment() {
                         Toast.makeText(context, "$msg", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-                    Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(context, "null", Toast.LENGTH_SHORT).show()
                 }
             }
 
