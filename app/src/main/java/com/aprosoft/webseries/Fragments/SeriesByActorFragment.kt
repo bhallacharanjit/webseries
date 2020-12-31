@@ -16,6 +16,7 @@ import com.aprosoft.webseries.Fragments.Platforms.myListArray
 import com.aprosoft.webseries.Fragments.Platforms.rv_PlatformSeries
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
+import com.aprosoft.webseries.Shared.Singleton
 import kotlinx.android.synthetic.main.fragment_series_by_actor.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -71,6 +72,13 @@ class SeriesByActorFragment : Fragment() {
     private fun seriesByActor(){
         val actorParams = HashMap<String,String>()
         actorParams["actorid"] = actorID.toString()
+        if(Singleton().getUserFromSharedPrefrence(context!!)!=null){
+            val userObject = Singleton().getUserFromSharedPrefrence(context!!)
+            actorParams["userId"]=userObject?.getString("token").toString()
+        }else{
+            //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
+            actorParams["userId"]=""
+        }
         val call:Call<ResponseBody> = ApiClient.getClient.seriesByActor(actorParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {

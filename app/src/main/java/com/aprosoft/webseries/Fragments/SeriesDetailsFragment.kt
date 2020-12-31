@@ -41,6 +41,7 @@ import retrofit2.Response
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+
 var seriesString:String? = null
 var jsonObject = JSONObject()
 var myListString:String? = null
@@ -263,16 +264,24 @@ class   SeriesDetailsFragment : Fragment() {
             activity?.supportFragmentManager?.popBackStack()
         }
 
+        review()
 
         val spinner = v.findViewById(R.id.spinner) as MaterialSpinner
-        spinner.setItems("App reviews", "User reviwes", "imdb reviews")
+        spinner.setItems("All Reviews","App reviews", "User reviwes", "imdb reviews")
         spinner.setOnItemSelectedListener { view, position, id, item ->
 //            Snackbar.make(view,"Clicked $position",Snackbar.LENGTH_LONG).show()
             spinnerItemPostion= position
-//            Toast.makeText(context, "$spinnerItemPostion", Toast.LENGTH_SHORT).show()
-            review()
+            if (position==0){
+                review()
+            }
+            if (position==1){
+                adminReview()
+            }
+            if (position==2){
+                usersReview()
+            }
         }
-        review()
+
 
         v.btn_play_trailer.setOnClickListener {
             openYoutubeLink("$trailerKey")
@@ -368,61 +377,20 @@ class   SeriesDetailsFragment : Fragment() {
     }
 
     private fun review(){
-        val showid = jsonObject.getString("token")
         val reviewParams = HashMap<String, String>()
-        reviewParams["showid"] = showid
-
+        reviewParams["showid"] = showId.toString()
         val call:Call<ResponseBody> = ApiClient.getClient.review(reviewParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val res = response.body()?.string()
                 val jsonArray = JSONArray(res)
                 Log.d("jsonArray", "$jsonArray")
-
-
                 if (jsonArray.length() > 0) {
                     for (i in 0 until jsonArray.length()) {
-
-                        val role = jsonArray.getJSONObject(i).getString("role")
-                        if (spinnerItemPostion == 0 && role == "admin") {
-                            AdminReviewArray = JSONArray()
-                            val reviewObject = jsonArray.getJSONObject(i)
-                            AdminReviewArray.put(reviewObject)
-                            Log.d("reviewObject", "$AdminReviewArray")
-                            val reviewsAdapter = ReviewsAdapter(context!!, AdminReviewArray)
-                            reviewsAdapter.notifyDataSetChanged()
-                            recyclerView.adapter = reviewsAdapter
-                        }
-                        if (spinnerItemPostion == 1 && role == "user") {
-                            userReviewArray = JSONArray()
-                            val reviewObject = jsonArray.getJSONObject(i)
-                            userReviewArray.put(reviewObject)
-                            Log.d("reviewObject", "$userReviewArray")
-                            val reviewsAdapter = ReviewsAdapter(context!!, userReviewArray)
-                            reviewsAdapter.notifyDataSetChanged()
-                            recyclerView.adapter = reviewsAdapter
-                        }
-                        if (spinnerItemPostion == 2 && role == "imdb") {
-                            imdbReviewArray = JSONArray()
-                            val reviewObject = jsonArray.getJSONObject(i)
-                            imdbReviewArray.put(reviewObject)
-                            Log.d("reviewObject", "$imdbReviewArray")
-                            val reviewsAdapter = ReviewsAdapter(context!!, imdbReviewArray)
-                            reviewsAdapter.notifyDataSetChanged()
-                            recyclerView.adapter = reviewsAdapter
-                        }
-
+                        val reviewsAdapter = ReviewsAdapter(context!!,jsonArray)
+                        recyclerView.adapter = reviewsAdapter
                     }
-//                    val jsonObject = jsonArray.getJSONObject(0)
-//                    val success = jsonObject.getBoolean("success")
-//                    if (success) {
-//                        val reviewsAdapter = ReviewsAdapter(context!!, jsonArray)
-//                        recyclerView.adapter = reviewsAdapter
-//
-//                        //Toast.makeText(context, "review working", Toast.LENGTH_SHORT).show()
-//                    } else {
-//                        Toast.makeText(context, "review not working", Toast.LENGTH_SHORT).show()
-//                    }
+
                 } else {
 //                    Toast.makeText(context, "Array is null", Toast.LENGTH_SHORT).show()
                 }
@@ -432,6 +400,53 @@ class   SeriesDetailsFragment : Fragment() {
             }
         })
     }
+
+    private fun usersReview(){
+        val usersReviewParams = HashMap<String,String>()
+        usersReviewParams["showid"]= showId.toString()
+
+        val call:Call<ResponseBody> = ApiClient.getClient.ReviewByUsers(usersReviewParams)
+        call.enqueue(object :Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val res= response.body()?.string()
+                val jsonArray = JSONArray(res)
+                if (jsonArray.length()>0){
+                    for (i in 0 until jsonArray.length()) {
+                        val reviewsAdapter = ReviewsAdapter(context!!,jsonArray)
+                        recyclerView.adapter = reviewsAdapter
+                    }
+                }else{
+                    Log.d("emptyArray","$jsonArray")
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("error","$t")
+            }
+        })
+    }
+    private fun adminReview(){
+        val adminReviewParams = HashMap<String,String>()
+        adminReviewParams["showid"]= showId.toString()
+        val call:Call<ResponseBody> = ApiClient.getClient.ReviewByAdmin(adminReviewParams)
+        call.enqueue(object :Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val res= response.body()?.string()
+                val jsonArray = JSONArray(res)
+                if (jsonArray.length()>0){
+                    for (i in 0 until jsonArray.length()) {
+                        val reviewsAdapter = ReviewsAdapter(context!!,jsonArray)
+                        recyclerView.adapter = reviewsAdapter
+                    }
+                }else{
+                    Log.d("emptyArray","$jsonArray")
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("error","$t")
+            }
+        })
+    }
+
     private fun addTomyList(){
         val showid = jsonObject.getString("token")
         val userObject = Singleton().getUserFromSharedPrefrence(context!!)

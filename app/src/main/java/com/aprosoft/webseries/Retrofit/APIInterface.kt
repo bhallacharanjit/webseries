@@ -82,4 +82,12 @@ interface APIInterface {
     @POST("seriesByActor")
     fun seriesByActor(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("userReview")
+    fun ReviewByUsers(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("adminReview")
+    fun ReviewByAdmin(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
+
 }
