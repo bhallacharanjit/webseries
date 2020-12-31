@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
@@ -53,6 +55,14 @@ class MoreSeriesFragment : Fragment() {
         Log.d("seriesArray","$seriesArray")
         val view=inflater.inflate(R.layout.fragment_more_series, container, false)
 
+        view.iv_backArrow_MoreSeries.setOnClickListener {
+            val animation: Animation = AnimationUtils.loadAnimation(
+                context?.applicationContext,
+                R.anim.alpha
+            )
+            view.iv_backArrow_MoreSeries.startAnimation(animation)
+            activity?.supportFragmentManager?.popBackStack()
+        }
         view.rv_MoreSeries.setHasFixedSize(true)
         val mLayoutManager: RecyclerView.LayoutManager = GridLayoutManager(context,2)
         view.rv_MoreSeries.layoutManager = mLayoutManager

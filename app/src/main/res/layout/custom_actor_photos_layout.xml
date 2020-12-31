@@ -7,7 +7,6 @@
     <ImageView
         android:layout_width="180dp"
         android:layout_height="250dp"
-        android:src="@drawable/ali_fazal"
         android:scaleType="fitXY"
         android:alpha="0.8"
         android:id="@+id/iv_actorPhoto"

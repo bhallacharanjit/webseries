@@ -38,7 +38,6 @@ class ReviewsAdapter(context: Context, var jsonArray: JSONArray)
     override fun onBindViewHolder(holder: ReviewsAdapter.MyViewHolder, position: Int) {
 
         val jsonObject = jsonArray.getJSONObject(position)
-
         rating = jsonObject.getString("star")
 //        Toast.makeText(context, "$rating", Toast.LENGTH_SHORT).show()
         holder.tv_reviewerName.text = jsonObject.getString("name")

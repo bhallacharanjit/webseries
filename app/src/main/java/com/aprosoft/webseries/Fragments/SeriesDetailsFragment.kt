@@ -104,6 +104,15 @@ class   SeriesDetailsFragment : Fragment() {
         val tv_showDescription:TextView = v.findViewById(R.id.tv_showDescription)
 
         v.tv_watchTime.text = jsonObject.getString("watchtime")
+
+        if (jsonObject.getString("averageRating") == "null") {
+            v.seriesDetailsRating.visibility= View.GONE
+        }else{
+            v.seriesDetailsRating.visibility= View.VISIBLE
+            v.seriesDetailsRating.rating= jsonObject.getString("averageRating").toFloat()
+        }
+
+
         v.iv_whiteHeart.setOnClickListener {
             if (Singleton().getUserFromSharedPrefrence(context!!)!=null){
                 v.iv_whiteHeart.visibility = View.GONE

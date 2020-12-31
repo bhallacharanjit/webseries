@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.aprosoft.webseries.Fragments.MyListFragment
@@ -24,6 +25,7 @@ class MyListAdapter(context: Context, var jsonArray: JSONArray,myListFragment: M
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
         var iv_myList_photo = view.findViewById<ImageView>(R.id.iv_myList_Photo)
         var tv_myList_name = view.findViewById<TextView>(R.id.tv_myList_Name)
+        var myListRating = view.findViewById<RatingBar>(R.id.MyListRating)
     }
 
 
@@ -36,6 +38,14 @@ class MyListAdapter(context: Context, var jsonArray: JSONArray,myListFragment: M
     override fun onBindViewHolder(holder: MyListAdapter.MyViewHolder, position: Int) {
         val jsonObject = jsonArray.getJSONObject(position)
         val data = jsonArray[position]
+        var rating:String?= null
+        if (jsonObject.getString("averageRating")=="null"){
+            holder.myListRating.visibility = View.GONE
+        }else{
+            holder.myListRating.visibility = View.VISIBLE
+            rating = jsonObject.getString("averageRating")
+            holder.myListRating.rating = rating.toFloat()
+        }
         holder.tv_myList_name.text = jsonObject.getString("showname")
         val imageURL = Singleton().imageUrl+jsonObject.getString("webseriesposter")
         Glide.with(context)

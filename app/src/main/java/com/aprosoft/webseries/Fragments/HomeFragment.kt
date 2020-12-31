@@ -22,6 +22,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import kotlinx.android.synthetic.main.custom_category_webseries.view.*
+import kotlinx.android.synthetic.main.fragment_add_review.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.fragment_series_details.view.*
@@ -110,7 +111,6 @@ class HomeFragment : Fragment() {
 
                             videoPlayer.getPlayerUiController()
 
-
 //                            videoPlayer.isFullScreen()
 //                            videoPlayer.toggleFullScreen()
 
@@ -197,6 +197,8 @@ class HomeFragment : Fragment() {
 //                aviLoader?.visibility = View.GONE
                 val res = response.body()?.string()
                 seriesArray = JSONArray(res)
+                Log.d("seriesArray", "$seriesArray")
+
                 val jsonObject = seriesArray.getJSONObject(0)
                 val success = jsonObject.getBoolean("success")
                 if (success) {
@@ -206,6 +208,7 @@ class HomeFragment : Fragment() {
                         val popular_webSeries_layout: LinearLayout =
                             v.findViewById(R.id.ll_popular_Webseries)
                         val seriesPoster = v.findViewById<ImageView>(R.id.iv_seriesPoster)
+                        var ratingbar = v.findViewById<RatingBar>(R.id.rating)
                         val seriesName = v.findViewById<TextView>(R.id.tv_seriesName)
                         val imageUrl =
                             Singleton().imageUrl + seriesObject.getString("webseriesposter")
@@ -215,11 +218,17 @@ class HomeFragment : Fragment() {
                             .into(seriesPoster)
                         seriesName.text = seriesObject.getString("showname")
 
+                        var rating: String? = null
+                        if (seriesObject.getString("averageRating") == "null") {
+                            ratingbar.visibility= View.GONE
+                        }else{
+                            ratingbar.visibility= View.VISIBLE
+                            rating = seriesObject.getString("averageRating")
+                            ratingbar.rating= rating.toFloat()
+                        }
+
                         seriesPoster.tag = i
                         seriesPoster.setOnClickListener {
-//                            val name = seriesObject.getString("showname")
-//                            Toast.makeText(context, "$name", Toast.LENGTH_SHORT).show()
-
                             val fragmentTransaction: FragmentTransaction =
                                 fragmentManager?.beginTransaction()!!
                             val bundle = Bundle()
@@ -232,13 +241,9 @@ class HomeFragment : Fragment() {
                             seriesDetailsFragment.arguments = bundle
                         }
 
-//                        popular_webSeries_layout.tag = i
-//                        popular_webSeries_layout.setOnClickListener {
-//
-////                val intent  = Intent(this,)
-////                            Toast.makeText(context, "working", Toast.LENGTH_SHORT).show()
-//                        }
                         ll_posterLayout.addView(v)
+
+                        getRatingStars(ratingbar)
                     }
 //                    Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
                 } else {
@@ -319,6 +324,7 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val res = response.body()?.string()
                 categoryArray = JSONArray(res)
+                Log.d("categoryArray","$categoryArray")
                 val arryOfString = ArrayList<String>()
                 if (categoryArray.length() > 0) {
                     val jsonObject = categoryArray.getJSONObject(0)
@@ -335,6 +341,14 @@ class HomeFragment : Fragment() {
                             val categoryObject = categoryArray.getJSONObject(i)
                             val v: View = inflater.inflate(R.layout.custom_category_webseries, null)
                             v.tv_CategorySeriesName.text = categoryObject.getString("showname")
+                            var rating: String? = null
+                            if (categoryObject.getString("averageRating") == "null") {
+                                v.rating_catgorySeries.visibility= View.GONE
+                            }else{
+                                v.rating_catgorySeries.visibility= View.VISIBLE
+                                rating = categoryObject.getString("averageRating")
+                                v.rating_catgorySeries.rating= rating.toFloat()
+                            }
                             val imgUrl =
                                 Singleton().imageUrl + categoryObject.getString("webseriesposter")
                             Glide.with(context!!)
@@ -412,6 +426,36 @@ class HomeFragment : Fragment() {
         })
     }
 
+    private fun getRatingStars(ratingbar: RatingBar) {
+        val starParams = HashMap<String,String>()
+        starParams["showid"] =""
+        val call:Call<ResponseBody> = ApiClient.getClient.review(starParams)
+        call.enqueue(object : Callback<ResponseBody> {
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val res = response.body()?.string()
+                val jsonArray = JSONArray(res)
+
+                if (jsonArray.length() > 0) {
+                    Log.d("jsonArray","$jsonArray")
+                    val jsonObject = jsonArray.getJSONObject(0)
+                    val success = jsonObject.getBoolean("success")
+                    if (success) {
+
+
+
+                    } else {
+                        Toast.makeText(context, "$success", Toast.LENGTH_SHORT).show()
+                    }
+
+                } else {
+                    Log.d("emptyarray","$jsonArray")
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("error","$t")
+            }
+        })
+    }
 
 
 

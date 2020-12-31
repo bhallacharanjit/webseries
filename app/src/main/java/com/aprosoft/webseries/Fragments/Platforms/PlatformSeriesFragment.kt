@@ -138,33 +138,38 @@ class PlatformSeriesFragment : Fragment() {
             //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
             seriesParams["userId"]=""
         }
-
-
         val call:Call<ResponseBody> = ApiClient.getClient.platformSeries(seriesParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 kProgressHUD?.dismiss()
                 val res = response.body()?.string()
                 val jsonArray = JSONArray(res)
-                val jsonObject = jsonArray.getJSONObject(0)
-                val success = jsonObject.getBoolean("success")
-                var msg: String? = null
-                if (success) {
-                    msg = jsonObject.getString("msg")
-                    //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                    val platformsSeriesAdapter = PlatformsSeriesAdapter(context!!,
-                        jsonArray,
-                        this@PlatformSeriesFragment)
-                    rv_PlatformSeries.adapter = platformsSeriesAdapter
-                } else {
-                    msg = jsonObject.getString("msg")
-                    seriesView.tv_nothingToShow.visibility = View.VISIBLE
+                if (jsonArray.length() > 0) {
+                    val jsonObject = jsonArray.getJSONObject(0)
+                    val success = jsonObject.getBoolean("success")
+                    var msg: String? = null
+                    if (success) {
+                        msg = jsonObject.getString("msg")
+                        //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                        val platformsSeriesAdapter = PlatformsSeriesAdapter(
+                            context!!,
+                            jsonArray,
+                            this@PlatformSeriesFragment
+                        )
+                        rv_PlatformSeries.adapter = platformsSeriesAdapter
+                    } else {
+                        msg = jsonObject.getString("msg")
+                        seriesView.tv_nothingToShow.visibility = View.VISIBLE
 //                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
 //                    Handler().postDelayed({
 //                        activity?.onBackPressed()
 //                    },3000)
+                    }
+                } else {
+                    Toast.makeText(context, "Nothig to show", Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 kProgressHUD?.dismiss()
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()

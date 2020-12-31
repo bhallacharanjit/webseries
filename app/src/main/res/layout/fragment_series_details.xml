@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content">
 
                     <androidx.appcompat.widget.AppCompatRatingBar
-                        android:id="@+id/rating"
+                        android:id="@+id/seriesDetailsRating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:numStars="5"
@@ -89,7 +89,7 @@
                         android:layout_marginEnd="5dp"
                         android:layout_marginTop="5dp"
                         android:id="@+id/tv_title"
-                        android:layout_below="@id/rating"
+                        android:layout_below="@id/seriesDetailsRating"
                         />
                     <ImageView
                         android:id="@+id/iv_whiteHeart"
@@ -272,7 +272,7 @@
                         >
 
                         <LinearLayout
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:orientation="horizontal"
                             android:id="@+id/ll_actorPhotosLayout">

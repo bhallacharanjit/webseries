@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.RatingBar
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.aprosoft.webseries.Fragments.SeriesByCategoryFragment
@@ -19,6 +20,7 @@ class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray, var 
     class MyViewHolder(view: View):RecyclerView.ViewHolder(view){
         val iv_categorySeriesImage = view.findViewById<ImageView>(R.id.iv_CategorySeriesImage)
         val tv_categorySeriesName = view.findViewById<TextView>(R.id.tv_CategorySeriesName)
+        val categoryseriesRating = view.findViewById<RatingBar>(R.id.CategorySeriesRating)
 
     }
 
@@ -29,6 +31,16 @@ class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray, var 
 
     override fun onBindViewHolder(holder: CategorySeriesAdapter.MyViewHolder, position: Int) {
         val jsonObject = jsonArray.getJSONObject(position)
+        var rating:String?= null
+        if (jsonObject.getString("averageRating")=="null"){
+            holder.categoryseriesRating.visibility = View.GONE
+        }else{
+            holder.categoryseriesRating.visibility = View.VISIBLE
+            rating = jsonObject.getString("averageRating")
+            holder.categoryseriesRating.rating = rating.toFloat()
+        }
+
+
         Glide.with(context)
             .load(Singleton().imageUrl+jsonObject.getString("webseriesposter"))
             .into(holder.iv_categorySeriesImage)
@@ -36,7 +48,6 @@ class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray, var 
         holder.itemView.setOnClickListener {
             val listObject = jsonArray.getJSONObject(position)
             seriesByCategoryFragment.moveToNextFragment(listObject)
-
         }
 
     }

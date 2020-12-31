@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
@@ -14,7 +14,6 @@
             android:layout_width="150dp"
             android:layout_height="225dp"
             android:id="@+id/iv_myList_Photo"
-            android:src="@drawable/lucy_poster"
             android:layout_margin="5dp"
             android:background="?android:attr/selectableItemBackground"
             android:foreground="?android:attr/selectableItemBackground"
@@ -30,6 +29,18 @@
             android:text="Lucy"
             android:textColor="@color/textColor_grey"
             android:textSize="13sp" />
+
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/MyListRating"
+            android:numStars="5"
+            android:stepSize="0.5"
+            style="@style/Widget.AppCompat.RatingBar.Small"
+            android:theme="@style/RatingBar"
+            android:layout_below="@id/tv_myList_Name"
+            android:layout_centerHorizontal="true"
+            />
 
     </RelativeLayout>
 
