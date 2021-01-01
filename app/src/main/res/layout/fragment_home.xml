@@ -161,7 +161,6 @@
                     android:id="@+id/image_slider"
                     android:layout_width="match_parent"
                     android:layout_height="180dp"
-                    app:iss_placeholder="@drawable/ic_play_arrow_white_18dp"
                     app:iss_auto_cycle="true"
                     app:iss_period="1000"
                     app:iss_delay="1"

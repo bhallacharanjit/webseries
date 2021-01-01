@@ -32,7 +32,7 @@
             <Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,27 +46,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
-
-<!--            <RelativeLayout-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp">-->
-
-<!--                <ImageView-->
-<!--                    android:layout_width="40dp"-->
-<!--                    android:layout_height="40dp"-->
-<!--                    android:layout_centerInParent="true"-->
-<!--                    android:padding="6dp"-->
-<!--                    android:src="@drawable/ic_notifications_active_white_24dp" />-->
-
-<!--&lt;!&ndash;                <ImageView&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_width="20dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_height="20dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_alignParentTop="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_alignParentEnd="true"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:layout_margin="8dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:padding="4dp"&ndash;&gt;-->
-<!--&lt;!&ndash;                    android:src="@drawable/circleyellowfil" />&ndash;&gt;-->
-<!--            </RelativeLayout>-->
 
         </LinearLayout>
 
@@ -109,7 +88,6 @@
                                 android:layout_width="200dp"
                                 android:layout_height="150dp"
                                 android:id="@+id/iv_profileImage"
-                                android:src="@drawable/ic_user"
                                 android:layout_centerInParent="true"
                                 />
 

@@ -180,6 +180,7 @@ class ProfileFragment : Fragment() {
                         Glide.with(context!!)
                             .load(Singleton().imageUrl+jsonObject.getString("photo"))
                             .circleCrop()
+                            .placeholder(R.drawable.ic_user)
                             .into(iv_profileImage!!)
 //                        Toast.makeText(context, "Profile", Toast.LENGTH_SHORT).show()
                     } else {

@@ -22,21 +22,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        app:itemTextColor="@color/textColor_grey"
+        app:itemIconTint="@drawable/selector"
+        app:menu="@menu/menu_bottom_navigation"
+        app:labelVisibilityMode="labeled"
         android:background="@color/background_black"
         app:itemIconSize="24dp"
         android:elevation="2dp"
-        app:menu="@menu/menu_bottom_navigation"
         android:id="@+id/bottomNav"
-        app:itemIconTint="@color/textColor_grey"
-        app:labelVisibilityMode="labeled"
         tools:ignore="PrivateResource"
         android:foreground="?android:attr/selectableItemBackground"
         android:theme="@android:style/ThemeOverlay.Material.Dark"
+        app:itemTextColor="@drawable/text_color"
         />
-
-
-
-
-
 </RelativeLayout>

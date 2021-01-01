@@ -1,17 +1,16 @@
 package com.aprosoft.webseries
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.aprosoft.webseries.Fragments.HomeFragment
 import com.aprosoft.webseries.Fragments.MyListFragment
 import com.aprosoft.webseries.Fragments.ProfileFragment
+import com.aprosoft.webseries.Fragments.SettingsFragment
 import com.aprosoft.webseries.Shared.Singleton
 import com.aprosoft.webseries.User.LoginActivity
 import com.chartboost.sdk.CBLocation
@@ -35,8 +34,9 @@ class MainActivity : AppCompatActivity() {
         else{
             BottomNavClick(bottomNav)
             bottomNav.menu.findItem(R.id.menu_profile).isVisible = false
+            bottomNav.menu.findItem(R.id.myList).isVisible= false
             bottomNav.menu.findItem(R.id.menu_profile_login).isVisible = true
-            bottomNav.menu.findItem(R.id.menu_logout).isVisible = false
+            bottomNav.menu.findItem(R.id.menu_settings).isVisible = true
         }
 
 //        val fragmentManager:FragmentManager =supportFragmentManager
@@ -112,9 +112,12 @@ class MainActivity : AppCompatActivity() {
 
                     true
                 }
-                R.id.menu_logout ->{
-
-                    logoutAlert()
+                R.id.menu_settings ->{
+                    val fragmentTransaction:FragmentTransaction = fragmentManager.beginTransaction()
+                    val settingsFragment = SettingsFragment()
+                    fragmentTransaction.replace(R.id.frame_main,settingsFragment)
+                    fragmentTransaction.addToBackStack("Fragments")
+                    fragmentTransaction.commit()
                     true
                 }
                 else-> false
@@ -128,6 +131,7 @@ class MainActivity : AppCompatActivity() {
         alertDialog.setMessage("you want Logout")
 //        alertDialog.setIcon(R.drawable.ic_exit)
         alertDialog.setPositiveButton("Yes"){ _, _ ->
+
 
             val preferences =
                 getSharedPreferences("UserPref", Context.MODE_PRIVATE)

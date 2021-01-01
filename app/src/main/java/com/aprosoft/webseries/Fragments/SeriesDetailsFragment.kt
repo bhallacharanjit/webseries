@@ -44,16 +44,11 @@ private const val ARG_PARAM2 = "param2"
 
 var seriesString:String? = null
 var jsonObject = JSONObject()
-var myListString:String? = null
-var listArray = JSONArray()
 val imageUrl = Singleton().imageUrl
 var showId:String? = null
 private lateinit var recyclerView: RecyclerView
 var trailerKey:String?= null
 var spinnerItemPostion:Int? =0
-var AdminReviewArray= JSONArray()
-var userReviewArray= JSONArray()
-var imdbReviewArray= JSONArray()
 lateinit var v:View
 /**
  * A simple [Fragment] subclass.
@@ -89,11 +84,6 @@ class   SeriesDetailsFragment : Fragment() {
         Log.d("key", trailerKey)
 
 
-  //      myListString= arguments?.getString("myList")
-//        listArray = JSONArray(myListString)
-
-        //Log.d("listarray","$listArray")
-        //Toast.makeText(context, "$listArray", Toast.LENGTH_SHORT).show()
         v =  inflater.inflate(R.layout.fragment_series_details, container, false)
         val webseriesPoster:ImageView = v.findViewById(R.id.iv_webseriesPoster)
         val btn_releaseYear: Button = v.findViewById(R.id.btn_releasedYear)
@@ -156,8 +146,6 @@ class   SeriesDetailsFragment : Fragment() {
             val type2 = category1.substringBefore(",")
             v.tv_type2.text =type2
         }
-
-
 
         v.tv_type1.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
@@ -247,7 +235,6 @@ class   SeriesDetailsFragment : Fragment() {
         tv_showDescription.text = jsonObject.getString("showdesc")
         v.tv_showLanguage.text= jsonObject.getString("language")
 
-
         Glide.with(context!!)
             .load(imageUrl + jsonObject.getString("poster512x512"))
             .placeholder(R.drawable.ic_play_arrow_white_18dp)
@@ -281,7 +268,6 @@ class   SeriesDetailsFragment : Fragment() {
                 usersReview()
             }
         }
-
 
         v.btn_play_trailer.setOnClickListener {
             openYoutubeLink("$trailerKey")

@@ -17,7 +17,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="255dp"
-                android:src="@drawable/mirzapur_poster_fullsize"
                 android:alpha="0.8"
                 android:id="@+id/iv_ReviewSeriesPoster"
                 />
@@ -104,7 +103,6 @@
                             android:layout_height="wrap_content"
                             android:id="@+id/et_ReviewDesc"
                             android:textSize="15sp"
-                            android:hint="@string/write_your_review"
                             android:textColor="@color/white"
                             android:fontFamily="@font/montserrat_medium"
                             android:drawablePadding="10dp"

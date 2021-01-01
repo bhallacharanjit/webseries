@@ -69,7 +69,6 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
-
         val ll_posterLayout:LinearLayout = view.findViewById(R.id.ll_photosLayout)
         val ll_videoLayout = view.findViewById<LinearLayout>(R.id.ll_videoLayout)
         val ll_categoryLayout = view.findViewById<LinearLayout>(R.id.ll_categoryLayout)
@@ -259,9 +258,9 @@ class HomeFragment : Fragment() {
     }
     private fun platformImageSlider(platformImageSlider: ImageSlider) {
         val imageList = ArrayList<SlideModel>()
-        imageList.add(SlideModel(R.drawable.netflix_poster, "Netflix"))
-        imageList.add(SlideModel(R.drawable.amazon_prime_poster, "Amazon Prime"))
-        imageList.add(SlideModel(R.drawable.mx_player_poster, "MX player original"))
+        imageList.add(SlideModel(R.drawable.netflix_poster))
+        imageList.add(SlideModel(R.drawable.amazon_prime_poster))
+        imageList.add(SlideModel(R.drawable.mx_player_poster))
         platformImageSlider.setImageList(imageList)
         platformImageSlider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
@@ -269,7 +268,6 @@ class HomeFragment : Fragment() {
                 if (position ==0){
 
                 }
-
                 val fragmentTransaction: FragmentTransaction = fragmentManager?.beginTransaction()!!
                 val allPlatformsFragment = AllPlatformsFragment()
                 fragmentTransaction.replace(R.id.frame_main, allPlatformsFragment)

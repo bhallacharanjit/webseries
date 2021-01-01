@@ -90,4 +90,7 @@ interface APIInterface {
     @POST("adminReview")
     fun ReviewByAdmin(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 
+    @FormUrlEncoded
+    @POST("logout")
+    fun logout(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 }

@@ -30,9 +30,9 @@
         android:icon="@drawable/ic_account_circle_24px"
         />
     <item
-        android:id="@+id/menu_logout"
-        android:title="Logout"
-        android:icon="@drawable/ic_logout"
+        android:id="@+id/menu_settings"
+        android:title="Settings"
+        android:icon="@drawable/ic_settings"
         />
 
 </menu>
