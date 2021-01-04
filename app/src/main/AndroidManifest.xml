@@ -7,8 +7,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
@@ -19,15 +19,16 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.Custom"
         android:usesCleartextTraffic="true">
-
-        <activity android:name="com.chartboost.sdk.CBImpressionActivity"
+        <activity android:name=".AppReviewActivity"></activity>
+        <activity
+            android:name="com.chartboost.sdk.CBImpressionActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:excludeFromRecents="true"
             android:hardwareAccelerated="true"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen"
-            android:configChanges="keyboardHidden|orientation|screenSize" />
-
-        <activity android:name=".User.ForgotPasswordActivity"
-            android:screenOrientation="portrait"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar.Fullscreen" />
+        <activity
+            android:name=".User.ForgotPasswordActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".User.SignupActivity"
             android:screenOrientation="portrait" />
@@ -39,7 +40,6 @@
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

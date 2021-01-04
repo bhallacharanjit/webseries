@@ -1,6 +1,10 @@
 package com.aprosoft.webseries.Fragments
 
+import android.R.attr.button
+import android.annotation.SuppressLint
 import android.content.Context.LAYOUT_INFLATER_SERVICE
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
@@ -22,6 +26,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import kotlinx.android.synthetic.main.custom_category_webseries.view.*
+import kotlinx.android.synthetic.main.custom_series_category_layout.view.*
+import kotlinx.android.synthetic.main.custom_series_photos_layout.view.*
 import kotlinx.android.synthetic.main.fragment_add_review.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
@@ -78,9 +84,9 @@ class HomeFragment : Fragment() {
         view.tv_moreSeries.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
             val bundle = Bundle()
-            bundle.putString("seriesArray","$seriesArray")
+            bundle.putString("seriesArray", "$seriesArray")
             val moreSeriesFragment = MoreSeriesFragment()
-            fragmentTransaction.replace(R.id.frame_main,moreSeriesFragment)
+            fragmentTransaction.replace(R.id.frame_main, moreSeriesFragment)
             fragmentTransaction.addToBackStack("Fragments")
             fragmentTransaction.commit()
             moreSeriesFragment.arguments= bundle
@@ -97,16 +103,17 @@ class HomeFragment : Fragment() {
 //                aviLoader?.visibility = View.VISIBLE
                 val res = response.body()?.string()
                 val jsonArray = JSONArray(res)
-                if (jsonArray.length()>0){
+                if (jsonArray.length() > 0) {
 
                     val jsonObject = jsonArray.getJSONObject(0)
                     val success = jsonObject.getBoolean("success")
                     if (success) {
                         for (i in 0 until jsonArray.length()) {
                             val videoObject = jsonArray.getJSONObject(i)
-                            Log.d("counting","$i")
-                            val v:View = inflater.inflate(R.layout.custom_video_layout, null)
-                            val videoPlayer:YouTubePlayerView = v.findViewById(R.id.youtube_player_view)
+                            Log.d("counting", "$i")
+                            val v: View = inflater.inflate(R.layout.custom_video_layout, null)
+                            val videoPlayer: YouTubePlayerView =
+                                v.findViewById(R.id.youtube_player_view)
 
                             videoPlayer.getPlayerUiController()
 
@@ -115,12 +122,15 @@ class HomeFragment : Fragment() {
 
                             val params = videoPlayer.layoutParams
                             val displayMetrics = DisplayMetrics()
-                            this@HomeFragment.activity?.windowManager?.defaultDisplay?.getMetrics(displayMetrics)
+                            this@HomeFragment.activity?.windowManager?.defaultDisplay?.getMetrics(
+                                displayMetrics
+                            )
                             val width = displayMetrics.widthPixels
                             params.width = width
                             videoPlayer.layoutParams = params
                             lifecycle.addObserver(videoPlayer)
-                            videoPlayer.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                            videoPlayer.addYouTubePlayerListener(object :
+                                AbstractYouTubePlayerListener() {
                                 override fun onReady(youTubePlayer: YouTubePlayer) {
 
                                     videoPlayer.enterFullScreen()
@@ -134,18 +144,17 @@ class HomeFragment : Fragment() {
                             })
                             ll_videoLayout.addView(v)
                         }
-                    }else{
+                    } else {
                         //Toast.makeText(context, " not Working", Toast.LENGTH_SHORT).show()
                     }
-                }
-                else{
+                } else {
                     //Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                 }
 
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("error","$t")
+                Log.d("error", "$t")
 //                aviLoader?.visibility = View.GONE
             }
         })
@@ -153,7 +162,7 @@ class HomeFragment : Fragment() {
         platformImageSlider(platformImageSlider)
         showCategory(ll_categoryLayout, ll_categoryPhotosLayout)
         myList()
-        categoryPhotos(ll_categoryPhotosLayout,"Action")
+        categoryPhotos(ll_categoryPhotosLayout, "Action")
 //        trailers(ll_videoLayout)
 
         return view
@@ -182,7 +191,7 @@ class HomeFragment : Fragment() {
     private fun seriesPoster(ll_posterLayout: LinearLayout) {
 //        aviLoader?.visibility = View.VISIBLE
         val inflater =context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val seriesParams= HashMap<String,String>()
+        val seriesParams= HashMap<String, String>()
         if(Singleton().getUserFromSharedPrefrence(context!!)!=null){
             val userObject = Singleton().getUserFromSharedPrefrence(context!!)
             seriesParams["userId"]=userObject?.getString("token").toString()
@@ -219,11 +228,11 @@ class HomeFragment : Fragment() {
 
                         var rating: String? = null
                         if (seriesObject.getString("averageRating") == "null") {
-                            ratingbar.visibility= View.GONE
-                        }else{
-                            ratingbar.visibility= View.VISIBLE
+                            ratingbar.visibility = View.GONE
+                        } else {
+                            ratingbar.visibility = View.VISIBLE
                             rating = seriesObject.getString("averageRating")
-                            ratingbar.rating= rating.toFloat()
+                            ratingbar.rating = rating.toFloat()
                         }
 
                         seriesPoster.tag = i
@@ -265,7 +274,7 @@ class HomeFragment : Fragment() {
         platformImageSlider.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
                 //Toast.makeText(context, "$position", Toast.LENGTH_SHORT).show()
-                if (position ==0){
+                if (position == 0) {
 
                 }
                 val fragmentTransaction: FragmentTransaction = fragmentManager?.beginTransaction()!!
@@ -277,11 +286,15 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private  fun showCategory(ll_categoryLayout: LinearLayout, ll_categoryPhotosLayout: LinearLayout) {
+    private  fun showCategory(
+        ll_categoryLayout: LinearLayout,
+        ll_categoryPhotosLayout: LinearLayout
+    ) {
 //        aviLoader?.visibility = View.VISIBLE
         val inflater =context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val call:Call<ResponseBody> = ApiClient.getClient.viewCategory()
         call.enqueue(object : Callback<ResponseBody> {
+            @SuppressLint("UseCompatLoadingForDrawables")
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 //                aviLoader?.visibility = View.GONE
                 val res = response.body()?.string()
@@ -293,12 +306,15 @@ class HomeFragment : Fragment() {
                         val categoryObject = jsonArray.getJSONObject(i)
                         val v: View = inflater.inflate(R.layout.custom_series_category_layout, null)
                         val tv_category = v.findViewById<TextView>(R.id.tv_seriesCategory)
+
+
                         tv_category.text = categoryObject.getString("CategoryName")
                         tv_category.tag = i
                         tv_category.setOnClickListener {
-                            val token = categoryObject.getString("token")
+                            tv_category.background =context!!.getDrawable(R.drawable.clicktochangecolor)
+                            tv_category.setTextColor(Color.WHITE)
                             val categoryName = categoryObject.getString("CategoryName")
-                            categoryPhotos(ll_categoryPhotosLayout,categoryName)
+                            categoryPhotos(ll_categoryPhotosLayout, categoryName)
                         }
                         ll_categoryLayout.addView(v)
                     }
@@ -315,14 +331,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun categoryPhotos(ll_categoryPhotosLayout: LinearLayout, categoryType: String) {
-        val categoryParams = HashMap<String,String>()
+        val categoryParams = HashMap<String, String>()
         categoryParams["categoryId"] = categoryType
         val call:Call<ResponseBody> = ApiClient.getClient.seriesByCategory(categoryParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val res = response.body()?.string()
                 categoryArray = JSONArray(res)
-                Log.d("categoryArray","$categoryArray")
+                Log.d("categoryArray", "$categoryArray")
                 val arryOfString = ArrayList<String>()
                 if (categoryArray.length() > 0) {
                     val jsonObject = categoryArray.getJSONObject(0)
@@ -341,11 +357,11 @@ class HomeFragment : Fragment() {
                             v.tv_CategorySeriesName.text = categoryObject.getString("showname")
                             var rating: String? = null
                             if (categoryObject.getString("averageRating") == "null") {
-                                v.rating_catgorySeries.visibility= View.GONE
-                            }else{
-                                v.rating_catgorySeries.visibility= View.VISIBLE
+                                v.rating_catgorySeries.visibility = View.GONE
+                            } else {
+                                v.rating_catgorySeries.visibility = View.VISIBLE
                                 rating = categoryObject.getString("averageRating")
-                                v.rating_catgorySeries.rating= rating.toFloat()
+                                v.rating_catgorySeries.rating = rating.toFloat()
                             }
                             val imgUrl =
                                 Singleton().imageUrl + categoryObject.getString("webseriesposter")
@@ -396,14 +412,14 @@ class HomeFragment : Fragment() {
         val userObject = Singleton().getUserFromSharedPrefrence(context!!)
         uid = userObject?.getString("token")
 
-        val listParmas = HashMap<String,String>()
+        val listParmas = HashMap<String, String>()
         listParmas["uid"] = uid.toString()
         val call:Call<ResponseBody> = ApiClient.getClient.myShowsList(listParmas)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 val res = response.body()?.string()
-                MyShowListArray= JSONArray(res)
-                Log.d("mylist","$MyShowListArray")
+                MyShowListArray = JSONArray(res)
+                Log.d("mylist", "$MyShowListArray")
                 val msg: String
                 if (MyShowListArray.length() > 0) {
                     val jsonObject = MyShowListArray.getJSONObject(0)
@@ -418,6 +434,7 @@ class HomeFragment : Fragment() {
                     //Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
                 }
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
             }
@@ -425,7 +442,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun getRatingStars(ratingbar: RatingBar) {
-        val starParams = HashMap<String,String>()
+        val starParams = HashMap<String, String>()
         starParams["showid"] =""
         val call:Call<ResponseBody> = ApiClient.getClient.review(starParams)
         call.enqueue(object : Callback<ResponseBody> {
@@ -434,11 +451,10 @@ class HomeFragment : Fragment() {
                 val jsonArray = JSONArray(res)
 
                 if (jsonArray.length() > 0) {
-                    Log.d("jsonArray","$jsonArray")
+                    Log.d("jsonArray", "$jsonArray")
                     val jsonObject = jsonArray.getJSONObject(0)
                     val success = jsonObject.getBoolean("success")
                     if (success) {
-
 
 
                     } else {
@@ -446,14 +462,17 @@ class HomeFragment : Fragment() {
                     }
 
                 } else {
-                    Log.d("emptyarray","$jsonArray")
+                    Log.d("emptyarray", "$jsonArray")
                 }
             }
+
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.d("error","$t")
+                Log.d("error", "$t")
             }
         })
     }
+
+
 
 
 

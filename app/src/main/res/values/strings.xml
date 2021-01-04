@@ -13,6 +13,11 @@
     <string name="write_your_review">Write your review</string>
     <string name="review">Review</string>
     <string name="submit">Submit</string>
+    <string name="rate_app_title">Rate app</string>
+    <string name="rate_app_message">If you are enjoying our app</string>
+    <string name="rate_btn_pos">Rate Now</string>
+    <string name="rate_btn_neg">Remind me later</string>
+    <string name="rate_btn_nut">No, Thanks</string>
 
     <string-array name="Reviews">
         <item>App review</item>

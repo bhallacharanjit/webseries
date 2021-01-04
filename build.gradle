@@ -6,6 +6,12 @@ buildscript {
         jcenter()
         maven { url 'https://maven.google.com' }
         maven() { url "https://chartboostmobile.bintray.com/Chartboost" }
+        maven {
+            url = uri("https://maven.springframework.org/release")
+        }
+        maven {
+            url = uri("https://maven.restlet.com")
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:4.1.1'
@@ -21,9 +27,16 @@ allprojects {
     repositories {
         google()
         jcenter()
+
         mavenLocal()
         maven { url 'https://jitpack.io' }
         maven { url "https://maven.google.com" }
+        maven {
+            url = uri("https://maven.springframework.org/release")
+        }
+        maven {
+            url = uri("https://maven.restlet.com")
+        }
     }
 }
 
