@@ -6,6 +6,7 @@ import android.graphics.PorterDuff
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Vibrator
+import android.util.Log
 import android.view.View
 import android.view.animation.CycleInterpolator
 import android.view.animation.TranslateAnimation
@@ -14,6 +15,8 @@ import com.aprosoft.webseries.MainActivity
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_login.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
@@ -46,6 +49,21 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            // Log and toast
+//            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("TAG", token)
+            Toast.makeText(baseContext, "msg", Toast.LENGTH_SHORT).show()
+        })
 
 
 

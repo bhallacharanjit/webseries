@@ -9,14 +9,28 @@
 
 
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/frame_main"
-        android:layout_above="@id/bottomNav"
+        android:layout_above="@id/rl_bannerContainer"
         android:layout_marginBottom="5dp"
         />
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/bottomNav"
+        android:id="@+id/rl_bannerContainer">
+        <FrameLayout
+            android:id="@+id/bannerContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:visibility="gone" />
+    </RelativeLayout>
+
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:layout_width="match_parent"

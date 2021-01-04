@@ -1,10 +1,10 @@
 package com.aprosoft.webseries
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.appcompat.app.AlertDialog
+import android.view.View
+import android.widget.FrameLayout
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.aprosoft.webseries.Fragments.HomeFragment
@@ -13,10 +13,14 @@ import com.aprosoft.webseries.Fragments.ProfileFragment
 import com.aprosoft.webseries.Fragments.SettingsFragment
 import com.aprosoft.webseries.Shared.Singleton
 import com.aprosoft.webseries.User.LoginActivity
-import com.chartboost.sdk.CBLocation
-import com.chartboost.sdk.Chartboost
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.ironsource.mediationsdk.ISBannerSize
+import com.ironsource.mediationsdk.IronSource
+import com.ironsource.mediationsdk.logger.IronSourceError
+import com.ironsource.mediationsdk.sdk.BannerListener
+import com.ironsource.mediationsdk.sdk.InterstitialListener
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +28,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        val banner = IronSource.createBanner(this, ISBannerSize.BANNER)
 
 
 
@@ -42,13 +47,52 @@ class MainActivity : AppCompatActivity() {
 //        val fragmentManager:FragmentManager =supportFragmentManager
         val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()
         val homeFragment = HomeFragment()
-        fragmentTransaction.add(R.id.frame_main,homeFragment)
+        fragmentTransaction.add(R.id.frame_main, homeFragment)
         fragmentTransaction.commit()
 
 //        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
 
+        //Init Interstitial
 
-        Chartboost.cacheInterstitial(CBLocation.LOCATION_DEFAULT)
+        IronSource.setInterstitialListener(object : InterstitialListener {
+            override fun onInterstitialAdReady() {
+//                TODO("Not yet implemented")
+                IronSource.showInterstitial("DefaultInterstitial");
+            }
+
+            override fun onInterstitialAdLoadFailed(p0: IronSourceError?) {
+//                TODO("Not yet implemented")
+            }
+
+            override fun onInterstitialAdOpened() {
+//                TODO("Not yet implemented")
+            }
+
+            override fun onInterstitialAdClosed() {
+//                TODO("Not yet implemented")
+            }
+
+            override fun onInterstitialAdShowSucceeded() {
+//                TODO("Not yet implemented")
+            }
+
+            override fun onInterstitialAdShowFailed(p0: IronSourceError?) {
+//                TODO("Not yet implemented")
+            }
+
+            override fun onInterstitialAdClicked() {
+//                TODO("Not yet implemented")
+            }
+
+        })
+
+
+
+        IronSource.init(this, "e5c92431", IronSource.AD_UNIT.INTERSTITIAL);
+        IronSource.loadInterstitial();
+
+        bannerAdd()
+
 
 
 //        bottomNav.menu.removeItem(R.id.menu_logout)
@@ -56,16 +100,27 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+    override fun onResume() {
+        super.onResume()
+        IronSource.onResume(this);
+    }
+
+    override fun onPause() {
+        super.onPause()
+        IronSource.onPause(this);
+    }
+
     private fun BottomNavClick(bottomNav: BottomNavigationView){
 
         bottomNav.setOnNavigationItemSelectedListener{
             when(it.itemId){
 
-                R.id.menu_home ->{
+                R.id.menu_home -> {
 
-                    val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()
+                    val fragmentTransaction: FragmentTransaction =
+                        fragmentManager.beginTransaction()
                     val homeFragment = HomeFragment()
-                    fragmentTransaction.replace(R.id.frame_main,homeFragment)
+                    fragmentTransaction.replace(R.id.frame_main, homeFragment)
                     fragmentTransaction.addToBackStack("Fragments")
                     fragmentTransaction.commit()
 
@@ -75,20 +130,16 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
 
-                R.id.myList->{
-
-                    if (Chartboost.hasInterstitial(CBLocation.LOCATION_DEFAULT)) {
-                        Chartboost.showInterstitial(CBLocation.LOCATION_DEFAULT)
-                    }
-
-                    if (Singleton().getUserFromSharedPrefrence(this)!=null){
-                        val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()
+                R.id.myList -> {
+                    if (Singleton().getUserFromSharedPrefrence(this) != null) {
+                        val fragmentTransaction: FragmentTransaction =
+                            fragmentManager.beginTransaction()
                         val myListFragment = MyListFragment()
-                        fragmentTransaction.replace(R.id.frame_main,myListFragment)
+                        fragmentTransaction.replace(R.id.frame_main, myListFragment)
                         fragmentTransaction.addToBackStack("Fragments")
                         fragmentTransaction.commit()
-                    }else{
-                        val intent = Intent(this,LoginActivity::class.java)
+                    } else {
+                        val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
                     }
                     true
@@ -98,24 +149,26 @@ class MainActivity : AppCompatActivity() {
 //                }
                 R.id.menu_profile -> {
 
-                    val fragmentTransaction:FragmentTransaction =fragmentManager.beginTransaction()
+                    val fragmentTransaction: FragmentTransaction =
+                        fragmentManager.beginTransaction()
                     val profileFragment = ProfileFragment()
-                    fragmentTransaction.replace(R.id.frame_main,profileFragment)
+                    fragmentTransaction.replace(R.id.frame_main, profileFragment)
                     fragmentTransaction.addToBackStack("Fragments")
                     fragmentTransaction.commit()
                     true
                 }
-                R.id.menu_profile_login->{
+                R.id.menu_profile_login -> {
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     this.finish()
 
                     true
                 }
-                R.id.menu_settings ->{
-                    val fragmentTransaction:FragmentTransaction = fragmentManager.beginTransaction()
+                R.id.menu_settings -> {
+                    val fragmentTransaction: FragmentTransaction =
+                        fragmentManager.beginTransaction()
                     val settingsFragment = SettingsFragment()
-                    fragmentTransaction.replace(R.id.frame_main,settingsFragment)
+                    fragmentTransaction.replace(R.id.frame_main, settingsFragment)
                     fragmentTransaction.addToBackStack("Fragments")
                     fragmentTransaction.commit()
                     true
@@ -125,41 +178,44 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun logoutAlert() {
-        val alertDialog: AlertDialog.Builder = AlertDialog.Builder(this)
-        alertDialog.setTitle("Are you sure ?")
-        alertDialog.setMessage("you want Logout")
-//        alertDialog.setIcon(R.drawable.ic_exit)
-        alertDialog.setPositiveButton("Yes"){ _, _ ->
+    private fun bannerAdd(){
+        IronSource.init(this, "e5c92431", IronSource.AD_UNIT.BANNER)
+        val bannerContainer: FrameLayout = findViewById(R.id.bannerContainer)
+        val banner = IronSource.createBanner(this, ISBannerSize.BANNER)
+        val layoutParams = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.MATCH_PARENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+        bannerContainer.addView(banner, 0, layoutParams)
+        banner.bannerListener = object : BannerListener {
+            override fun onBannerAdLoaded() {
+                // Called after a banner ad has been successfully loaded
+                banner.visibility = View.VISIBLE
+                bannerContainer.visibility= View.VISIBLE
+            }
 
+            override fun onBannerAdLoadFailed(error: IronSourceError) {
+                // Called after a banner has attempted to load an ad but failed.
+                runOnUiThread { bannerContainer.removeAllViews() }
+            }
 
-            val preferences =
-                getSharedPreferences("UserPref", Context.MODE_PRIVATE)
-            val editor = preferences.edit()
-            editor.clear()
-            editor.apply()
-            finish()
+            override fun onBannerAdClicked() {
+                // Called after a banner has been clicked.
+            }
 
-            val spreferences =
-                getSharedPreferences("WebseriesPref", Context.MODE_PRIVATE)
-            val editor1 = spreferences.edit()
-            editor1.clear()
-            editor1.apply()
-            finish()
-            val intent = Intent(this, MainActivity::class.java)
-            intent.putExtra("finish", true) // if you are checking for this in your other Activities
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or
-                    Intent.FLAG_ACTIVITY_CLEAR_TASK or
-                    Intent.FLAG_ACTIVITY_NEW_TASK
-            startActivity(intent)
-            finish()
+            override fun onBannerAdScreenPresented() {
+                // Called when a banner is about to present a full screen content.
+            }
+
+            override fun onBannerAdScreenDismissed() {
+                // Called after a full screen content has been dismissed
+            }
+
+            override fun onBannerAdLeftApplication() {
+                // Called when a user would be taken out of the application context.
+            }
         }
-        alertDialog.setNegativeButton("No"){ _, _ ->
-
-        }
-
-        alertDialog.create()
-        alertDialog.show()
+        IronSource.loadBanner(banner)
     }
 
 

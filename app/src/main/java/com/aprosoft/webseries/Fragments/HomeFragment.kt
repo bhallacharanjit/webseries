@@ -47,6 +47,7 @@ var categoryArray = JSONArray()
 var uid:String?= null
 //var aviLoader:AVLoadingIndicatorView?= null
 var categoryViewArrayList:ArrayList<View>? = null
+var categoryArrayList:ArrayList<View>?= null
 var seriesArray = JSONArray()
 /**
  * A simple [Fragment] subclass.
@@ -290,42 +291,49 @@ class HomeFragment : Fragment() {
         ll_categoryLayout: LinearLayout,
         ll_categoryPhotosLayout: LinearLayout
     ) {
-//        aviLoader?.visibility = View.VISIBLE
         val inflater =context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val call:Call<ResponseBody> = ApiClient.getClient.viewCategory()
         call.enqueue(object : Callback<ResponseBody> {
-            @SuppressLint("UseCompatLoadingForDrawables")
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-//                aviLoader?.visibility = View.GONE
+
                 val res = response.body()?.string()
                 val jsonArray = JSONArray(res)
-                val jsonObject = jsonArray.getJSONObject(0)
-                val success = jsonObject.getBoolean("success")
-                if (success) {
-                    for (i in 0 until jsonArray.length()) {
-                        val categoryObject = jsonArray.getJSONObject(i)
-                        val v: View = inflater.inflate(R.layout.custom_series_category_layout, null)
-                        val tv_category = v.findViewById<TextView>(R.id.tv_seriesCategory)
-
-
-                        tv_category.text = categoryObject.getString("CategoryName")
-                        tv_category.tag = i
-                        tv_category.setOnClickListener {
-                            tv_category.background =context!!.getDrawable(R.drawable.clicktochangecolor)
-                            tv_category.setTextColor(Color.WHITE)
-                            val categoryName = categoryObject.getString("CategoryName")
-                            categoryPhotos(ll_categoryPhotosLayout, categoryName)
-                        }
-                        ll_categoryLayout.addView(v)
+                if (jsonArray.length()>0){
+                    if (categoryArrayList == null) {
+                        categoryArrayList = ArrayList()
+                    } else {
+                        clearCategoryBackground()
                     }
-                } else {
+                    val jsonObject = jsonArray.getJSONObject(0)
+                    val success = jsonObject.getBoolean("success")
+                    if (success) {
+                        for (i in 0 until jsonArray.length()) {
+                            val categoryObject = jsonArray.getJSONObject(i)
+                            val v: View = inflater.inflate(R.layout.custom_series_category_layout, null)
+                            val tv_category = v.findViewById<TextView>(R.id.tv_seriesCategory)
+
+                            tv_category.text = categoryObject.getString("CategoryName")
+                            categoryArrayList!!.add(v)
+                            tv_category.tag = i
+                            tv_category.setOnClickListener {
+                                clearCategoryBackground()
+                                tv_category.setTextColor(resources.getColor(R.color.duskYellow))
+                                val categoryName = categoryObject.getString("CategoryName")
+                                categoryPhotos(ll_categoryPhotosLayout, categoryName)
+
+                            }
+                            ll_categoryLayout.addView(v)
+                        }
+
+                    } else {
 //                    Toast.makeText(context, "something went wrong", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    clearCategoryBackground()
                 }
             }
-
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(context, "$t", Toast.LENGTH_SHORT).show()
-//                aviLoader?.visibility = View.GONE
             }
         })
     }
@@ -339,7 +347,6 @@ class HomeFragment : Fragment() {
                 val res = response.body()?.string()
                 categoryArray = JSONArray(res)
                 Log.d("categoryArray", "$categoryArray")
-                val arryOfString = ArrayList<String>()
                 if (categoryArray.length() > 0) {
                     val jsonObject = categoryArray.getJSONObject(0)
                     val success = jsonObject.getBoolean("success")
@@ -406,6 +413,16 @@ class HomeFragment : Fragment() {
 //            categoryViewArrayList!![i]
 //        }
         ll_categoryPhotosLayout.removeAllViews()
+    }
+    fun clearCategoryBackground(){
+
+
+        for (i in 0 until categoryArrayList!!.size) {
+            val v = categoryArrayList!![i]
+            val tv_category = v.findViewById<TextView>(R.id.tv_seriesCategory)
+            tv_category.setTextColor(Color.WHITE)
+        }
+
     }
 
     private fun myList(){

@@ -193,10 +193,10 @@ class SettingsFragment : Fragment() {
         val rateApp = v.findViewById<TextView>(R.id.tv_RateUs)
         rateApp.setOnClickListener {
 
-            val intent= Intent(context,AppReviewActivity::class.java)
-            startActivity(intent)
+//            val intent= Intent(context,AppReviewActivity::class.java)
+//            startActivity(intent)
 
-        //            showRateApp()
+                    showRateApp()
         }
     }
 
@@ -212,7 +212,7 @@ class SettingsFragment : Fragment() {
             } else {
                 // There was some problem, continue regardless of the result.
                 // show native rate app dialog on error
-                //showRateAppFallbackDialog()
+                showRateAppFallbackDialog()
             }
         }
     }

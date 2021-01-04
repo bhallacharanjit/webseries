@@ -5,12 +5,15 @@ buildscript {
         google()
         jcenter()
         maven { url 'https://maven.google.com' }
-        maven() { url "https://chartboostmobile.bintray.com/Chartboost" }
+
         maven {
             url = uri("https://maven.springframework.org/release")
         }
         maven {
             url = uri("https://maven.restlet.com")
+        }
+        maven {
+            url "https://dl.bintray.com/ironsource-mobile/android-sdk"
         }
     }
     dependencies {

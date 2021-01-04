@@ -19,6 +19,8 @@
     <string name="rate_btn_neg">Remind me later</string>
     <string name="rate_btn_nut">No, Thanks</string>
 
+    <string name="default_notification_channel_id">FindMySeries_NotificationID</string>
+
     <string-array name="Reviews">
         <item>App review</item>
         <item>User review</item>
