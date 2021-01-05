@@ -27,7 +27,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:textSize="20sp"
             android:gravity="center"
-            android:textColor="@color/textColor_grey"
+            android:textColor="@color/lightGrey"
             android:layout_marginTop="10dp"/>
 
 
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:startIconDrawable="@drawable/ic_user"
-            app:hintTextAppearance="@color/textColor_grey"
-            android:textColorHint="@color/textColor_grey">
+            app:hintTextAppearance="@color/lightGrey"
+            android:textColorHint="@color/lightGrey">
 
             <EditText
                 android:layout_width="match_parent"
@@ -45,7 +45,7 @@
                 android:id="@+id/et_UserName"
                 android:hint="Full Name"
                 android:textSize="15sp"
-                android:textColor="@color/textColor_grey"
+                android:textColor="@color/lightGrey"
                 android:fontFamily="@font/montserrat_medium"
                 android:drawablePadding="10dp"
                 android:padding="15dp"
@@ -59,9 +59,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            app:startIconDrawable="@drawable/ic_user"
-            app:hintTextAppearance="@color/textColor_grey"
-            android:textColorHint="@color/textColor_grey">
+            app:startIconDrawable="@drawable/ic_email_24dp"
+            app:hintTextAppearance="@color/lightGrey"
+            android:textColorHint="@color/lightGrey">
 
             <EditText
                 android:layout_width="match_parent"
@@ -69,7 +69,7 @@
                 android:id="@+id/et_UserEmail"
                 android:hint="Email address"
                 android:textSize="15sp"
-                android:textColor="@color/textColor_grey"
+                android:textColor="@color/lightGrey"
                 android:fontFamily="@font/montserrat_medium"
                 android:drawablePadding="10dp"
                 android:padding="15dp"
@@ -85,8 +85,8 @@
             android:layout_marginTop="10dp"
             app:endIconMode="password_toggle"
             app:startIconDrawable="@drawable/ic_key"
-            app:hintTextAppearance="@color/textColor_grey"
-            android:textColorHint="@color/textColor_grey"
+            app:hintTextAppearance="@color/lightGrey"
+            android:textColorHint="@color/lightGrey"
             >
 
             <EditText
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:hint="Password"
                 android:textSize="15sp"
-                android:textColor="@color/textColor_grey"
+                android:textColor="@color/lightGrey"
                 android:id="@+id/et_UserPassword"
                 android:fontFamily="@font/montserrat_medium"
                 android:drawablePadding="10dp"
@@ -119,7 +119,7 @@
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_bold"
             android:background="@drawable/login_button_background"
-            android:textColor="@color/textColor_grey"
+            android:textColor="@color/lightGrey"
             android:ems="10"
         />
 
@@ -133,7 +133,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:layout_marginTop="20dp"
             android:padding="10dp"
-            android:textColor="@color/textColor_grey"/>
+            android:textColor="@color/lightGrey"/>
     </LinearLayout>
 
 

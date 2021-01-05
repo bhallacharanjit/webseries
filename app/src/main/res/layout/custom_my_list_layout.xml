@@ -27,7 +27,7 @@
             android:layout_centerHorizontal="true"
             android:fontFamily="@font/montserrat_medium"
             android:text="Lucy"
-            android:textColor="@color/textColor_grey"
+            android:textColor="@color/lightGrey"
             android:textSize="13sp" />
 
         <androidx.appcompat.widget.AppCompatRatingBar

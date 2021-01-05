@@ -27,7 +27,7 @@
             android:fontFamily="@font/montserrat_bold"
             android:textSize="20sp"
             android:gravity="center"
-            android:textColor="@color/textColor_grey"
+            android:textColor="@color/lightGrey"
             android:layout_marginTop="10dp"/>
 
 
@@ -36,8 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:startIconDrawable="@drawable/ic_user"
-            app:hintTextAppearance="@color/textColor_grey"
-            android:textColorHint="@color/textColor_grey"
+            app:hintTextAppearance="@color/lightGrey"
+            android:textColorHint="@color/lightGrey"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -46,7 +46,7 @@
                 android:id="@+id/et_UserEmail"
                 android:hint="@string/email_address"
                 android:textSize="15sp"
-                android:textColor="@color/textColor_grey"
+                android:textColor="@color/lightGrey"
                 android:fontFamily="@font/montserrat_medium"
                 android:drawablePadding="10dp"
                 android:padding="15dp"
@@ -61,8 +61,8 @@
             android:layout_marginTop="10dp"
             app:endIconMode="password_toggle"
             app:startIconDrawable="@drawable/ic_key"
-            app:hintTextAppearance="@color/textColor_grey"
-            android:textColorHint="@color/textColor_grey"
+            app:hintTextAppearance="@color/lightGrey"
+            android:textColorHint="@color/lightGrey"
             >
 
             <com.google.android.material.textfield.TextInputEditText
@@ -70,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/password"
                 android:textSize="15sp"
-                android:textColor="@color/textColor_grey"
+                android:textColor="@color/lightGrey"
                 android:id="@+id/et_UserPassword"
                 android:fontFamily="@font/montserrat_medium"
                 android:drawablePadding="10dp"
@@ -90,7 +90,8 @@
             android:layout_gravity="right"
             android:fontFamily="@font/montserrat_bold"
             android:layout_marginTop="10dp"
-            android:textColor="@color/textColor_grey"/>
+            android:textColor="@color/lightGrey"
+            android:visibility="gone"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -102,7 +103,7 @@
             android:id="@+id/btn_login"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/montserrat_bold"
-            android:textColor="@color/textColor_grey"
+            android:textColor="@color/lightGrey"
             android:ems="10"
             android:background="@drawable/login_button_background"
             android:theme="@android:style/ThemeOverlay.Material.Dark"
@@ -119,21 +120,8 @@
             android:fontFamily="@font/montserrat_bold"
             android:layout_marginTop="20dp"
             android:padding="10dp"
-            android:textColor="@color/textColor_grey"/>
+            android:textColor="@color/lightGrey"/>
     </LinearLayout>
-
-<!--    <com.wang.avi.AVLoadingIndicatorView-->
-<!--        android:id="@+id/avi"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        style="@style/AVLoadingIndicatorView"-->
-<!--        android:visibility="invisible"-->
-<!--        app:indicatorName="BallPulseIndicator"-->
-<!--        app:indicatorColor="@color/duskYellow"-->
-<!--        android:layout_centerInParent="true"-->
-<!--        />-->
-
-
 
 
 </RelativeLayout>

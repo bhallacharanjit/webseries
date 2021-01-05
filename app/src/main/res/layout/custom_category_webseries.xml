@@ -22,7 +22,7 @@
         android:fontFamily="@font/montserrat_medium"
         android:textSize="13sp"
         android:layout_gravity="center"
-        android:textColor="@color/textColor_grey"
+        android:textColor="@color/lightGrey"
         />
     <androidx.appcompat.widget.AppCompatRatingBar
         android:id="@+id/rating_catgorySeries"

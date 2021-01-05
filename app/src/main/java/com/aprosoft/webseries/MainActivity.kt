@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
         IronSource.setInterstitialListener(object : InterstitialListener {
             override fun onInterstitialAdReady() {
 //                TODO("Not yet implemented")
-                IronSource.showInterstitial("DefaultInterstitial");
+                IronSource.showInterstitial("DefaultInterstitial")
             }
 
             override fun onInterstitialAdLoadFailed(p0: IronSourceError?) {
@@ -88,8 +88,8 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        IronSource.init(this, "e5c92431", IronSource.AD_UNIT.INTERSTITIAL);
-        IronSource.loadInterstitial();
+        IronSource.init(this, "e5c92431", IronSource.AD_UNIT.INTERSTITIAL)
+        IronSource.loadInterstitial()
 
         bannerAdd()
 
@@ -102,12 +102,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        IronSource.onResume(this);
+        IronSource.onResume(this)
     }
 
     override fun onPause() {
         super.onPause()
-        IronSource.onPause(this);
+        IronSource.onPause(this)
     }
 
     private fun BottomNavClick(bottomNav: BottomNavigationView){

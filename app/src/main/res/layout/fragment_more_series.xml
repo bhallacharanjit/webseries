@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/topbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -24,31 +24,27 @@
                 android:background="@drawable/background_circle"
                 android:src="@drawable/ic_back_arrow"
                 android:layout_margin="5dp"/>
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_platformTitle"
                 android:text="More"
+                android:layout_marginTop="5dp"
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/white"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:layout_toRightOf="@id/iv_backArrow_MoreSeries"/>
 
-            <Space
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
-
-        </LinearLayout>
+            
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="5dp">
 
             <TextView
                 android:layout_width="wrap_content"

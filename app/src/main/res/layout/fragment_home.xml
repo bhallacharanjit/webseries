@@ -95,11 +95,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Best Popular Webseries"
-                    android:textColor="@color/textColor_grey"
+                    android:textColor="@color/lightGrey"
                     android:fontFamily="@font/montserrat_bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="25dp"
-                    android:textSize="15sp"
+                    android:textSize="13sp"
                     android:layout_centerVertical="true"
                     />
                 <TextView
@@ -145,7 +145,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Top Platforms"
-                    android:textColor="@color/textColor_grey"
+                    android:textColor="@color/lightGrey"
                     android:fontFamily="@font/montserrat_bold"
                     android:layout_marginTop="5dp"
                     android:layout_marginStart="25dp"

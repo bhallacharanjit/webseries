@@ -11,9 +11,12 @@ import android.view.animation.CycleInterpolator
 import android.view.animation.TranslateAnimation
 import android.widget.Toast
 import com.aprosoft.webseries.Fragments.jsonObject
+import com.aprosoft.webseries.MainActivity
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.activity_signup.et_UserEmail
@@ -25,11 +28,28 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SignupActivity : AppCompatActivity() {
+    var fcmtoken:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
         val vibrate: Vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            fcmtoken = task.result
+
+            // Log and toast
+//            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("TAG", fcmtoken)
+            //Toast.makeText(baseContext, fcmtoken, Toast.LENGTH_SHORT).show()
+        })
+
 
         tv_loginNow.setOnClickListener {
             intent = Intent(this,LoginActivity::class.java)
@@ -78,6 +98,7 @@ class SignupActivity : AppCompatActivity() {
         signupParams["name"]=et_UserName.text.toString()
         signupParams["email"] =et_UserEmail.text.toString()
         signupParams["password"]=  et_UserPassword.text.toString()
+        signupParams["fcmToken"]= fcmtoken.toString()
 
         val call:Call<ResponseBody> = ApiClient.getClient.signup(signupParams)
         call.enqueue(object : Callback<ResponseBody> {
@@ -85,16 +106,22 @@ class SignupActivity : AppCompatActivity() {
                 kProgressHUD?.dismiss()
                 val res = response.body()?.string()
                 val jsonArray = JSONArray(res)
-                val jsonObject = jsonArray.getJSONObject(0)
-                val success = jsonObject.getBoolean("success")
-                if (success) {
-                    //Toast.makeText(applicationContext, "success", Toast.LENGTH_SHORT).show()
-                    intent = Intent(this@SignupActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                    this@SignupActivity.finish()
-                } else {
+                if (jsonArray.length()>0){
+                    val jsonObject = jsonArray.getJSONObject(0)
+                    val success = jsonObject.getBoolean("success")
+                    if (success) {
+                        //Toast.makeText(applicationContext, "success", Toast.LENGTH_SHORT).show()
+                        Singleton().setSharedPrefrence(this@SignupActivity,jsonObject)
+                        intent = Intent(this@SignupActivity, MainActivity::class.java)
+                        startActivity(intent)
+                        this@SignupActivity.finish()
+                    } else {
 //                    Toast.makeText(applicationContext, " not success", Toast.LENGTH_SHORT).show()
+                    }
+                }else{
+                    Log.d("signUpError","$jsonArray")
                 }
+
             }
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
                 Toast.makeText(applicationContext, "$t", Toast.LENGTH_SHORT).show()

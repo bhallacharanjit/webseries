@@ -25,6 +25,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class LoginActivity : AppCompatActivity() {
+    var fcmtoken:String?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
@@ -42,6 +43,8 @@ class LoginActivity : AppCompatActivity() {
         tv_goToRegister.setOnClickListener {
             intent = Intent(this,SignupActivity::class.java)
             startActivity(intent)
+
+            this.finish()
         }
 
         tv_forgotPassword.setOnClickListener {
@@ -57,12 +60,12 @@ class LoginActivity : AppCompatActivity() {
             }
 
             // Get new FCM registration token
-            val token = task.result
+            fcmtoken = task.result
 
             // Log and toast
 //            val msg = getString(R.string.msg_token_fmt, token)
-            Log.d("TAG", token)
-            Toast.makeText(baseContext, "msg", Toast.LENGTH_SHORT).show()
+            Log.d("TAG", fcmtoken)
+            //Toast.makeText(baseContext, fcmtoken, Toast.LENGTH_SHORT).show()
         })
 
 
@@ -102,6 +105,7 @@ class LoginActivity : AppCompatActivity() {
         val loginParams = HashMap<String, String>()
         loginParams["email"]= et_UserEmail.text.toString()
         loginParams["password"] = et_UserPassword.text.toString()
+        loginParams["fcmToken"]= fcmtoken.toString()
 
         val call:Call<ResponseBody> = ApiClient.getClient.login(loginParams)
         call.enqueue(object : Callback<ResponseBody> {
@@ -114,7 +118,7 @@ class LoginActivity : AppCompatActivity() {
                 val success = jsonObject.getBoolean("success")
                 val msg = jsonObject.getString("msg")
                 if (success) {
-                    Toast.makeText(applicationContext, "$msg", Toast.LENGTH_SHORT).show()
+                    //Toast.makeText(applicationContext, "$msg", Toast.LENGTH_SHORT).show()
                     Singleton().setSharedPrefrence(this@LoginActivity, jsonObject)
                     intent = Intent(this@LoginActivity, MainActivity::class.java)
                     startActivity(intent)

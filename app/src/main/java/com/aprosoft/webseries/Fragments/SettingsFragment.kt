@@ -172,7 +172,7 @@ class SettingsFragment : Fragment() {
                 if (jsonArray.length() > 0) {
                     val success = jsonArray.getJSONObject(0).getBoolean("success")
                     if (success) {
-                        Toast.makeText(context, "$success", Toast.LENGTH_SHORT).show()
+                        //Toast.makeText(context, "$success", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "$success", Toast.LENGTH_SHORT).show()
                     }
