@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragments.MoreSeriesFragment">
+    tools:context=".Fragments.MoreSeriesFragment"
+    android:id="@+id/frameLayout">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:id="@+id/mainView">
 
         <RelativeLayout
             android:id="@+id/topbar"
@@ -31,15 +34,29 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/tv_platformTitle"
                 android:text="More"
-                android:layout_marginTop="5dp"
+                android:layout_centerVertical="true"
                 android:fontFamily="@font/montserrat_medium"
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:layout_toRightOf="@id/iv_backArrow_MoreSeries"/>
+                android:layout_centerHorizontal="true"/>
 
-            
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_SelectLanguage"
+                android:text="Language"
+                android:fontFamily="@font/montserrat_medium"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_alignParentEnd="true"
+                app:drawableEndCompat="@drawable/ic_drop_down_arrow"
+                android:drawablePadding="5dp"
+                android:layout_marginEnd="15dp"
+                android:layout_centerVertical="true"
+                />
+
         </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
@@ -66,4 +83,107 @@
 
     </LinearLayout>
 
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/rl_languages"
+        android:visibility="gone"
+        android:background="@drawable/circularbordersolid"
+        android:layout_gravity="center_horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_LanguageTitle"
+            android:text="Select Language"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_All"
+            android:layout_below="@id/tv_LanguageTitle"
+            android:text="All"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_EngLanguage"
+            android:layout_below="@id/tv_All"
+            android:text="English"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"
+            android:textSize="15sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_EngLanguage"
+            android:id="@+id/tv_HindiLanguage"
+            android:textSize="15sp"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Hindi"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_HindiLanguage"
+            android:id="@+id/tv_PunjabiLanguage"
+            android:textSize="15sp"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Punjabi"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_PunjabiLanguage"
+            android:id="@+id/tv_GermanLanguage"
+            android:textSize="15sp"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="German"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_GermanLanguage"
+            android:id="@+id/tv_SpanishLanguage"
+            android:textSize="15sp"
+            android:textColor="@color/lightGrey"
+            android:fontFamily="@font/montserrat_bold"
+            android:text="Spanish"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:padding="5dp"/>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_close"
+            android:background="@drawable/background_circle"
+            android:src="@drawable/ic_close_white_48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:layout_below="@id/tv_SpanishLanguage"/>
+    </RelativeLayout>
 </FrameLayout>

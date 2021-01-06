@@ -93,4 +93,8 @@ interface APIInterface {
     @FormUrlEncoded
     @POST("logout")
     fun logout(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
+
+    @FormUrlEncoded
+    @POST("seriesByLanguage")
+    fun seriesByLanguage(@FieldMap params: HashMap<String, String>):Call<ResponseBody>
 }

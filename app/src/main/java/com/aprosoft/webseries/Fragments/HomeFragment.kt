@@ -1,10 +1,7 @@
 package com.aprosoft.webseries.Fragments
 
-import android.R.attr.button
-import android.annotation.SuppressLint
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.DisplayMetrics
 import android.util.Log
