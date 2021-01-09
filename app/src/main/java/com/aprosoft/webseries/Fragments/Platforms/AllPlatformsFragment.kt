@@ -5,6 +5,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -15,6 +17,8 @@ import com.aprosoft.webseries.Adapters.AllPlatformsAdapter
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
+import kotlinx.android.synthetic.main.fragment_all_platforms.view.*
+import kotlinx.android.synthetic.main.fragment_more_series.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import retrofit2.Call
@@ -53,6 +57,14 @@ class AllPlatformsFragment : Fragment() {
         // Inflate the layout for this fragment
 
         platformView=inflater.inflate(R.layout.fragment_all_platforms, container, false)
+
+        platformView.iv_backArrow_AllPlatforms.setOnClickListener {
+            val animation: Animation = AnimationUtils.loadAnimation(
+                context?.applicationContext,
+                R.anim.alpha)
+            platformView.iv_backArrow_AllPlatforms.startAnimation(animation)
+            activity?.supportFragmentManager?.popBackStack()
+        }
 
         rvPlatform = platformView.findViewById(R.id.rv_PlatformList)
         rvPlatform.setHasFixedSize(true)

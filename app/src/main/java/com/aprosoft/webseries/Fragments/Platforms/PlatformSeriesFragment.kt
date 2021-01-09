@@ -9,6 +9,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.fragment.app.FragmentTransaction
@@ -26,7 +28,12 @@ import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
 import com.aprosoft.webseries.User.LoginActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
+import kotlinx.android.synthetic.main.fragment_more_series.view.*
 import kotlinx.android.synthetic.main.fragment_platform_series.view.*
+import kotlinx.android.synthetic.main.fragment_platform_series.view.tv_nothingToShow
+import kotlinx.android.synthetic.main.fragment_platform_series.view.tv_platformTitle
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import org.json.JSONObject
@@ -47,6 +54,8 @@ var platformName:String?= null
 //lateinit var notificationOff:ImageView
 var userObject= JSONObject()
 var isActive: Boolean?=null
+var platformToken:String?=null
+var fcmtoken:String?=null
 /**
  * A simple [Fragment] subclass.
  * Use the [PlatformSeriesFragment.newInstance] factory method to
@@ -85,6 +94,13 @@ class PlatformSeriesFragment : Fragment() {
 
         }
 
+        seriesView.iv_backArrow.setOnClickListener {
+            val animation: Animation = AnimationUtils.loadAnimation(
+                context?.applicationContext,
+                R.anim.alpha)
+            seriesView.iv_backArrow.startAnimation(animation)
+            activity?.supportFragmentManager?.popBackStack()
+        }
 
         seriesView.iv_notificationIcon.setOnClickListener {
 
@@ -122,6 +138,22 @@ class PlatformSeriesFragment : Fragment() {
 
         myList()
         platformSeries()
+
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("TAG", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            fcmtoken = task.result
+
+            // Log and toast
+//            val msg = getString(R.string.msg_token_fmt, token)
+            Log.d("TAG", fcmtoken)
+            //Toast.makeText(baseContext, fcmtoken, Toast.LENGTH_SHORT).show()
+        })
 
         return seriesView
 
@@ -183,6 +215,7 @@ class PlatformSeriesFragment : Fragment() {
         val notificationParams = HashMap<String,String>()
         notificationParams["platformId"] = platformId.toString()
         notificationParams["userId"]= userObject.getString("token")
+        notificationParams["notificationtoken"]= fcmtoken.toString()
 
         val call: Call<ResponseBody> = ApiClient.getClient.notification(notificationParams)
         call.enqueue(object : Callback<ResponseBody> {
@@ -226,8 +259,9 @@ class PlatformSeriesFragment : Fragment() {
                     if (success) {
                         msg = jsonObject.getString("msg")
                         isActive = jsonObject.getBoolean("isActive")
+                        platformToken= jsonObject.getString("platformId")
                         //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                        if (isActive == true) {
+                        if (isActive == true&& platformToken== platformId) {
                             //Toast.makeText(context, "$isActive", Toast.LENGTH_SHORT).show()
                             seriesView.iv_notificationIcon.visibility = View.GONE
                             seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
@@ -241,7 +275,7 @@ class PlatformSeriesFragment : Fragment() {
                         }
                     } else {
                         msg = jsonObject.getString("msg")
-                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+                       // Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                         //isActive = jsonObject.getBoolean("isActive")
                     }
                 }

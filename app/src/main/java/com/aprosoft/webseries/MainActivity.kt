@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        requestNotificationPermission()
+
 
 
         if (Singleton().getUserFromSharedPrefrence(this)!=null){
@@ -65,7 +65,6 @@ class MainActivity : AppCompatActivity() {
 
         IronSource.setInterstitialListener(object : InterstitialListener {
             override fun onInterstitialAdReady() {
-//                TODO("Not yet implemented")
                 IronSource.showInterstitial("DefaultInterstitial")
             }
 
@@ -92,63 +91,11 @@ class MainActivity : AppCompatActivity() {
             override fun onInterstitialAdClicked() {
 //                TODO("Not yet implemented")
             }
-
         })
-
-
-
         IronSource.init(this, "e5c92431", IronSource.AD_UNIT.INTERSTITIAL)
         IronSource.loadInterstitial()
-
         bannerAdd()
-
-
-
 //        bottomNav.menu.removeItem(R.id.menu_logout)
-
-    }
-
-    private fun requestNotificationPermission() {
-        if (ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_NOTIFICATION_POLICY)
-            == PackageManager.PERMISSION_GRANTED
-        ) return
-        if (ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                Manifest.permission.ACCESS_NOTIFICATION_POLICY
-            )
-        ) {
-        }
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(Manifest.permission.ACCESS_NOTIFICATION_POLICY),
-                NOTIFICATION_PERMISSION_CODE
-            )
-        }
-    }
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String?>,
-        grantResults: IntArray
-    ) {
-
-        // Checking the request code of our request
-        if (requestCode == NOTIFICATION_PERMISSION_CODE) {
-
-            // If permission is granted
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Displaying a toast
-                Toast.makeText(
-                    this,
-                    "Permission granted now you can read the storage",
-                    Toast.LENGTH_LONG
-                ).show()
-            } else {
-                // Displaying another toast if permission is not granted
-                Toast.makeText(this, "Oops you just denied the permission", Toast.LENGTH_LONG)
-                    .show()
-            }
-        }
     }
 
     override fun onResume() {
