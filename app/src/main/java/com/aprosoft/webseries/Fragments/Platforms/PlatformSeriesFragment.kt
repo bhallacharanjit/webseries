@@ -93,7 +93,7 @@ class PlatformSeriesFragment : Fragment() {
 //            checkNotification()
                 seriesView.iv_notificationIcon.visibility = View.GONE
                 seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
-                seriesView.tv_notificationText.text = "Turn off notifications"
+                //seriesView.tv_notificationText.text = "Turn off notifications"
             }else{
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
@@ -105,7 +105,7 @@ class PlatformSeriesFragment : Fragment() {
 //            checkNotification()
                 seriesView.iv_notificationIcon.visibility = View.VISIBLE
                 seriesView.iv_notificationOnIcon.visibility = View.GONE
-                seriesView.tv_notificationText.text = "Turn on notifications"
+                //seriesView.tv_notificationText.text = "Turn on notifications"
             }else{
                 val intent = Intent(context, LoginActivity::class.java)
                 startActivity(intent)
@@ -231,13 +231,13 @@ class PlatformSeriesFragment : Fragment() {
                             //Toast.makeText(context, "$isActive", Toast.LENGTH_SHORT).show()
                             seriesView.iv_notificationIcon.visibility = View.GONE
                             seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
-                            seriesView.tv_notificationText.text = "Turn off notifications"
+                            //seriesView.tv_notificationText.text = "Turn off notifications"
                         }
                         else{
                             //Toast.makeText(context, "$isActive", Toast.LENGTH_SHORT).show()
                             seriesView.iv_notificationIcon.visibility = View.VISIBLE
                             seriesView.iv_notificationOnIcon.visibility = View.GONE
-                            seriesView.tv_notificationText.text = "Turn on notifications"
+                            //seriesView.tv_notificationText.text = "Turn on notifications"
                         }
                     } else {
                         msg = jsonObject.getString("msg")

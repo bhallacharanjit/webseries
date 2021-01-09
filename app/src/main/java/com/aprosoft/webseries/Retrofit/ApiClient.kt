@@ -8,7 +8,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-object ApiClient {
+object  ApiClient {
     var  Base_URL = "http://webseries.aprosoftech.com/api/webseries/"
     val getClient:APIInterface
     get(){
