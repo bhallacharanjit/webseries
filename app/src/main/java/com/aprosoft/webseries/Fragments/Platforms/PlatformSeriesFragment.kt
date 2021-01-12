@@ -65,6 +65,9 @@ class PlatformSeriesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var pageNumber = 1
+    var platformsSeriesAdapter: PlatformsSeriesAdapter?=null
+    var platformSeriesJSONArray: JSONArray?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,9 +94,7 @@ class PlatformSeriesFragment : Fragment() {
         if (Singleton().getUserFromSharedPrefrence(context!!)!=null){
             checkNotification()
         }else{
-
         }
-
         seriesView.iv_backArrow.setOnClickListener {
             val animation: Animation = AnimationUtils.loadAnimation(
                 context?.applicationContext,
@@ -170,6 +171,9 @@ class PlatformSeriesFragment : Fragment() {
             //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
             seriesParams["userId"]=""
         }
+        seriesParams["PageNumber"]= pageNumber.toString()
+        seriesParams["PageSize"]= Singleton().NUMBER_OF_RECORDS.toString()
+
         val call:Call<ResponseBody> = ApiClient.getClient.platformSeries(seriesParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -181,24 +185,30 @@ class PlatformSeriesFragment : Fragment() {
                     val success = jsonObject.getBoolean("success")
                     var msg: String? = null
                     if (success) {
+
+
                         msg = jsonObject.getString("msg")
                         //Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-                        val platformsSeriesAdapter = PlatformsSeriesAdapter(
-                            context!!,
-                            jsonArray,
-                            this@PlatformSeriesFragment
-                        )
-                        rv_PlatformSeries.adapter = platformsSeriesAdapter
+                        if (platformsSeriesAdapter==null){
+                            platformSeriesJSONArray= jsonArray
+                            platformsSeriesAdapter= PlatformsSeriesAdapter(context!!,
+                                platformSeriesJSONArray!!,this@PlatformSeriesFragment)
+                            rv_PlatformSeries.adapter = platformsSeriesAdapter
+
+                        }else{
+                            for (i in 0 until jsonArray.length()) {
+                                val jsonObject = jsonArray.getJSONObject(i)
+                                platformSeriesJSONArray?.put(jsonObject)
+                            }
+                            platformsSeriesAdapter!!.notifyChanges(platformSeriesJSONArray!!)
+                        }
                     } else {
                         msg = jsonObject.getString("msg")
                         seriesView.tv_nothingToShow.visibility = View.VISIBLE
 //                    Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-//                    Handler().postDelayed({
-//                        activity?.onBackPressed()
-//                    },3000)
                     }
                 } else {
-                    Toast.makeText(context, "Nothig to show", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "Nothing to show", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -290,28 +300,6 @@ class PlatformSeriesFragment : Fragment() {
         })
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PlatformSeriesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            PlatformSeriesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-
-
     private fun myList(){
         val userObject = Singleton().getUserFromSharedPrefrence(context!!)
         uid = userObject?.getString("token")
@@ -359,16 +347,33 @@ class PlatformSeriesFragment : Fragment() {
         seriesDetailsFragment.arguments= bundle
     }
 
-//    private fun checkNotification(){
-//
-//        if (isActive == true){
-////            Toast.makeText(context, "1", Toast.LENGTH_SHORT).show()
-//            seriesView.iv_notificationIcon.visibility = View.GONE
-//            seriesView.iv_notificationOnIcon.visibility = View.VISIBLE
-//        }else{
-////            Toast.makeText(context, "0", Toast.LENGTH_SHORT).show()
-//            seriesView.iv_notificationIcon.visibility = View.VISIBLE
-//            seriesView.iv_notificationOnIcon.visibility = View.GONE
-//        }
-//    }
+    fun callPlatformSeries() {
+        if (platformSeriesJSONArray!!.length() % Singleton().NUMBER_OF_RECORDS == 0) {
+            pageNumber += 1
+            platformSeries()
+        } else {
+            Toast.makeText(context,"You have reached the end of list",Toast.LENGTH_LONG).show()
+        }
+    }
+
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param param1 Parameter 1.
+         * @param param2 Parameter 2.
+         * @return A new instance of fragment PlatformSeriesFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            PlatformSeriesFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
 }

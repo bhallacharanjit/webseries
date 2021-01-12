@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.aprosoft.webseries.Adapters.CategorySeriesAdapter
+import com.aprosoft.webseries.Adapters.PlatformsSeriesAdapter
 import com.aprosoft.webseries.Fragments.Platforms.myListArray
 import com.aprosoft.webseries.Fragments.Platforms.rv_PlatformSeries
 import com.aprosoft.webseries.R
@@ -44,6 +45,9 @@ class SeriesByCategoryFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var pageNumber = 1
+    var categorySeriesAdapter:CategorySeriesAdapter?=null
+    var categorySeriesJSONArray: JSONArray?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +88,9 @@ class SeriesByCategoryFragment : Fragment() {
             //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
             categoryParams["userId"]=""
         }
+        categoryParams["PageNumber"]= 1.toString()
+        categoryParams["PageSize"]= Singleton().NUMBER_OF_RECORDS.toString()
+
         val call:Call<ResponseBody> = ApiClient.getClient.seriesByCategory(categoryParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -95,8 +102,19 @@ class SeriesByCategoryFragment : Fragment() {
                     val success = jsonObject.getBoolean("success")
                     if (success) {
                         val msg = jsonObject.getString("msg")
-                        val categorySeriesAdapter = CategorySeriesAdapter(context!!,jsonArray,this@SeriesByCategoryFragment)
-                        CategorySeriesView.rv_CategorySeries.adapter = categorySeriesAdapter
+                        if (categorySeriesAdapter==null){
+                            categorySeriesJSONArray= jsonArray
+                            categorySeriesAdapter = CategorySeriesAdapter(context!!,
+                                    categorySeriesJSONArray!!,this@SeriesByCategoryFragment)
+                            CategorySeriesView.rv_CategorySeries.adapter = categorySeriesAdapter
+                        }else{
+                            for (i in 0 until jsonArray.length()){
+                                val jsonObject = jsonArray.getJSONObject(i)
+                                categorySeriesJSONArray?.put(jsonObject)
+                            }
+                            categorySeriesAdapter!!.notifyChanges(categorySeriesJSONArray!!)
+                        }
+
 //                        Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
                     } else {
                         val msg = jsonObject.getString("msg")
@@ -113,8 +131,16 @@ class SeriesByCategoryFragment : Fragment() {
         })
     }
 
+    fun callCategorySeries() {
+        if (categorySeriesJSONArray!!.length() % Singleton().NUMBER_OF_RECORDS == 0) {
+            pageNumber += 1
+            seriesByCategory()
+        } else {
+            Toast.makeText(context,"You have reached the end of list",Toast.LENGTH_LONG).show()
+        }
+    }
     fun moveToNextFragment(listObject: JSONObject){
-        val fragmentTransaction:FragmentTransaction?= fragmentManager?.beginTransaction()
+               val fragmentTransaction:FragmentTransaction?= fragmentManager?.beginTransaction()
         val seriesDetailsFragment = SeriesDetailsFragment()
         val bundle = Bundle()
         bundle.putString("seriesObject", "$listObject")

@@ -32,6 +32,12 @@ class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray, var 
     override fun onBindViewHolder(holder: CategorySeriesAdapter.MyViewHolder, position: Int) {
         val jsonObject = jsonArray.getJSONObject(position)
         var rating:String?= null
+
+        if (position == jsonArray.length()-2) {
+            seriesByCategoryFragment.callCategorySeries()
+        }
+
+
         if (jsonObject.getString("averageRating")=="null"){
             holder.categoryseriesRating.visibility = View.GONE
         }else{
@@ -54,5 +60,9 @@ class CategorySeriesAdapter(var context: Context, var jsonArray: JSONArray, var 
 
     override fun getItemCount(): Int {
         return jsonArray.length()
+    }
+    fun notifyChanges(jsonArray: JSONArray) {
+        this.jsonArray = jsonArray
+        this.notifyDataSetChanged()
     }
 }

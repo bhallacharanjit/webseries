@@ -62,6 +62,8 @@ class   SeriesDetailsFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -339,8 +341,12 @@ class   SeriesDetailsFragment : Fragment() {
                             v.iv_actorPhoto.setOnClickListener {
                                 val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
                                 val bundle = Bundle()
-                                bundle.putString("actorid","${jsonArray.getJSONObject(i).getString("token")}")
-                                bundle.putString("actorname","${jsonArray.getJSONObject(i).getString("actorname")}")
+                                bundle.putString("actorid",
+                                    jsonArray.getJSONObject(i).getString("token")
+                                )
+                                bundle.putString("actorname",
+                                    jsonArray.getJSONObject(i).getString("actorname")
+                                )
                                 val seriesByActorFragment = SeriesByActorFragment()
                                 fragmentTransaction.replace(R.id.frame_main, seriesByActorFragment)
                                 fragmentTransaction.addToBackStack("Fragments")

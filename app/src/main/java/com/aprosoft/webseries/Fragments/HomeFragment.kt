@@ -46,6 +46,11 @@ var uid:String?= null
 var categoryViewArrayList:ArrayList<View>? = null
 var categoryArrayList:ArrayList<View>?= null
 var seriesArray = JSONArray()
+
+
+var pageNo = 1
+
+
 /**
  * A simple [Fragment] subclass.
  * Use the [HomeFragment.newInstance] factory method to
@@ -81,13 +86,10 @@ class HomeFragment : Fragment() {
 
         view.tv_moreSeries.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
-            val bundle = Bundle()
-            bundle.putString("seriesArray", "$seriesArray")
             val moreSeriesFragment = MoreSeriesFragment()
             fragmentTransaction.replace(R.id.frame_main, moreSeriesFragment)
             fragmentTransaction.addToBackStack("Fragments")
             fragmentTransaction.commit()
-            moreSeriesFragment.arguments= bundle
         }
         val platformImageSlider:ImageSlider = view.findViewById(R.id.image_slider)
 
@@ -197,6 +199,10 @@ class HomeFragment : Fragment() {
             //Toast.makeText(context, "empty", Toast.LENGTH_SHORT).show()
             seriesParams["userId"]=""
         }
+        seriesParams["PageNumber"]= pageNo.toString()
+        seriesParams["PageSize"]= Singleton().NUMBER_OF_RECORDS.toString()
+
+
        val call:Call<ResponseBody> = ApiClient.getClient.viewAllsWebseries(seriesParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
@@ -249,7 +255,7 @@ class HomeFragment : Fragment() {
 
                         ll_posterLayout.addView(v)
 
-                        getRatingStars(ratingbar)
+//                        getRatingStars(ratingbar)
                     }
 //                    Toast.makeText(context, "done", Toast.LENGTH_SHORT).show()
                 } else {

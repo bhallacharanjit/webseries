@@ -39,6 +39,12 @@ class MoreSeriesAdapter(var context: Context,var jsonArray: JSONArray,
         var token:String?= null
         var rating:String?= null
 
+
+        if (position == jsonArray.length()-2) {
+            moreSeriesFragment.callMoreSeries()
+        }
+
+
         if (jsonObject.getString("averageRating")=="null"){
             holder.platformSeriesRating.visibility = View.GONE
         }else{
@@ -62,5 +68,11 @@ class MoreSeriesAdapter(var context: Context,var jsonArray: JSONArray,
 
     override fun getItemCount(): Int {
         return jsonArray.length()
+    }
+
+
+    fun notifyChanges(jsonArray: JSONArray) {
+        this.jsonArray = jsonArray
+        this.notifyDataSetChanged()
     }
 }

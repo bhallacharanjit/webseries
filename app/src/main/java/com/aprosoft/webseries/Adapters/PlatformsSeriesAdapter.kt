@@ -39,6 +39,10 @@ class PlatformsSeriesAdapter(var context: Context,
     override fun onBindViewHolder(holder: PlatformsSeriesAdapter.MyViewHolder, position: Int) {
         val jsonObject = jsonArray.getJSONObject(position)
 
+        if (position == jsonArray.length()-2) {
+            platformSeriesFragment.callPlatformSeries()
+        }
+
         var rating:String?= null
         if (jsonObject.getString("averageRating")=="null"){
             holder.platformSeriesRating.visibility = View.GONE
@@ -63,5 +67,10 @@ class PlatformsSeriesAdapter(var context: Context,
 
     override fun getItemCount(): Int {
         return jsonArray.length()
+    }
+
+    fun notifyChanges(jsonArray: JSONArray) {
+        this.jsonArray = jsonArray
+        this.notifyDataSetChanged()
     }
 }

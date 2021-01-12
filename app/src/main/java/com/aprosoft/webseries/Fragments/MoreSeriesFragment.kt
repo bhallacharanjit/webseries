@@ -31,6 +31,8 @@ import retrofit2.Response
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+
+
 /**
  * A simple [Fragment] subclass.
  * Use the [MoreSeriesFragment.newInstance] factory method to
@@ -40,7 +42,9 @@ class MoreSeriesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
+    private var moreSeriesAdapter:MoreSeriesAdapter? = null
+    private var seriesJsonArray:JSONArray? = null
+    var pageNumber = 1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -49,16 +53,16 @@ class MoreSeriesFragment : Fragment() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        pageNumber=1
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val seriesString = arguments?.getString("seriesArray")
-        val seriesArray = JSONArray(seriesString)
-        Log.d("seriesArray","$seriesArray")
         val view=inflater.inflate(R.layout.fragment_more_series, container, false)
-
         view.iv_backArrow_MoreSeries.setOnClickListener {
             val animation: Animation = AnimationUtils.loadAnimation(
                 context?.applicationContext,
@@ -67,7 +71,7 @@ class MoreSeriesFragment : Fragment() {
             activity?.supportFragmentManager?.popBackStack()
         }
         view.tv_All.setOnClickListener {
-            val moreSeriesAdapter = MoreSeriesAdapter(context!!,seriesArray,this@MoreSeriesFragment)
+            val moreSeriesAdapter = MoreSeriesAdapter(context!!, seriesJsonArray!!,this@MoreSeriesFragment)
             view.rv_MoreSeries.adapter = moreSeriesAdapter
             if (view.rl_languages.visibility==View.VISIBLE){
                 view.rl_languages.visibility= View.GONE
@@ -102,11 +106,13 @@ class MoreSeriesFragment : Fragment() {
         view.rv_MoreSeries.layoutManager = mLayoutManager
         // rv_PlatformSeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
         view.rv_MoreSeries.itemAnimator = DefaultItemAnimator()
+        moreSeries()
 
-        val moreSeriesAdapter = MoreSeriesAdapter(context!!,seriesArray,this@MoreSeriesFragment)
-        view.rv_MoreSeries.adapter = moreSeriesAdapter
         return view
     }
+
+
+
 
     fun moveToNextFragment(listObject: JSONObject) {
         val fragmentTransaction: FragmentTransaction? = fragmentManager?.beginTransaction()
@@ -163,6 +169,54 @@ class MoreSeriesFragment : Fragment() {
         })
     }
 
+    private fun moreSeries(){
+        val moreSeriesParams= HashMap<String,String>()
+        if(Singleton().getUserFromSharedPrefrence(context!!)!=null){
+            val userObject = Singleton().getUserFromSharedPrefrence(context!!)
+            moreSeriesParams["userId"]=userObject?.getString("token").toString()
+        }else{
+            moreSeriesParams["userId"]=""
+        }
+        moreSeriesParams["PageNumber"]= pageNumber.toString()
+        moreSeriesParams["PageSize"]=Singleton().NUMBER_OF_RECORDS.toString()
+        Log.d("pageNUmber","$pageNumber,${Singleton().NUMBER_OF_RECORDS}")
+
+        val call:Call<ResponseBody> = ApiClient.getClient.viewAllsWebseries(moreSeriesParams)
+        call.enqueue(object :Callback<ResponseBody>{
+            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
+                val res= response.body()?.string()
+                val jsonArray= JSONArray(res)
+                if (jsonArray.length()>0){
+                    if (moreSeriesAdapter == null) {
+                        seriesJsonArray = jsonArray
+                        moreSeriesAdapter =
+                            MoreSeriesAdapter(context!!, seriesJsonArray!!, this@MoreSeriesFragment)
+                        view?.rv_MoreSeries?.adapter = moreSeriesAdapter
+                    } else {
+                        for (i in 0 until jsonArray.length()) {
+                            val jsonObject = jsonArray.getJSONObject(i)
+                            seriesJsonArray!!.put(jsonObject)
+                        }
+                        moreSeriesAdapter!!.notifyChanges(seriesJsonArray!!)
+                    }
+                }else{
+                    Log.d("ArrayError","$jsonArray")
+                }
+            }
+            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
+                Log.d("error","$t")
+            }
+        })
+    }
+
+    fun callMoreSeries() {
+        if (seriesJsonArray!!.length() % Singleton().NUMBER_OF_RECORDS == 0) {
+            pageNumber += 1
+            moreSeries()
+        } else {
+            Toast.makeText(context,"You have reached the end of list",Toast.LENGTH_LONG).show()
+        }
+    }
     companion object {
         /**
          * Use this factory method to create a new instance of
@@ -182,6 +236,4 @@ class MoreSeriesFragment : Fragment() {
                 }
             }
     }
-
-
 }

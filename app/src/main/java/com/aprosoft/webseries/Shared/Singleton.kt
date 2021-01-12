@@ -10,6 +10,7 @@ class Singleton {
     val imageUrl ="http://webseries.aprosoftech.com/Images/"
     val prefName = "WebseriesPref"
     val userPref = "UserPref"
+    val NUMBER_OF_RECORDS = 6
 
 
     fun setSharedPrefrence(context: Context, jsonObject: JSONObject){
