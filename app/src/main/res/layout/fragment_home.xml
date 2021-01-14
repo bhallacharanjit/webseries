@@ -66,24 +66,40 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"  >
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp">
 
-                <HorizontalScrollView
+                <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                    android:id="@+id/youtube_player"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="3dp"
-                    android:id="@+id/horizontalScrollView"
-                    android:scrollbars="none">
+                    app:autoPlay="false"
+                    app:showFullScreenButton="false"
+                    app:showYouTubeButton="false"
+                    android:fitsSystemWindows="true"
+                    app:showVideoCurrentTime="true"
+                    app:showVideoDuration="true"
+                    app:showSeekBar="true"
+                    />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/ll_videoLayout">
+<!--                <HorizontalScrollView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:layout_margin="3dp"-->
+<!--                    android:id="@+id/horizontalScrollView"-->
+<!--                    android:scrollbars="none">-->
 
-                    </LinearLayout>
 
-                </HorizontalScrollView>
+
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:orientation="horizontal"-->
+<!--                        android:id="@+id/ll_videoLayout">-->
+
+<!--                    </LinearLayout>-->
+
+<!--                </HorizontalScrollView>-->
 
             </LinearLayout>
 

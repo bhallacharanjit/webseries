@@ -63,6 +63,7 @@ class MoreSeriesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view=inflater.inflate(R.layout.fragment_more_series, container, false)
+
         view.iv_backArrow_MoreSeries.setOnClickListener {
             val animation: Animation = AnimationUtils.loadAnimation(
                 context?.applicationContext,
@@ -107,7 +108,6 @@ class MoreSeriesFragment : Fragment() {
         // rv_PlatformSeries.addItemDecoration(DividerItemDecoration(context, GridLayoutManager.VERTICAL))
         view.rv_MoreSeries.itemAnimator = DefaultItemAnimator()
         moreSeries()
-
         return view
     }
 
@@ -170,6 +170,7 @@ class MoreSeriesFragment : Fragment() {
     }
 
     private fun moreSeries(){
+
         val moreSeriesParams= HashMap<String,String>()
         if(Singleton().getUserFromSharedPrefrence(context!!)!=null){
             val userObject = Singleton().getUserFromSharedPrefrence(context!!)
@@ -236,4 +237,6 @@ class MoreSeriesFragment : Fragment() {
                 }
             }
     }
+
+
 }

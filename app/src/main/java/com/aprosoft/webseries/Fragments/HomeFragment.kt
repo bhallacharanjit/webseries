@@ -61,6 +61,9 @@ class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var MyShowListArray = JSONArray()
+    lateinit var videoPlayer: YouTubePlayerView
+    var trailerArray= JSONArray()
+    var videoId:String?= null
 
     private lateinit var horizontalScrollView:HorizontalScrollView
 
@@ -79,7 +82,7 @@ class HomeFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_home, container, false)
         val ll_posterLayout:LinearLayout = view.findViewById(R.id.ll_photosLayout)
-        val ll_videoLayout = view.findViewById<LinearLayout>(R.id.ll_videoLayout)
+        //val ll_videoLayout = view.findViewById<LinearLayout>(R.id.ll_videoLayout)
         val ll_categoryLayout = view.findViewById<LinearLayout>(R.id.ll_categoryLayout)
         val ll_categoryPhotosLayout = view.findViewById<LinearLayout>(R.id.ll_categoryPhotosLayout)
 //        aviLoader = view.findViewById(R.id.avi_homefrag)
@@ -93,7 +96,7 @@ class HomeFragment : Fragment() {
         }
         val platformImageSlider:ImageSlider = view.findViewById(R.id.image_slider)
 
-        horizontalScrollView = view.findViewById(R.id.horizontalScrollView)
+      //  horizontalScrollView = view.findViewById(R.id.horizontalScrollView)
 
         val call:Call<ResponseBody> =ApiClient.getClient.viewTrailer()
 
@@ -102,51 +105,76 @@ class HomeFragment : Fragment() {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 //                aviLoader?.visibility = View.VISIBLE
                 val res = response.body()?.string()
-                val jsonArray = JSONArray(res)
-                if (jsonArray.length() > 0) {
+                trailerArray = JSONArray(res)
+                if (trailerArray.length() > 0) {
 
-                    val jsonObject = jsonArray.getJSONObject(0)
+                    val jsonObject = trailerArray.getJSONObject(1)
                     val success = jsonObject.getBoolean("success")
+
                     if (success) {
-                        for (i in 0 until jsonArray.length()) {
-                            val videoObject = jsonArray.getJSONObject(i)
-                            Log.d("counting", "$i")
-                            val v: View = inflater.inflate(R.layout.custom_video_layout, null)
-                            val videoPlayer: YouTubePlayerView =
-                                v.findViewById(R.id.youtube_player_view)
+                        videoPlayer= view.findViewById(R.id.youtube_player)
+                        videoPlayer.getPlayerUiController()
+                        videoPlayer.isFullScreen()
+                        videoPlayer.toggleFullScreen()
 
-                            videoPlayer.getPlayerUiController()
+                        videoPlayer.addYouTubePlayerListener(object :
+                            AbstractYouTubePlayerListener() {
+                            override fun onReady(youTubePlayer: YouTubePlayer) {
 
-//                            videoPlayer.isFullScreen()
-//                            videoPlayer.toggleFullScreen()
-
-                            val params = videoPlayer.layoutParams
-                            val displayMetrics = DisplayMetrics()
-                            this@HomeFragment.activity?.windowManager?.defaultDisplay?.getMetrics(
-                                displayMetrics
-                            )
-                            val width = displayMetrics.widthPixels
-                            params.width = width
-                            videoPlayer.layoutParams = params
-                            lifecycle.addObserver(videoPlayer)
-                            videoPlayer.addYouTubePlayerListener(object :
-                                AbstractYouTubePlayerListener() {
-                                override fun onReady(youTubePlayer: YouTubePlayer) {
-
-                                    videoPlayer.enterFullScreen()
-                                    videoPlayer.exitFullScreen()
-//                                val videoId = "xMKzdQrC5TI"
-                                    val videoId = videoObject.getString("trailerId")
-//                    var videoId = null
-                                    youTubePlayer.cueVideo(videoId, 0f)
-
-                                }
-                            })
-                            ll_videoLayout.addView(v)
-                        }
+                                videoPlayer.enterFullScreen()
+                                videoPlayer.exitFullScreen()
+                                videoId = jsonObject.getString("trailerId")
+                                youTubePlayer.cueVideo(videoId!!, 0f)
+                            }
+                        })
                     } else {
-                        //Toast.makeText(context, " not Working", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                     }
+
+
+//                    if (success) {
+//
+//                        for (i in 0 until jsonArray.length()) {
+//                            val videoObject = jsonArray.getJSONObject(i)
+//                            Log.d("counting", "$i")
+//                            val v: View = inflater.inflate(R.layout.custom_video_layout, null)
+//                            val videoPlayer: YouTubePlayerView =
+//                                v.findViewById(R.id.youtube_player_view)
+//
+//                            videoPlayer.getPlayerUiController()
+//
+////                            videoPlayer.isFullScreen()
+////                            videoPlayer.toggleFullScreen()
+//
+//                            val params = videoPlayer.layoutParams
+//                            val displayMetrics = DisplayMetrics()
+//                            this@HomeFragment.activity?.windowManager?.defaultDisplay?.getMetrics(
+//                                displayMetrics
+//                            )
+//                            val width = displayMetrics.widthPixels
+//                            params.width = width
+//                            videoPlayer.layoutParams = params
+//                            lifecycle.addObserver(videoPlayer)
+//                            videoPlayer.addYouTubePlayerListener(object :
+//                                AbstractYouTubePlayerListener() {
+//                                override fun onReady(youTubePlayer: YouTubePlayer) {
+//
+//                                    videoPlayer.enterFullScreen()
+//                                    videoPlayer.exitFullScreen()
+////                                val videoId = "xMKzdQrC5TI"
+//                                    val videoId = videoObject.getString("trailerId")
+////                    var videoId = null
+//                                    youTubePlayer.cueVideo(videoId, 0f)
+//
+//                                }
+//                            })
+//                            ll_videoLayout.addView(v)
+//                        }
+//                    } else {
+//                        //Toast.makeText(context, " not Working", Toast.LENGTH_SHORT).show()
+//                    }
+
+
                 } else {
                     //Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                 }
@@ -188,6 +216,13 @@ class HomeFragment : Fragment() {
             }
     }
 
+
+    override fun onResume() {
+//        videoId = trailerArray.getJSONObject(1).getString("trailerId")
+//        youTubePlayer.cueVideo(videoId!!, 0f)
+        super.onResume()
+    }
+
     private fun seriesPoster(ll_posterLayout: LinearLayout) {
 //        aviLoader?.visibility = View.VISIBLE
         val inflater =context?.getSystemService(LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -203,7 +238,7 @@ class HomeFragment : Fragment() {
         seriesParams["PageSize"]= Singleton().NUMBER_OF_RECORDS.toString()
 
 
-       val call:Call<ResponseBody> = ApiClient.getClient.viewAllsWebseries(seriesParams)
+        val call:Call<ResponseBody> = ApiClient.getClient.viewAllsWebseries(seriesParams)
         call.enqueue(object : Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
 //                aviLoader?.visibility = View.GONE
