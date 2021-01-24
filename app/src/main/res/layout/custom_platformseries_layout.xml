@@ -14,6 +14,7 @@
         <ImageView
             android:layout_width="150dp"
             android:layout_height="225dp"
+            android:scaleType="fitXY"
             android:id="@+id/iv_PlatformSeriesImage"
             android:layout_margin="5dp"/>
 

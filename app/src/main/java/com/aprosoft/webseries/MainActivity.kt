@@ -108,20 +108,14 @@ class MainActivity : AppCompatActivity() {
             when(it.itemId){
 
                 R.id.menu_home -> {
-
                     val fragmentTransaction: FragmentTransaction =
                         fragmentManager.beginTransaction()
                     val homeFragment = HomeFragment()
                     fragmentTransaction.replace(R.id.frame_main, homeFragment)
                     fragmentTransaction.addToBackStack("Fragments")
                     fragmentTransaction.commit()
-
-//                    intent = Intent(this,MainActivity::class.java)
-//                    startActivity(intent)
-
                     true
                 }
-
                 R.id.myList -> {
                     if (Singleton().getUserFromSharedPrefrence(this) != null) {
                         val fragmentTransaction: FragmentTransaction =
@@ -185,7 +179,6 @@ class MainActivity : AppCompatActivity() {
                 banner.visibility = View.VISIBLE
                 bannerContainer.visibility= View.VISIBLE
             }
-
             override fun onBannerAdLoadFailed(error: IronSourceError) {
                 // Called after a banner has attempted to load an ad but failed.
                 runOnUiThread { bannerContainer.removeAllViews() }

@@ -13,6 +13,7 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.DefaultItemAnimator
@@ -26,6 +27,7 @@ import com.aprosoft.webseries.User.LoginActivity
 import com.bumptech.glide.Glide
 import com.jaredrummler.materialspinner.MaterialSpinner
 import kotlinx.android.synthetic.main.custom_actor_photos_layout.view.*
+import kotlinx.android.synthetic.main.fragment_more_series.view.*
 import kotlinx.android.synthetic.main.fragment_series_details.*
 import kotlinx.android.synthetic.main.fragment_series_details.view.*
 import okhttp3.ResponseBody
@@ -78,6 +80,13 @@ class   SeriesDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+
+        activity?.onBackPressedDispatcher?.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                activity?.supportFragmentManager?.popBackStack()
+            }
+        })
         seriesString= arguments?.getString("seriesObject")
         jsonObject= JSONObject(seriesString)
         showId = jsonObject.getString("token")
