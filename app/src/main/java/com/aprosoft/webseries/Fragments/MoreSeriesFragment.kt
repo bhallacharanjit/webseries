@@ -46,6 +46,7 @@ class MoreSeriesFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+
         pageNumber=1
     }
 
@@ -122,10 +123,11 @@ class MoreSeriesFragment : Fragment() {
         val bundle = Bundle()
         bundle.putString("seriesObject", "$listObject")
         val seriesDetailsFragment = SeriesDetailsFragment()
-        fragmentTransaction!!.replace(R.id.frame_main, seriesDetailsFragment)
+        fragmentTransaction!!.add(R.id.frame_main, seriesDetailsFragment)
         fragmentTransaction.addToBackStack("Fragments")
-        fragmentTransaction.commit()
         seriesDetailsFragment.arguments= bundle
+        fragmentTransaction.commit()
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -182,6 +184,11 @@ class MoreSeriesFragment : Fragment() {
                 Log.d("error", "$t")
             }
         })
+    }
+
+    override fun onPause() {
+        super.onPause()
+
     }
 
     private fun moreSeries(){

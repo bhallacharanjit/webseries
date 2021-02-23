@@ -254,13 +254,15 @@ class   SeriesDetailsFragment : Fragment() {
 
         iv_backArrow.setOnClickListener {
 
+     //      activity?.getFragmentManager().popBackStack()
+
             val animation: Animation = AnimationUtils.loadAnimation(
                 context?.applicationContext,
                 R.anim.alpha
             )
             iv_backArrow.startAnimation(animation)
             activity?.supportFragmentManager?.popBackStack()
-        }
+             }
 
         review()
 
