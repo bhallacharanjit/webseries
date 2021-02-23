@@ -144,7 +144,7 @@ class SeriesByCategoryFragment : Fragment() {
         val seriesDetailsFragment = SeriesDetailsFragment()
         val bundle = Bundle()
         bundle.putString("seriesObject", "$listObject")
-        fragmentTransaction!!.replace(R.id.frame_main,seriesDetailsFragment)
+        fragmentTransaction!!.add(R.id.frame_main,seriesDetailsFragment)
         fragmentTransaction.addToBackStack("Fragments")
         fragmentTransaction.commit()
         seriesDetailsFragment.arguments = bundle
