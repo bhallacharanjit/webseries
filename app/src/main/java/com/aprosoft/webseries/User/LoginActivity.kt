@@ -74,6 +74,7 @@ class LoginActivity : AppCompatActivity() {
             when{
                 et_UserEmail.text.toString()=="" ->{
                     et_UserEmail.startAnimation(shakeError())
+//                    et_UserEmail.error="Invalid Email Id"
                     vibrate.vibrate(100)
                     et_UserEmail.background.setColorFilter(resources.getColor(R.color.red), PorterDuff.Mode.SRC_ATOP)
                 }

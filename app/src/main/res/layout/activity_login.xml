@@ -36,6 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             app:startIconDrawable="@drawable/ic_user"
+            app:startIconTint="@color/lightGrey"
             app:hintTextAppearance="@color/lightGrey"
             android:textColorHint="@color/lightGrey"
             >
@@ -60,6 +61,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             app:endIconMode="password_toggle"
+            app:startIconTint="@color/lightGrey"
+            app:endIconTint="@color/lightGrey"
             app:startIconDrawable="@drawable/ic_key"
             app:hintTextAppearance="@color/lightGrey"
             android:textColorHint="@color/lightGrey"

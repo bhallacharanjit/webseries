@@ -107,6 +107,7 @@ class HomeFragment : Fragment() {
 //                aviLoader?.visibility = View.VISIBLE
                 val res = response.body()?.string()
                 val trailerArray = JSONArray(res)
+                Log.d("trailerLength","${trailerArray.length()}")
                 val totalTrailer:Int
                 if (trailerArray.length() > 0) {
                     val jsonObject = trailerArray.getJSONObject(count)
@@ -218,6 +219,10 @@ class HomeFragment : Fragment() {
     }
     private fun randomTrailer(jsonArray: JSONArray){
         count+=1
+        Log.d("trailerCount","$count")
+        if(count>= jsonArray.length()){
+            count = 0
+        }
     }
 
     private fun seriesPoster(ll_posterLayout: LinearLayout) {
