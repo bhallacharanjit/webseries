@@ -3,7 +3,6 @@ package com.aprosoft.webseries.Fragments
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.graphics.Color
 import android.os.Bundle
-import android.util.DisplayMetrics
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,12 +22,8 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
 import kotlinx.android.synthetic.main.custom_category_webseries.view.*
-import kotlinx.android.synthetic.main.custom_series_category_layout.view.*
-import kotlinx.android.synthetic.main.custom_series_photos_layout.view.*
-import kotlinx.android.synthetic.main.fragment_add_review.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import kotlinx.android.synthetic.main.fragment_series_details.view.*
 import okhttp3.ResponseBody
 import org.json.JSONArray
 import retrofit2.Call
@@ -519,6 +514,7 @@ class HomeFragment : Fragment() {
             }
         })
     }
+
 
 
 
