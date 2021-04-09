@@ -35,6 +35,7 @@
                     android:textStyle="bold"
                     android:layout_centerHorizontal="true"/>
 
+
 <!--                <FrameLayout-->
 <!--                    android:id="@+id/toolbar_container"-->
 <!--                    android:layout_width="match_parent"-->

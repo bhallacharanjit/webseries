@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import br.com.mauker.materialsearchview.MaterialSearchView
 import com.aprosoft.webseries.Fragments.Platforms.AllPlatformsFragment
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
