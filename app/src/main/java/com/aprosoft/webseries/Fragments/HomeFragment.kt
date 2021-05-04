@@ -1,8 +1,10 @@
-package com.aprosoft.webseries.Fragments
+ package com.aprosoft.webseries.Fragments
 
 import android.content.Context.LAYOUT_INFLATER_SERVICE
 import android.graphics.Color
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import br.com.mauker.materialsearchview.MaterialSearchView
+import com.adrianotelesc.expandablesearchbar.ExpandableSearchBar
 import com.aprosoft.webseries.Fragments.Platforms.AllPlatformsFragment
 import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
@@ -83,7 +85,22 @@ class HomeFragment : Fragment() {
         val ll_categoryLayout = view.findViewById<LinearLayout>(R.id.ll_categoryLayout)
         val ll_categoryPhotosLayout = view.findViewById<LinearLayout>(R.id.ll_categoryPhotosLayout)
 //        aviLoader = view.findViewById(R.id.avi_homefrag)
+        val searchBar = view.findViewById<ExpandableSearchBar>(R.id.searchbar)
 
+        searchBar.addTextChangeListener(textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                Toast.makeText(context, "$p0", Toast.LENGTH_SHORT).show()
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+        })
         view.tv_moreSeries.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
             val moreSeriesFragment = MoreSeriesFragment()

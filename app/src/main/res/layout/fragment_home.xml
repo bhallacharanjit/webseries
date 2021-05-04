@@ -33,51 +33,17 @@
                     android:textColor="@color/white"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_centerHorizontal="true"/>
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"/>
 
-
-<!--                <FrameLayout-->
-<!--                    android:id="@+id/toolbar_container"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="wrap_content">-->
-
-<!--                    <androidx.appcompat.widget.Toolbar-->
-<!--                        android:id="@+id/toolbar"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="?attr/actionBarSize"-->
-<!--                        android:background="@color/theme_primary" />-->
-
-<!--                    <com.miguelcatalan.materialsearchview.MaterialSearchView-->
-<!--                        android:id="@+id/search_view"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content" />-->
-<!--                </FrameLayout>-->
-<!--                <RelativeLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="50dp">-->
-
-
-<!--                    <ImageView-->
-<!--                        android:layout_width="40dp"-->
-<!--                        android:layout_height="40dp"-->
-<!--                        android:id="@+id/iv_searchIcon"-->
-<!--                        android:padding="6dp"-->
-<!--                        android:layout_marginEnd="5dp"-->
-<!--                        android:src="@drawable/ic_search"-->
-<!--                        android:layout_alignParentEnd="true"/>-->
-
-<!--                    <EditText-->
-<!--                        android:layout_width="200dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:id="@+id/et_searchBar"-->
-<!--                        android:hint="Discover"-->
-<!--                        android:layout_alignParentEnd="true"-->
-<!--                        android:textColor="#FFFF"-->
-<!--                        android:layout_marginEnd="5dp"-->
-<!--                        android:theme="@style/MyEditTextTheme"-->
-<!--                        />-->
-
-<!--                </RelativeLayout>-->
+                <com.adrianotelesc.expandablesearchbar.ExpandableSearchBar
+                    style="@style/ExpandableSearchBarDark"
+                    android:id="@+id/searchbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:hint="Search"
+                    app:isRounded="true"
+                    />
 
             </RelativeLayout>
 
