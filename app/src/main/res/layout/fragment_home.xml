@@ -36,14 +36,14 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"/>
 
-                <com.adrianotelesc.expandablesearchbar.ExpandableSearchBar
-                    style="@style/ExpandableSearchBarDark"
-                    android:id="@+id/searchbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:hint="Search"
-                    app:isRounded="true"
-                    />
+<!--                <com.adrianotelesc.expandablesearchbar.ExpandableSearchBar-->
+<!--                    style="@style/ExpandableSearchBarDark"-->
+<!--                    android:id="@+id/searchbar"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    app:hint="Search"-->
+<!--                    app:isRounded="true"-->
+<!--                    />-->
 
             </RelativeLayout>
 
