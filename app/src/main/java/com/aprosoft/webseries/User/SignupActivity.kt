@@ -16,6 +16,7 @@ import com.aprosoft.webseries.R
 import com.aprosoft.webseries.Retrofit.ApiClient
 import com.aprosoft.webseries.Shared.Singleton
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -29,9 +30,13 @@ import retrofit2.Response
 
 class SignupActivity : AppCompatActivity() {
     var fcmtoken:String?=null
+    // variable for FirebaseAuth class
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
+
+
+
 
         val vibrate: Vibrator = this.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
