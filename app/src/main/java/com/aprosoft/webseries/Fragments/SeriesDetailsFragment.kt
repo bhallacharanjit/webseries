@@ -71,7 +71,7 @@ class   SeriesDetailsFragment : Fragment() {
         showId = jsonObject.getString("token")
         trailerKey = jsonObject.getString("trailer")
         Log.d("seriesObject", "$jsonObject")
-        Log.d("key", trailerKey)
+        Log.d("key", "$trailerKey")
 
 
         v =  inflater.inflate(R.layout.fragment_series_details, container, false)

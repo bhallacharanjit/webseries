@@ -51,7 +51,7 @@ class SignupActivity : AppCompatActivity() {
 
             // Log and toast
 //            val msg = getString(R.string.msg_token_fmt, token)
-            Log.d("TAG", fcmtoken)
+            Log.d("TAG", "$fcmtoken")
             //Toast.makeText(baseContext, fcmtoken, Toast.LENGTH_SHORT).show()
         })
 

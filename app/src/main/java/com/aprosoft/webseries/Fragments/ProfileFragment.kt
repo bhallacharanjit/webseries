@@ -106,7 +106,7 @@ class ProfileFragment : Fragment() {
             scaled.compress(Bitmap.CompressFormat.JPEG, 100, baos)
             val images = baos.toByteArray()
             base64QImage = Base64.encodeToString(images, Base64.DEFAULT)
-            Log.d("base64", base64QImage)
+            Log.d("base64", base64QImage.toString())
             updateProfilePic()
 
             //You can get File object from intent
