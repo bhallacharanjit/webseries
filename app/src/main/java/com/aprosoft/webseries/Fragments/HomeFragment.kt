@@ -34,10 +34,6 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 var categoryArray = JSONArray()
 var uid:String?= null
 //var aviLoader:AVLoadingIndicatorView?= null
@@ -50,15 +46,8 @@ var pageNo = 1
 var count = 0
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
     var MyShowListArray = JSONArray()
     lateinit var videoPlayer: YouTubePlayerView
 
@@ -66,13 +55,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var horizontalScrollView:HorizontalScrollView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -84,23 +67,6 @@ class HomeFragment : Fragment() {
         //val ll_videoLayout = view.findViewById<LinearLayout>(R.id.ll_videoLayout)
         val ll_categoryLayout = view.findViewById<LinearLayout>(R.id.ll_categoryLayout)
         val ll_categoryPhotosLayout = view.findViewById<LinearLayout>(R.id.ll_categoryPhotosLayout)
-//        aviLoader = view.findViewById(R.id.avi_homefrag)
-//        val searchBar = view.findViewById<ExpandableSearchBar>(R.id.searchbar)
-//
-//        searchBar.addTextChangeListener(textWatcher = object : TextWatcher {
-//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//
-//            }
-//
-//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-//                Toast.makeText(context, "$p0", Toast.LENGTH_SHORT).show()
-//            }
-//
-//            override fun afterTextChanged(p0: Editable?) {
-//
-//            }
-//
-//        })
         view.tv_moreSeries.setOnClickListener {
             val fragmentTransaction:FragmentTransaction = fragmentManager?.beginTransaction()!!
             val moreSeriesFragment = MoreSeriesFragment()
@@ -145,55 +111,9 @@ class HomeFragment : Fragment() {
                     } else {
                         Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                     }
-
-
-//                    if (success) {
-//
-//                        for (i in 0 until jsonArray.length()) {
-//                            val videoObject = jsonArray.getJSONObject(i)
-//                            Log.d("counting", "$i")
-//                            val v: View = inflater.inflate(R.layout.custom_video_layout, null)
-//                            val videoPlayer: YouTubePlayerView =
-//                                v.findViewById(R.id.youtube_player_view)
-//
-//                            videoPlayer.getPlayerUiController()
-//
-////                            videoPlayer.isFullScreen()
-////                            videoPlayer.toggleFullScreen()
-//
-//                            val params = videoPlayer.layoutParams
-//                            val displayMetrics = DisplayMetrics()
-//                            this@HomeFragment.activity?.windowManager?.defaultDisplay?.getMetrics(
-//                                displayMetrics
-//                            )
-//                            val width = displayMetrics.widthPixels
-//                            params.width = width
-//                            videoPlayer.layoutParams = params
-//                            lifecycle.addObserver(videoPlayer)
-//                            videoPlayer.addYouTubePlayerListener(object :
-//                                AbstractYouTubePlayerListener() {
-//                                override fun onReady(youTubePlayer: YouTubePlayer) {
-//
-//                                    videoPlayer.enterFullScreen()
-//                                    videoPlayer.exitFullScreen()
-////                                val videoId = "xMKzdQrC5TI"
-//                                    val videoId = videoObject.getString("trailerId")
-////                    var videoId = null
-//                                    youTubePlayer.cueVideo(videoId, 0f)
-//
-//                                }
-//                            })
-//                            ll_videoLayout.addView(v)
-//                        }
-//                    } else {
-//                        //Toast.makeText(context, " not Working", Toast.LENGTH_SHORT).show()
-//                    }
-
-
                 } else {
                     //Toast.makeText(context, "nothing to show", Toast.LENGTH_SHORT).show()
                 }
-
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
@@ -211,25 +131,6 @@ class HomeFragment : Fragment() {
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
     private fun randomTrailer(jsonArray: JSONArray){
         count+=1
         Log.d("trailerCount","$count")

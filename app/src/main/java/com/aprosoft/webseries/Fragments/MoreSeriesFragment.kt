@@ -30,11 +30,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [MoreSeriesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class MoreSeriesFragment : Fragment() {
     private var moreSeriesAdapter:MoreSeriesAdapter? = null
     private var seriesJsonArray:JSONArray? = null
