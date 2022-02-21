@@ -110,9 +110,9 @@ class ProfileFragment : Fragment() {
             updateProfilePic()
 
             //You can get File object from intent
-            val file: File = ImagePicker.getFile(data)!!
+            //val file: File = ImagePicker.getFile(data)!!
             //You can also get File Path from intent
-            val filePath:String = ImagePicker.getFilePath(data)!!
+           // val filePath:String = ImagePicker.getFilePath(data)!!
         } else if (resultCode == ImagePicker.RESULT_ERROR) {
             Toast.makeText(context, ImagePicker.getError(data), Toast.LENGTH_SHORT).show()
         } else {
