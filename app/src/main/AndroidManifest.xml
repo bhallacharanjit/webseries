@@ -34,7 +34,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.Custom"
         android:usesCleartextTraffic="true"
-        android:banner="TODO"
         tools:targetApi="m">
         <!--
      Set custom default icon. This is used when no icon is set for incoming notification messages.
